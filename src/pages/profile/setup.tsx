@@ -134,7 +134,7 @@ const Setup: NextPage = () => {
           />
         </div>
 
-        <div className="col-span-2 border-b-2 py-2"></div>
+        <div className="col-span-2 border-b-2"></div>
 
         {/*   Switch Container */}
         <div className="col-span-2 flex items-center gap-4">
@@ -178,7 +178,7 @@ const Setup: NextPage = () => {
           />
         </div>
 
-        <div className="col-span-2 border-b-2 py-3"></div>
+        <div className="col-span-2 border-b-2 "></div>
 
         <div className="col-span-2 flex flex-col gap-2 md:col-span-1">
           <label htmlFor="emergencyContact">
