@@ -27,8 +27,11 @@ model Event {
     raceFinished10km  Boolean            @default(false)
     cameraPassword    String             @default("hatawbataan")
     closeRegistration Boolean            @default(false)
+    scheduleTime      DateTime
     image             String?
+    address           String
     eventParticipant  EventParticipant[]
+    createdAt         DateTime           @default(now())
 }
 
 enum Gender {
@@ -71,6 +74,7 @@ model EventParticipant {
     profileId          String
     event              Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
     eventId            String
+    createdAt          DateTime  @default(now())
 
     @@unique([eventId, profileId])
 }
@@ -86,9 +90,10 @@ model Profile {
     address                String?
     emergencyContact       String?
     emergencyContactNumber String?
-    firstTime              Boolean            @default(false)
+    firstTime              Boolean            @default(true)
     eventParticitpant      EventParticipant[]
     updatedAt              DateTime           @updatedAt
+    createdAt              DateTime           @default(now())
     user                   User?
 
     @@unique([firstName, lastName, birthdate])

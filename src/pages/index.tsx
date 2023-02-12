@@ -4,9 +4,11 @@ import Image from "next/image";
 
 import { useSession } from "next-auth/react";
 
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 
 import ScreenContainer from "../layouts/ScreenContainer";
+
+import { JoinContext } from "../context/join";
 
 import { GoNote } from "react-icons/go";
 import { FiUserCheck, FiDownload } from "react-icons/fi";
@@ -31,6 +33,10 @@ import WaiverImg from "../assets/landing-page/waiver.png";
 const Home: NextPage = () => {
   const waiverRef = useRef<HTMLDivElement>(null);
 
+  const { toggleJoin } = useContext(JoinContext);
+
+  const { data: sessionData } = useSession();
+
   return (
     <>
       <div className="w-full py-5">
@@ -47,12 +53,23 @@ const Home: NextPage = () => {
                 *Free event t-shirt for first 3,000 registered participant
               </p>
               <div className="grid grid-cols-2 gap-6">
-                <Link
-                  href="/event/cld87jvpj0000f114kp3wsili/register"
-                  className="col-span-1 flex items-center justify-center gap-2 rounded-md bg-primary py-3 font-semibold text-white shadow-md shadow-primary-hover transition-all hover:border-2 hover:border-primary hover:bg-white hover:text-primary"
-                >
-                  REGISTER <FiUserCheck />
-                </Link>
+                {sessionData && (
+                  <Link
+                    href={"/events"}
+                    className="col-span-1 flex items-center justify-center gap-2 rounded-md bg-primary py-3 font-semibold text-white shadow-md shadow-primary-hover transition-all hover:border-2 hover:border-primary hover:bg-white hover:text-primary"
+                  >
+                    JOIN <FiUserCheck />
+                  </Link>
+                )}
+
+                {!sessionData && (
+                  <button
+                    className="col-span-1 flex items-center justify-center gap-2 rounded-md bg-primary py-3 font-semibold text-white shadow-md shadow-primary-hover transition-all hover:border-2 hover:border-primary hover:bg-white hover:text-primary"
+                    onClick={() => toggleJoin()}
+                  >
+                    REGISTER <FiUserCheck />
+                  </button>
+                )}
                 <button
                   onClick={() => {
                     if (waiverRef.current) {

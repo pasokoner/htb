@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
+import { ShirtSize } from "@prisma/client";
 
 export const participantRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -156,6 +157,74 @@ export const participantRouter = createTRPCRouter({
               ...data,
             },
           },
+        },
+      });
+    }),
+  getEventProfile: protectedProcedure
+    .input(
+      z.object({
+        profileId: z.string().optional(),
+        eventId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.eventParticipant.findFirst({
+        where: {
+          profileId: input.profileId,
+          eventId: input.eventId,
+        },
+
+        include: {
+          profile: true,
+        },
+      });
+    }),
+  join: protectedProcedure
+    .input(
+      z.object({
+        profileId: z.string(),
+        eventId: z.string(),
+        shirtSize: z.nativeEnum(ShirtSize),
+        distance: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const data = await ctx.prisma.eventParticipant.findMany({
+        orderBy: {
+          registrationNumber: "desc",
+        },
+        take: 1,
+      });
+
+      return await ctx.prisma.eventParticipant.create({
+        data: {
+          ...input,
+          registrationNumber: data[0]?.registrationNumber
+            ? data[0].registrationNumber + 1
+            : 3350,
+        },
+      });
+    }),
+  editEventProfile: protectedProcedure
+    .input(
+      z.object({
+        profileId: z.string(),
+        eventId: z.string(),
+        shirtSize: z.nativeEnum(ShirtSize),
+        distance: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.eventParticipant.update({
+        where: {
+          eventId_profileId: {
+            eventId: input.eventId,
+            profileId: input.profileId,
+          },
+        },
+        data: {
+          shirtSize: input.shirtSize,
+          distance: input.distance,
         },
       });
     }),

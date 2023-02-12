@@ -1,3 +1,4 @@
+import JoinProvider from "../context/join";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 
@@ -8,11 +9,13 @@ type Props = {
 const PageContainer = ({ children }: Props) => {
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <NavBar />
+      <JoinProvider>
+        <NavBar />
 
-      <main className="flex-1">{children}</main>
+        <main className="flex-1">{children}</main>
 
-      <Footer />
+        <Footer />
+      </JoinProvider>
     </div>
   );
 };

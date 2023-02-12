@@ -25,6 +25,7 @@ const config = {
       "unsplash.com",
       "images.unsplash.com",
       "lh3.googleusercontent.com",
+      "drive.google.com",
     ],
   },
 };

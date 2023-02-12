@@ -6,9 +6,7 @@ import { useState } from "react";
 import IconHatawBataan from "../assets/icon-hataw-bataan.webp";
 import ScreenContainer from "./ScreenContainer";
 import { signIn, signOut, useSession } from "next-auth/react";
-import Modal from "../components/Modal";
 
-import { FcGoogle } from "react-icons/fc";
 import { api } from "../utils/api";
 
 import Snackbar from "../components/Snackbar";
@@ -23,8 +21,6 @@ const NavBar: React.FC = () => {
   const { data: profileData } = api.profile.getProfile.useQuery(undefined, {
     enabled: !!sessionData?.user.profileId,
   });
-
-  const [showModal, setShowModal] = useState(false);
 
   const [firstTime, setFirstTime] = useState(true);
 
@@ -41,39 +37,30 @@ const NavBar: React.FC = () => {
             width={50}
             alt="Hataw Bataan Icon"
           />
-          <h1 className="text-lg font-semibold md:text-3xl">
+          <h1 className="hidden text-2xl font-semibold sm:block">
             <span className="text-[#0062ad]">Hataw </span>
             <span className="text-[#d33d49]">Takbo </span>
             <span className="text-[#0d632b]">Bataan</span>
           </h1>
         </Link>
 
+        <Link
+          href={"/events"}
+          className="text-sm text-primary underline hover:text-primary-hover sm:ml-auto sm:mr-4"
+        >
+          BROWSE EVENTS
+        </Link>
+
         {!sessionData && (
           <button
             className="rounded-md border-2 border-primary py-1.5 px-2.5 text-center text-xs font-semibold text-primary shadow-md transition-all hover:bg-primary hover:text-white active:bg-primary-hover md:px-4 md:py-2"
-            onClick={() => setShowModal(true)}
+            onClick={() => {
+              void signIn();
+            }}
           >
-            BE A MEMBER?
+            LOGIN
           </button>
         )}
-
-        <Modal
-          show={showModal}
-          title="Register"
-          onClose={() => setShowModal(false)}
-        >
-          <div className="md:min-w-[450px]">
-            <button
-              className="rounded-md border-2 border-slate-400 py-2 px-2"
-              onClick={() => {
-                void signIn();
-              }}
-            >
-              Click here to register
-              <FcGoogle className="ml-1 inline text-2xl" />
-            </button>
-          </div>
-        </Modal>
 
         {sessionData && !sessionData.user.profileId && (
           <button
@@ -122,7 +109,7 @@ const NavBar: React.FC = () => {
                 <div className="absolute right-0 z-10 mt-1 w-40 origin-top-right rounded-md border border-gray-100 bg-white shadow-lg">
                   <div className="p-2">
                     <Link
-                      href="/"
+                      href="/profile/my-profile"
                       className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       My Profile

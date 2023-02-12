@@ -3,6 +3,19 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const eventRouter = createTRPCRouter({
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    const { prisma } = ctx;
+
+    return prisma.event.findMany({
+      orderBy: {
+        scheduleTime: "desc",
+      },
+
+      include: {
+        _count: true,
+      },
+    });
+  }),
   details: publicProcedure
     .input(
       z.object({

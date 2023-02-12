@@ -1,6 +1,6 @@
 import { type NextPage, type GetServerSideProps } from "next";
 
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 import { useState } from "react";
 
@@ -17,13 +17,12 @@ import { api } from "../../utils/api";
 import { RiLoader5Fill } from "react-icons/ri";
 import ScreenContainer from "../../layouts/ScreenContainer";
 import { useRouter } from "next/router";
+import Snackbar from "../../components/Snackbar";
 
 type Profile = z.infer<typeof profileSchema>;
 
 const Setup: NextPage = () => {
   const [error, setError] = useState("");
-
-  const { data: sessionData } = useSession();
 
   const router = useRouter();
 
@@ -59,6 +58,10 @@ const Setup: NextPage = () => {
 
   const [outsideBataan, setOutsideBataan] = useState(false);
 
+  // const [showModal, setShowModal] = useState(false);
+
+  // const [agree, setAgree] = useState(false);
+
   const handleToggleAddress = () => {
     setOutsideBataan((prevState) => !prevState);
   };
@@ -68,12 +71,12 @@ const Setup: NextPage = () => {
   return (
     /* eslint-disable @typescript-eslint/no-misused-promises */
     <ScreenContainer className="py-6">
-      <h2 className="mx-auto mb-4 w-full max-w-4xl text-xl font-semibold uppercase">
+      <h2 className="mx-auto mb-4 w-full max-w-4xl text-2xl font-semibold uppercase">
         Account Setup
       </h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mx-auto grid max-w-3xl grid-cols-2 gap-4 text-sm"
+        className="mx-auto grid max-w-3xl grid-cols-2 gap-4 rounded-md border-2 bg-gray-100 p-4 text-sm"
       >
         <div className="col-span-2 flex flex-col gap-2 md:col-span-1">
           <label htmlFor="firstName">First Name</label>
@@ -204,7 +207,23 @@ const Setup: NextPage = () => {
           />
         </div>
 
-        {error && <div className="text-sm text-red-600">{error}</div>}
+        {/* {!agree && (
+          <button
+            type="button"
+            className={`col-span-2 rounded-md border-2 bg-[#0062ad] p-2 uppercase text-white hover:bg-[#0d6cb5] disabled:opacity-60`}
+            onClick={() => setShowModal(true)}
+          >
+            Submit
+          </button>
+        )} */}
+
+        <div className="col-span-2 rounded-md border-2 bg-slate-100 p-2 text-xs sm:text-sm">
+          Please be advised that any changes made to your account on our website
+          will be permanent and cannot be undone. It is important to thoroughly
+          review the details of the information you input before confirming
+          them. If you have any questions or concerns, please contact our
+          customer support team.
+        </div>
 
         {!isLoading && (
           <button
@@ -223,6 +242,43 @@ const Setup: NextPage = () => {
           </button>
         )}
       </form>
+      {error && (
+        <Snackbar
+          type="error"
+          message={error}
+          onClose={() => {
+            setError("");
+          }}
+        />
+      )}
+
+      {/* <Modal
+        show={showModal}
+        title="Saving Changes"
+        onClose={() => {
+          setShowModal(false);
+        }}
+      >
+        <p className="mb-4 text-sm sm:text-[1rem]">
+          Please be advised that any changes made to your account on our website
+          will be permanent and cannot be undone. It is important to thoroughly
+          review the details of the information you input before confirming
+          them. If you have any questions or concerns, please contact our
+          customer support team.
+        </p>
+
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            className="rounded-md border-2  border-red-400 py-1.5 font-medium uppercase text-red-500 sm:py-2"
+            onClick={() => setShowModal(false)}
+          >
+            Cancel
+          </button>
+          <button className="rounded-md border-2  bg-[#0062ad] py-1.5 uppercase text-white hover:bg-[#0d6cb5] disabled:opacity-60 sm:py-2">
+            Submit
+          </button>
+        </div>
+      </Modal> */}
     </ScreenContainer>
   );
 };
