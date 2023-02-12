@@ -20,6 +20,7 @@ import OneBataanLogo from "../assets/1bataan.png";
 import SeekPhorLogo from "../assets/seekphor.png";
 import HermosaLogo from "../assets/hermosa.png";
 import BataanSealLogo from "../assets/bataan-seal.png";
+import BagacLogo from "../assets/bagac-logo.png";
 
 import Alternative1 from "../assets/landing-page/alternative-1.jpg";
 import Alternative2 from "../assets/landing-page/alternative-2.jpg";
@@ -114,9 +115,9 @@ const Home: NextPage = () => {
             className="col-span-2 mx-auto md:col-span-1"
           />
           <Image
-            src={HermosaLogo}
+            src={BagacLogo}
             width={65}
-            alt="Hermosa Logo"
+            alt="Bagac Logo"
             className="col-span-2 mx-auto md:col-span-1"
           />
         </ScreenContainer>
