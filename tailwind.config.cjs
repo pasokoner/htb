@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 /*eslint-disable @typescript-eslint/no-var-requires*/
-const defaultTheme = require("tailwindcss/defaultTheme");
+import defaultTheme from "tailwindcss/defaultTheme";
 
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
