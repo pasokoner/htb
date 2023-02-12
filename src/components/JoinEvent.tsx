@@ -119,7 +119,7 @@ const JoinEvent = ({
             onClick={() => showControl()}
             className="col-span-1 rounded-md border-2 border-solid bg-red-500 py-1.5 text-white disabled:opacity-60"
           >
-            Cancel
+            CANCEL
           </button>
           <button
             type="submit"
@@ -168,7 +168,7 @@ const JoinEvent = ({
             onClick={() => showControl()}
             className="col-span-1 rounded-md border-2 border-solid bg-red-500 py-1.5 text-white disabled:opacity-60"
           >
-            Cancel
+            CANCEL
           </button>
           <button
             type="submit"
