@@ -1,17 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 
 /*eslint-disable @typescript-eslint/no-var-requires*/
-import defaultTheme from "tailwindcss/defaultTheme";
+// const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Poppins", ...defaultTheme.fontFamily.sans],
-        roboto: ["Roboto", ...defaultTheme.fontFamily.sans],
-        bebas: ["Bebas Neue", ...defaultTheme.fontFamily.sans],
-        inter: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Poppins"],
+        roboto: ["Roboto"],
+        bebas: ["Bebas Neue"],
+        inter: ["Inter"],
       },
       colors: {
         "primary-hover": "#0d6cb5",
