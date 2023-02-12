@@ -279,10 +279,8 @@ import type { GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  console.log(session);
-
   if (session) {
-    if (!session.user?.profile) {
+    if (!session.user?.profileId) {
       return {
         redirect: {
           destination: "/profile/setup",
