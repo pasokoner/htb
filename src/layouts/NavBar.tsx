@@ -44,12 +44,14 @@ const NavBar: React.FC = () => {
           </h1>
         </Link>
 
-        <Link
-          href={"/events"}
-          className="text-sm text-primary underline hover:text-primary-hover sm:ml-auto sm:mr-4"
-        >
-          BROWSE EVENTS
-        </Link>
+        {(profileData || !sessionData) && (
+          <Link
+            href={"/events"}
+            className="text-sm text-primary underline hover:text-primary-hover sm:ml-auto sm:mr-4"
+          >
+            BROWSE EVENTS
+          </Link>
+        )}
 
         {!sessionData && (
           <button
