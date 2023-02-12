@@ -37,7 +37,7 @@ export default function Modal(props: Props) {
           <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
             {/*header*/}
             {title && (
-              <div className="flex items-start justify-between rounded-t border-b border-solid border-slate-200 px-4 py-3">
+              <div className="flex items-center justify-between rounded-t border-b border-solid border-slate-200 px-4 py-3">
                 <h3 className="text-xl font-semibold">{title}</h3>
                 <button
                   className="float-right ml-auto border-0 bg-transparent p-1 text-xl font-semibold leading-none text-black outline-none focus:outline-none md:text-3xl"
