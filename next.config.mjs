@@ -20,5 +20,12 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: [
+      "unsplash.com",
+      "images.unsplash.com",
+      "lh3.googleusercontent.com",
+    ],
+  },
 };
 export default config;

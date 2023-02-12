@@ -4,7 +4,8 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import EmailProvider from "next-auth/providers/email";
+// import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "../env.mjs";
 import { prisma } from "./db";
@@ -22,13 +23,15 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      role?: UserRole;
+      role: UserRole;
+      profileId?: string;
     } & DefaultSession["user"];
   }
 
   interface User {
     // ...other properties
-    role?: UserRole;
+    role: UserRole;
+    profileId?: string;
   }
 }
 
@@ -39,21 +42,29 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  **/
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   callbacks: {
     session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
         session.user.role = user.role;
+        session.user.profileId = user.profileId;
       }
       return session;
     },
   },
-  adapter: PrismaAdapter(prisma),
+
   providers: [
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    // GoogleProvider({
+    //   clientId: env.GOOGLE_CLIENT_ID,
+    //   clientSecret: env.GOOGLE_CLIENT_SECRET,
+    // }),
+    EmailProvider({
+      type: "email",
+      server: env.EMAIL_SERVER,
+      from: env.EMAIL_FROM,
     }),
+
     /**
      * ...add more providers here
      *
