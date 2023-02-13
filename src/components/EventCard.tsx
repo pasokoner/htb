@@ -20,6 +20,7 @@ type Props = {
   closeRegistration?: boolean;
   ended?: boolean;
   ongoing?: boolean;
+  registrationNumber?: number;
 };
 
 const EventCard = ({
@@ -46,15 +47,13 @@ const EventCard = ({
 
   const [showJoin, setShowJoin] = useState(false);
 
-  console.log(eventProfileData);
-
   if (isLoading && profileId) {
     return <></>;
   }
 
   return (
     <div className="rounded-md border-2 border-slate-200">
-      <div className="relative h-28">
+      <div className="relative h-40">
         <div className="absolute bottom-2 left-2 z-10 rounded-md border-2 border-gray-400 bg-gray-200 p-1 text-xs font-semibold text-slate-600 opacity-90">
           {!closeRegistration && (
             <div className="flex items-center gap-1 text-xs">
@@ -163,6 +162,7 @@ const EventCard = ({
           void refetch();
           setShowJoin(false);
         }}
+        registrationNumber={eventProfileData?.registrationNumber}
       />
     </div>
   );

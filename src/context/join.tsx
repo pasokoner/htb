@@ -45,18 +45,6 @@ const JoinToggler: React.FC = () => {
       onClose={() => toggleJoin()}
     >
       <div className="max-w-[500px]">
-        {/* <div className="mb-2 grid grid-cols-6 gap-4">
-          <Image
-            src={HTBLogo}
-            width={150}
-            className="col-span-2"
-            alt="hataw takbo bataan logo"
-          />
-          <div className="col-span-4 bg-gray-200">
-            𝗛𝗔𝗡𝗗𝗔 𝗞𝗔 𝗡𝗔 𝗕𝗔𝗡𝗚 𝗧𝗨𝗠𝗔𝗞𝗕𝗢 𝗔𝗧 𝗠𝗔𝗞𝗜𝗛𝗔𝗧𝗔𝗪 𝗡𝗚𝗔𝗬𝗢𝗡𝗚 𝟮𝟬𝟮𝟯?
-          </div>
-        </div> */}
-
         <Image
           src={HTBLogo}
           width={150}
@@ -71,7 +59,7 @@ const JoinToggler: React.FC = () => {
         <button
           className="col-span-1 flex w-full items-center justify-center gap-2 rounded-md bg-primary py-3 font-semibold text-white shadow-md shadow-primary-hover transition-all hover:border-2 hover:border-primary hover:bg-white hover:text-primary"
           onClick={() => {
-            void signIn();
+            void signIn("google");
           }}
         >
           Click here to join

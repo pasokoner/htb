@@ -57,7 +57,7 @@ const NavBar: React.FC = () => {
           <button
             className="rounded-md border-2 border-primary py-1.5 px-2.5 text-center text-xs font-semibold text-primary shadow-md transition-all hover:bg-primary hover:text-white active:bg-primary-hover md:px-4 md:py-2"
             onClick={() => {
-              void signIn();
+              void signIn("google");
             }}
           >
             LOGIN
@@ -78,8 +78,7 @@ const NavBar: React.FC = () => {
         {sessionData && profileData && (
           <div className="text-rpimary inline-flex rounded-md border border-primary bg-white transition-all">
             <a
-              href="#"
-              className="rounded-l-md px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
+              className="cursor-pointer rounded-l-md px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
               onClick={() => setDropdown((prevState) => !prevState)}
             >
               Hi, {profileData.firstName.split(" ")[0]}

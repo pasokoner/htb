@@ -16,6 +16,7 @@ type Props = {
   showControl: () => void;
   onSuccess?: () => void;
   onError?: () => void;
+  registrationNumber?: number;
 };
 
 const JoinEvent = ({
@@ -27,6 +28,7 @@ const JoinEvent = ({
   onError,
   show,
   showControl,
+  registrationNumber,
 }: Props) => {
   const { mutate: join, isLoading: isJoining } =
     api.participant.join.useMutation({
@@ -41,6 +43,9 @@ const JoinEvent = ({
         if (onSuccess) onSuccess();
       },
     });
+
+  const [showAgreement, setShowAgreement] = useState(false);
+  const [acceptAgreement, setAcceptAgreement] = useState(false);
 
   const { register, handleSubmit } = useForm<{
     shirtSize: ShirtSize;
@@ -161,6 +166,14 @@ const JoinEvent = ({
           </select>
         </div>
 
+        <button
+          className="block w-full cursor-pointer rounded-md border-2 border-primary py-2 text-sm  text-primary hover:text-primary-hover"
+          type="button"
+          onClick={() => setShowAgreement(true)}
+        >
+          CLICK HERE TO ACCEPT RACE AGREEMENT
+        </button>
+
         <div className="grid grid-cols-2">
           <button
             type="button"
@@ -172,9 +185,10 @@ const JoinEvent = ({
           </button>
           <button
             type="submit"
+            disabled={!acceptAgreement}
             className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
           >
-            {isJoining ? <LoadingSpinner /> : "SAVE"}
+            {isJoining ? <LoadingSpinner /> : "JOIN"}
           </button>
         </div>
       </form>
@@ -182,13 +196,81 @@ const JoinEvent = ({
   }
 
   return (
-    <Modal
-      show={show}
-      title={distance && shirtSize ? "EDIT EVENT DETAILS" : "JOIN EVENT"}
-      onClose={() => showControl()}
-    >
-      {content}
-    </Modal>
+    <>
+      <Modal
+        show={show}
+        title={
+          distance && shirtSize
+            ? `EDIT DETAILS - ${registrationNumber as number}`
+            : "JOIN EVENT"
+        }
+        onClose={() => showControl()}
+      >
+        {content}
+      </Modal>
+
+      {!registrationNumber && showAgreement && (
+        <Modal
+          title="LIABILITY WAIVER AND RACE AGREEMENT"
+          show={showAgreement}
+          onClose={() => {
+            setShowAgreement(false);
+          }}
+        >
+          <div className="flex flex-col gap-4 p-4 text-sm ">
+            <p>
+              <span className="ml-10"></span>I attest that I am physically and
+              mentally fit to participate in the Hataw Takbo, Bataan and have
+              full knowledge of and assume all the risks associated with my
+              decision to voluntarily participate in the said event.
+            </p>
+            <p>
+              <span className="ml-10"></span>I also understand and accept that
+              during the event, the medical assistance available to me is
+              limited to first aid treatment. I am aware and agree that medical
+              expenses for injuries or medical treatment incurred at the event
+              are my sole responsibility as a participant.
+            </p>
+            <p>
+              <span className="ml-10"></span>I give my permission for the free
+              use of my names, photos and voice in any broadcast, telecast,
+              digital, print material or any other material in any medium for
+              this event.
+            </p>
+            <p>
+              <span className="ml-10"></span>In consideration of being permitted
+              to participate, I do hereby waive and release forever, any and all
+              rights to claims and damages I may have against the race
+              organizers, sponsors, volunteers, race officials, and all parties
+              involved with this event, arising from any and all liability for
+              injury, death or damages or any other claims, demands, losses or
+              damages incurred by me in connection with my participation in this
+              event.
+            </p>
+            <p>
+              <span className="ml-10"></span>I agree to abide by any decision of
+              the race official relative to any aspect of my participation in
+              this event. I attest that I have read the rules of the race,
+              understood it and agree to abide by them.
+            </p>
+            <p>
+              Participants Signature: _____________________ (parents must sign
+              if participant is below 18 years old)
+            </p>
+
+            <button
+              onClick={() => {
+                setAcceptAgreement(true);
+                setShowAgreement(false);
+              }}
+              className="col-span-2 rounded-md border-2 bg-[#0062ad] p-2 text-white hover:bg-[#0d6cb5]"
+            >
+              Accept Race Agreement
+            </button>
+          </div>
+        </Modal>
+      )}
+    </>
   );
 };
 
