@@ -51,7 +51,7 @@ const Home: NextPage = () => {
                 <p>Municipality of Bagac, Bataan</p>
               </div>
               <p className="mb-4 text-sm">
-                *Free event t-shirt for first 3,000 registered participant
+                *Free event t-shirt for first 2,000 registered participant
               </p>
               <div className="grid grid-cols-2 gap-6">
                 {sessionData && (
@@ -191,12 +191,13 @@ const Home: NextPage = () => {
                 AGE REQUIREMENTS:
               </h3>
               <ul className="ml-8 flex list-disc flex-col gap-2 text-sm">
-                <li>
-                  For 5k participants, must be 13 years old and above. Kids
-                  above 12 years old and above will be allowed to run provided
-                  he/she is accompanied by a registered parent or gurdian.
-                </li>
+                <li>For 5k participants, must be 13 years old and above.</li>
                 <li>For 10k participants, must be 16 years old and above.</li>
+                <li>
+                  Kids above 12 years old and above will be allowed to run
+                  provided he/she is accompanied by a registered parent or
+                  gurdian.
+                </li>
                 <li>
                   Participants below the age of 18, must seek their
                   parent/guardian consent and fill up the entry form where the
@@ -216,7 +217,7 @@ const Home: NextPage = () => {
                 </li>
                 <li>
                   Race bib numbers must be worn at all times during the race.
-                  BIB nubmers must be pinned in front of your running shirt.{" "}
+                  BIB numbers must be pinned in front of your running shirt.{" "}
                   <span className="font-semibold">NO BIB, NO RACE</span>
                 </li>
               </ul>
@@ -233,8 +234,8 @@ const Home: NextPage = () => {
             </h2>
             <p>
               <span className="ml-10"></span>I attest that I am physically and
-              mentally fit to participate in the Hataw Takbo, Bataan Hermosa and
-              have full knowledge of and assume all the risks associated with my
+              mentally fit to participate in the Hataw Takbo, Bataan and have
+              full knowledge of and assume all the risks associated with my
               decision to voluntarily participate in the said event.
             </p>
             <p>

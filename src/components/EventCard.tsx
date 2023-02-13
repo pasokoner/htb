@@ -84,7 +84,7 @@ const EventCard = ({
         </div>
 
         <Image
-          src={`/event-image/${name.toLocaleLowerCase()}.jpg`}
+          src={`/event-image/${name.toLocaleLowerCase()}.webp`}
           alt=""
           fill
           className="object-fill"
