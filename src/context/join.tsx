@@ -2,7 +2,7 @@ import React, { useState, createContext } from "react";
 import Modal from "../components/Modal";
 import { signIn } from "next-auth/react";
 
-import HTBLogo from "../assets/hataw-takbo-bataan.png";
+import HTBLogo from "../assets/hataw-takbo-bataan.webp";
 import Image from "next/image";
 
 interface ContextProps {
@@ -47,8 +47,8 @@ const JoinToggler: React.FC = () => {
       <div className="max-w-[500px]">
         <Image
           src={HTBLogo}
-          width={150}
-          className="mx-auto mb-2"
+          width={100}
+          className="mx-auto mb-2 h-28"
           alt="hataw takbo bataan logo"
         />
 

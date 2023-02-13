@@ -15,7 +15,7 @@ import { FiUserCheck, FiDownload } from "react-icons/fi";
 import { AiOutlineNotification } from "react-icons/ai";
 import { RiGuideLine } from "react-icons/ri";
 
-import HTBLogo from "../assets/hataw-takbo-bataan.png";
+import HTBLogo from "../assets/hataw-takbo-bataan.webp";
 import OneBataanLogo from "../assets/1bataan.png";
 import SeekPhorLogo from "../assets/seekphor.png";
 import HermosaLogo from "../assets/hermosa.png";
@@ -90,6 +90,7 @@ const Home: NextPage = () => {
           <Image
             src={HTBLogo}
             alt="Hataw Takbo Bataan Logo"
+            width={600}
             className="col-span-6 mx-auto max-w-[15rem] animate-run sm:col-span-3 sm:max-w-full"
           />
         </ScreenContainer>
