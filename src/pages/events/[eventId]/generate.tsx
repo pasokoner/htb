@@ -13,7 +13,7 @@ import QrMaker from "../../../components/QrMaker";
 
 import html2canvas from "html2canvas";
 
-import HTBLogo from "../../../assets/hataw-takbo-bataan.png";
+import HTBLogo from "../../../assets/hataw-takbo-bataan.webp";
 import OneBataanLogo from "../../../assets/1bataan.png";
 import SeekPhorLogo from "../../../assets/seekphor.png";
 import HermosaLogo from "../../../assets/hermosa.png";
