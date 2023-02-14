@@ -54,6 +54,11 @@ const EventCard = ({
   return (
     <div className="rounded-md border-2 border-slate-200">
       <div className="relative h-40">
+        {eventProfileData?.registrationNumber && (
+          <div className="absolute top-0 right-0 z-10 rounded-md border-2 border-black bg-black px-2 text-lg font-medium text-white">
+            REG NO. - {eventProfileData.registrationNumber}
+          </div>
+        )}
         <div className="absolute bottom-2 left-2 z-10 rounded-md border-2 border-gray-400 bg-gray-200 p-1 text-xs font-semibold text-slate-600 opacity-90">
           {!closeRegistration && (
             <div className="flex items-center gap-1 text-xs">
