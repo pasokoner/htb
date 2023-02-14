@@ -16,7 +16,8 @@ import html2canvas from "html2canvas";
 import HTBLogo from "../../../assets/hataw-takbo-bataan.webp";
 import OneBataanLogo from "../../../assets/1bataan.png";
 import SeekPhorLogo from "../../../assets/seekphor.png";
-import HermosaLogo from "../../../assets/hermosa.png";
+// import HermosaLogo from "../../../assets/hermosa.png";
+import BagacLogo from "../../../assets/bagac-logo.png";
 import BataanSealLogo from "../../../assets/bataan-seal.png";
 
 const Generate: NextPage = () => {
@@ -129,14 +130,14 @@ const Generate: NextPage = () => {
             <Image src={SeekPhorLogo} alt="Seek Phor" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
-            <Image src={HermosaLogo} alt="Hermosa Logo" className="" />
+            <Image src={BagacLogo} alt="Hermosa Logo" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
           </div>
 
           <div className="absolute left-[100px] mt-[45px] flex h-[40px] w-3/12 gap-2 opacity-10">
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
-            <Image src={HermosaLogo} alt="Hermosa Logo" className="" />
+            <Image src={BagacLogo} alt="Hermosa Logo" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
             <Image src={BataanSealLogo} alt="Bataan Seal" className="" />
@@ -149,19 +150,14 @@ const Generate: NextPage = () => {
             <Image src={SeekPhorLogo} alt="Seek Phor" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
-            <Image src={HermosaLogo} alt="Hermosa Logo" className="" />
+            <Image src={BagacLogo} alt="Hermosa Logo" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
           </div>
 
           <div className="col-span-1 flex flex-col items-center justify-center">
             <div className="z-10 flex w-11/12 scale-y-125 flex-col items-center justify-center rounded-md bg-white p-2">
-              <QrMaker
-                value={`${bibCanvas?.distance.toString() ?? ""}-${
-                  bibCanvas?.id ?? ""
-                }`}
-                size={4}
-              />
+              <QrMaker value={bibCanvas?.id ?? ""} size={4} />
             </div>
           </div>
           <div className="col-span-3 grid grid-cols-6 items-center justify-center ">
@@ -190,7 +186,7 @@ const Generate: NextPage = () => {
               className="z-10 col-span-1"
             />
             <Image
-              src={HermosaLogo}
+              src={BagacLogo}
               alt="Hermosa Logo"
               width={150}
               className="z-10 col-span-1"

@@ -208,7 +208,7 @@ const Camera: NextPage = () => {
         console.log("SHESH?");
         cameraCheck({
           timeFinished: new Date(data.timeFinished),
-          participantId: data.id,
+          participantId: data.participantId,
         });
       }
     }
