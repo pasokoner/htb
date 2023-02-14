@@ -26,7 +26,7 @@ import Alternative1 from "../assets/landing-page/alternative-1.jpg";
 import Alternative2 from "../assets/landing-page/alternative-2.jpg";
 import Alternative3 from "../assets/landing-page/alternative-3.jpg";
 
-import RouteImg from "../assets/landing-page/hermosa-route.jpg";
+import RouteImg from "../assets/landing-page/bagac-route.jpg";
 import StretchImg from "../assets/landing-page/stretch.jpg";
 import NoticeImg from "../assets/landing-page/notice.jpg";
 import WaiverImg from "../assets/landing-page/waiver.png";
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
               <h1 className="mb-2 text-3xl font-semibold sm:text-5xl">BAGAC</h1>
               <div className="mb-4 text-lg font-medium">
                 <p>Event Date: February 25, 2023</p>
-                <p>Municipality of Bagac, Bataan</p>
+                <p>Bagac Plaza Court</p>
               </div>
               <p className="mb-4 text-sm">
                 *Free event t-shirt for first 2,000 registered participant
@@ -130,16 +130,16 @@ const Home: NextPage = () => {
             RACE GUIDE <RiGuideLine className="text-yellow-400" />
           </h2>
           <div className="grid grid-cols-2 gap-4">
-            {/* <Image
+            <Image
               width={800}
               src={RouteImg}
-              alt="Hermosa Route Image"
+              alt="Bagac Route Image"
               className="col-span-2 md:col-span-1"
-            /> */}
+            />
             <Image
               width={800}
               src={StretchImg}
-              alt="Hermosa Route Image"
+              alt="Stretch Image"
               className="col-span-2 md:col-span-1"
             />
           </div>
