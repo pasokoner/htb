@@ -47,7 +47,7 @@ const NavBar: React.FC = () => {
         {(profileData || !sessionData) && (
           <Link
             href={"/events"}
-            className="inline-flex rounded-md border border-primary bg-white py-2 px-2.5 text-primary transition-all sm:ml-auto sm:mr-4"
+            className="inline-flex rounded-md border border-primary bg-white py-1.5 px-2.5 text-primary transition-all sm:ml-auto sm:mr-4"
           >
             EVENTS
           </Link>
