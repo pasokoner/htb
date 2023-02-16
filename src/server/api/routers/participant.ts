@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
-import { ShirtSize } from "@prisma/client";
+import { ShirtSize, EventParticipant, Profile, User } from "@prisma/client";
+import { FaLessThanEqual } from "react-icons/fa";
+import { getFinishedTime } from "../../../utils/convertion";
 
 export const participantRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -24,15 +26,19 @@ export const participantRouter = createTRPCRouter({
     .input(
       z.object({
         eventId: z.string(),
+        distance: z.number().optional(),
         registrationNumber: z.number().optional(),
-        take: z.number().optional(),
+        limit: z.number(),
+        cursor: z.string().nullish(),
+        skip: z.number().optional(),
       })
     )
     .query(async ({ input, ctx }) => {
-      return await ctx.prisma.eventParticipant.findMany({
+      const registrants = await ctx.prisma.eventParticipant.findMany({
         where: {
           eventId: input.eventId,
           registrationNumber: input.registrationNumber,
+          distance: input.distance,
         },
         orderBy: {
           registrationNumber: "asc",
@@ -40,8 +46,21 @@ export const participantRouter = createTRPCRouter({
         include: {
           profile: true,
         },
-        take: input.take,
+        take: input.limit + 1,
+
+        cursor: input.cursor ? { id: input.cursor } : undefined,
       });
+
+      let nextCursor: typeof input.cursor | undefined = undefined;
+      if (registrants.length > input.limit) {
+        const nextItem = registrants.pop(); // return the last item from the array
+        nextCursor = nextItem?.id;
+      }
+
+      return {
+        registrants,
+        nextCursor,
+      };
     }),
   getFinishers: publicProcedure
     .input(
@@ -60,6 +79,34 @@ export const participantRouter = createTRPCRouter({
           NOT: {
             timeFinished: null,
           },
+        },
+        include: {
+          profile: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+        orderBy: {
+          timeFinished: "asc",
+        },
+      });
+    }),
+  getList: publicProcedure
+    .input(
+      z.object({
+        eventId: z.string(),
+        distance: z.number().optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { eventId, distance } = input;
+
+      return await ctx.prisma.eventParticipant.findMany({
+        where: {
+          eventId: eventId,
+          distance: distance,
         },
         include: {
           profile: {
@@ -168,7 +215,7 @@ export const participantRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
-      return await ctx.prisma.eventParticipant.findFirst({
+      const eventParticipant = await ctx.prisma.eventParticipant.findFirst({
         where: {
           profileId: input.profileId,
           eventId: input.eventId,
@@ -176,8 +223,29 @@ export const participantRouter = createTRPCRouter({
 
         include: {
           profile: true,
+          event: true,
         },
       });
+
+      let time = "";
+
+      if (eventParticipant) {
+        const { timeFinished, distance, event } = eventParticipant;
+
+        if (timeFinished) {
+          if (distance === 3 && event.timeStart3km) {
+            time = getFinishedTime(timeFinished, event.timeStart3km);
+          } else if (distance === 5 && event.timeStart5km) {
+            time = getFinishedTime(timeFinished, event.timeStart5km);
+          } else if (distance === 10 && event.timeStart10km) {
+            time = getFinishedTime(timeFinished, event.timeStart10km);
+          }
+
+          return { ...eventParticipant, time };
+        }
+      }
+
+      return { ...eventParticipant, time };
     }),
   join: protectedProcedure
     .input(
@@ -227,5 +295,80 @@ export const participantRouter = createTRPCRouter({
           distance: input.distance,
         },
       });
+    }),
+  certScan: publicProcedure
+    .input(
+      z.object({
+        eventParticipantId: z.string().optional(),
+        eventParticipantInfo: z
+          .object({
+            registrationNumber: z.number(),
+            firstName: z.string(),
+            lastName: z.string(),
+          })
+          .optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { eventParticipantId, eventParticipantInfo } = input;
+
+      let data:
+        | (EventParticipant & {
+            profile: Profile & {
+              user: User | null;
+            };
+          })
+        | null = null;
+
+      if (eventParticipantId) {
+        data = await ctx.prisma.eventParticipant.findFirst({
+          where: {
+            id: eventParticipantId,
+          },
+          include: {
+            profile: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        });
+
+        if (!data) throw new Error("Invalid qr code");
+      } else if (eventParticipantInfo) {
+        const { firstName, lastName, registrationNumber } =
+          eventParticipantInfo;
+
+        data = await ctx.prisma.eventParticipant.findFirst({
+          where: {
+            registrationNumber,
+            profile: {
+              firstName: firstName,
+              lastName: lastName,
+            },
+          },
+          include: {
+            profile: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        });
+
+        if (!data) throw new Error("Invalid credentials");
+      }
+
+      if (!data?.timeFinished) {
+        throw new Error(
+          "You can't claim certificate without finishing the race"
+        );
+      }
+
+      if (!data.profile.user) {
+        return { unclaimed: true, profileId: data.profile.id };
+      }
+
+      return { unclaimed: false, profileId: data.profile.id };
     }),
 });

@@ -149,6 +149,7 @@ model User {
     role          UserRole  @default(USER)
     profile       Profile?  @relation(fields: [profileId], references: [id])
     profileId     String?   @unique
+    unclaimed     String?   @unique
 }
 
 model VerificationToken {

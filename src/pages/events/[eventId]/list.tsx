@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { api } from "../../../utils/api";
 
@@ -12,27 +12,41 @@ import LoadingSpinner from "../../../components/LoadingSpinner";
 import ScreenContainer from "../../../layouts/ScreenContainer";
 
 import { RiLoader5Fill } from "react-icons/ri";
+import ExportList from "../../../components/ExportList";
+
+import { useInView } from "react-intersection-observer";
 
 const List: NextPage = () => {
   const { query } = useRouter();
   const { eventId } = query;
 
+  const { ref, inView } = useInView();
+
   const [regNumber, setRegNumber] = useState<number | null>(null);
-  const [maxItems, setMaxItems] = useState<number>(50);
+  const [distance, setDistance] = useState<number | undefined>(undefined);
   const [cameraPassword, setCameraPassword] = useLocalStorage(
     "camera-password",
     ""
   );
 
   const {
-    data: participantData,
+    data: registrants,
     isLoading,
     refetch,
-  } = api.participant.getByQuery.useQuery({
-    eventId: eventId as string,
-    registrationNumber: regNumber ? regNumber : undefined,
-    take: maxItems,
-  });
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = api.participant.getByQuery.useInfiniteQuery(
+    {
+      eventId: eventId as string,
+      registrationNumber: regNumber ? regNumber : undefined,
+      limit: 20,
+      distance: distance,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
 
   const { data: eventData, isLoading: eventLoading } =
     api.event.details.useQuery(
@@ -44,6 +58,13 @@ const List: NextPage = () => {
         refetchInterval: 15000,
       }
     );
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      fetchNextPage();
+    }
+  }, [inView]);
 
   if (eventLoading) {
     return <LoadingSpinner />;
@@ -79,23 +100,39 @@ const List: NextPage = () => {
   return (
     <ScreenContainer className="py-6">
       <div>
-        <div className="mb-2">
-          <label htmlFor="maxItems" className="mr-4">
-            No. of items
-          </label>
-          <select
-            id="maxItems"
-            value={maxItems}
-            onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-              setMaxItems(parseInt(e.currentTarget.value));
-            }}
-          >
-            {[10, 50, 100, 10000].map((maxItem) => (
-              <option key={maxItem} value={maxItem}>
-                {maxItem}
-              </option>
-            ))}
-          </select>
+        <div className="flex items-center justify-between">
+          <div className="mb-2">
+            <label htmlFor="maxItems" className="mr-4">
+              Distance
+            </label>
+            <select
+              id="maxItems"
+              value={distance}
+              onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+                console.log(e.currentTarget.value);
+
+                if (e.currentTarget.value === "") {
+                  setDistance(undefined);
+                  return;
+                }
+
+                setDistance(parseInt(e.currentTarget.value));
+              }}
+            >
+              <option value={""}>ALL</option>
+              {[3, 5, 10].map((distance) => (
+                <option key={distance} value={distance}>
+                  {distance}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <ExportList
+            distance={distance}
+            eventId={eventId as string}
+            className="rounded-sm bg-primary py-1.5 px-2 font-medium text-white hover:bg-primary-hover md:py-2"
+          />
         </div>
         <input
           type="number"
@@ -114,36 +151,43 @@ const List: NextPage = () => {
         {isLoading && (
           <RiLoader5Fill className="mx-auto mt-6 animate-spin text-center text-5xl" />
         )}
-        {participantData &&
-          participantData
-            // .filter(({ registrationNumber }) => registrationNumber !== regNumber)
-            .map(({ profile, registrationNumber, id, distance }) => (
-              <div
-                key={id}
-                className="grid grid-cols-6 border-2 border-r-2 border-solid text-xs md:text-lg"
-              >
-                <div className="col-span-1 flex items-center justify-between border-r-2 p-2 md:col-span-1">
-                  <p>
-                    {registrationNumber} - {distance} KM
-                  </p>
-                  <div></div>
+        {registrants?.pages &&
+          registrants.pages.map(({ registrants }) => {
+            return registrants.map(
+              ({ profile, registrationNumber, id, distance }) => (
+                <div
+                  key={id}
+                  className="grid grid-cols-6 border-2 border-r-2 border-solid text-xs md:text-lg"
+                >
+                  <div className="col-span-1 flex items-center justify-between border-r-2 p-2 md:col-span-1">
+                    <p>
+                      {registrationNumber} - {distance} KM
+                    </p>
+                    <div></div>
+                  </div>
+                  <div className="col-span-5 flex items-center justify-between p-2 md:col-span-5">
+                    <p>
+                      {profile.firstName} {profile.lastName}
+                    </p>
+                    <EditName
+                      participantId={id}
+                      registrationNumber={registrationNumber}
+                      firstName={profile.firstName}
+                      lastName={profile.lastName}
+                      refetchFn={() => {
+                        void refetch();
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="col-span-5 flex items-center justify-between p-2 md:col-span-5">
-                  <p>
-                    {profile.firstName} {profile.lastName}
-                  </p>
-                  <EditName
-                    participantId={id}
-                    registrationNumber={registrationNumber}
-                    firstName={profile.firstName}
-                    lastName={profile.lastName}
-                    refetchFn={() => {
-                      void refetch();
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
+              )
+            );
+          })}
+
+        <span style={{ visibility: "hidden" }} ref={ref}>
+          intersection observer marker
+        </span>
+        {isFetchingNextPage ? <LoadingSpinner /> : null}
       </div>
     </ScreenContainer>
   );

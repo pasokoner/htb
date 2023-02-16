@@ -94,4 +94,52 @@ export const scanRouter = createTRPCRouter({
         });
       });
     }),
+  findById: publicProcedure
+    .input(
+      z.object({
+        eventParticipantId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.eventParticipant.findFirst({
+        where: {
+          id: input.eventParticipantId,
+        },
+
+        include: {
+          profile: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      });
+    }),
+  findByDetails: publicProcedure
+    .input(
+      z.object({
+        firstName: z.string(),
+        lastName: z.string(),
+        registrationNumber: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.eventParticipant.findFirst({
+        where: {
+          registrationNumber: input.registrationNumber,
+          profile: {
+            firstName: input.firstName,
+            lastName: input.lastName,
+          },
+        },
+
+        include: {
+          profile: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      });
+    }),
 });

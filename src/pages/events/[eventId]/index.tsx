@@ -62,20 +62,20 @@ const SingeEvent: NextPage = () => {
       </h2> */}
       <div className="mb-2 grid grid-cols-6 text-xs sm:text-sm">
         <Link
-          href={`/event/${eventData.id}/camera`}
+          href={`/events/${eventData.id}/camera`}
           className="col-span-2 flex items-center justify-center border-2 border-dotted border-slate-400 py-2 font-semibold"
         >
           CAMERA
         </Link>
 
         <Link
-          href={`/event/${eventData.id}/config`}
+          href={`/events/${eventData.id}/config`}
           className="col-span-2 flex items-center justify-center  border-2 border-dotted border-slate-400 py-2 font-semibold"
         >
           CONFIGURATION
         </Link>
         <Link
-          href={`/event/${eventData.id}/list`}
+          href={`/events/${eventData.id}/list`}
           className="col-span-2 flex items-center justify-center border-2  border-dotted border-slate-400 py-2 font-semibold"
         >
           PARTICIPANTS LIST
@@ -239,7 +239,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  if (session.user?.role !== "ADMIN") {
+  if (session.user?.role !== "SUPERADMIN") {
     return {
       redirect: {
         destination: "/",

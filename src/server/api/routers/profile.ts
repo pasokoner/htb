@@ -23,6 +23,28 @@ export const profileRouter = createTRPCRouter({
       const { session, prisma } = ctx;
 
       try {
+        if (session.user.unclaimed) {
+          return await prisma.$transaction(async (tx) => {
+            await tx.user.update({
+              where: {
+                id: session.user.id,
+              },
+              data: {
+                unclaimed: null,
+              },
+            });
+
+            return await tx.profile.update({
+              where: {
+                id: session.user.profileId,
+              },
+              data: {
+                ...input,
+              },
+            });
+          });
+        }
+
         return await prisma.$transaction(async (tx) => {
           const profile = await tx.profile.create({
             data: {
@@ -48,6 +70,7 @@ export const profileRouter = createTRPCRouter({
         throw e;
       }
     }),
+
   firstTime: protectedProcedure
     .input(
       z.object({
@@ -67,6 +90,40 @@ export const profileRouter = createTRPCRouter({
       where: {
         id: ctx.session.user.profileId as string,
       },
+      include: {
+        user: true,
+        eventParticitpant: true,
+      },
     });
   }),
+  getById: publicProcedure
+    .input(z.object({ profileId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.profile.findFirst({
+        where: {
+          id: input.profileId,
+        },
+        include: {
+          user: true,
+          eventParticitpant: true,
+        },
+      });
+    }),
+  connectWithUnclaimed: protectedProcedure
+    .input(
+      z.object({
+        profileId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          unclaimed: input.profileId,
+          profileId: input.profileId,
+        },
+      });
+    }),
 });

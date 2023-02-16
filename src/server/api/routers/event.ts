@@ -254,4 +254,23 @@ export const eventRouter = createTRPCRouter({
         },
       ];
     }),
+  config: protectedProcedure
+    .input(
+      z.object({
+        cameraPassword: z.string(),
+        eventId: z.string(),
+      })
+    )
+    .mutation(({ input, ctx }) => {
+      const { cameraPassword, eventId } = input;
+
+      return ctx.prisma.event.update({
+        where: {
+          id: eventId,
+        },
+        data: {
+          cameraPassword: cameraPassword,
+        },
+      });
+    }),
 });

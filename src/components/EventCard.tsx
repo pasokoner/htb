@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { ImLocation } from "react-icons/im";
 
@@ -9,6 +9,11 @@ import dayjs from "dayjs";
 import { api } from "../utils/api";
 import { GoPrimitiveDot } from "react-icons/go";
 import JoinEvent from "./JoinEvent";
+import Modal from "./Modal";
+import Certificate from "./Certificate";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import CertificateForm from "./CertificateForm";
 
 type Props = {
   name: string;
@@ -34,18 +39,28 @@ const EventCard = ({
   ended,
   ongoing,
 }: Props) => {
+  const [resultId, setResultId] = useState(profileId);
+
   const {
     data: eventProfileData,
     refetch,
     isLoading,
   } = api.participant.getEventProfile.useQuery({
-    profileId,
+    profileId: resultId,
     eventId,
   });
 
   const { toggleJoin } = useContext(JoinContext);
 
+  const { data: sessionData } = useSession();
+
+  const [showCertificate, setShowCertificate] = useState(false);
+
   const [showJoin, setShowJoin] = useState(false);
+
+  const setProfileId = (profileId: string) => {
+    setResultId(profileId);
+  };
 
   if (isLoading && profileId) {
     return <></>;
@@ -115,11 +130,53 @@ const EventCard = ({
         <p className="text-xs">Registered participants - {numOfParticipants}</p>
       </div>
 
-      {eventProfileData?.timeFinished && (
-        <a className="mb-2 block cursor-pointer text-center text-sm text-primary underline hover:text-primary-hover">
+      {sessionData?.user.role === "SUPERADMIN" && (
+        <Link
+          href={`/events/${eventId}`}
+          className="mb-2 block cursor-pointer text-center text-sm text-primary underline hover:text-primary-hover"
+        >
+          SHOW CONTROL
+        </Link>
+      )}
+
+      {name !== "Hermosa" && closeRegistration && ongoing && (
+        <a
+          className="mb-2 block cursor-pointer text-center text-sm text-primary underline hover:text-primary-hover"
+          onClick={() => setShowCertificate(true)}
+        >
           CLAIM CERTIFICATE
         </a>
       )}
+
+      {!sessionData && !eventProfileData && showCertificate && (
+        <Modal
+          show={showCertificate}
+          title="GET YOUR CERTIFICATE"
+          onClose={() => setShowCertificate(false)}
+        >
+          <CertificateForm setProfileId={setProfileId} />
+        </Modal>
+      )}
+
+      {sessionData &&
+        eventProfileData?.profile &&
+        eventProfileData?.time &&
+        showCertificate && (
+          <Modal
+            show={showCertificate}
+            title="CONGRATULATION FINISHING THE RACE"
+            onClose={() => setShowCertificate(false)}
+          >
+            <div className="relative flex flex-col items-center justify-center">
+              <Certificate
+                eventName={name}
+                participantName={`${eventProfileData?.profile.firstName} ${eventProfileData?.profile.lastName}`}
+                distance={5}
+                time={eventProfileData.time}
+              />
+            </div>
+          </Modal>
+        )}
 
       {!profileId && !closeRegistration && (
         <button

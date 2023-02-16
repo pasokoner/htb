@@ -32,13 +32,13 @@ export default function Modal(props: Props) {
   const modalContent = show ? (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden py-10 outline-none focus:outline-none">
-        <div className="relative mx-auto my-auto w-11/12 max-w-3xl md:w-auto">
+        <div className="relative mx-auto my-auto w-11/12 max-w-5xl md:w-auto">
           {/*content*/}
           <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
             {/*header*/}
             {title && (
               <div className="flex items-center justify-between rounded-t border-b border-solid border-slate-200 px-4 py-3">
-                <h3 className="text-xl font-semibold">{title}</h3>
+                <h3 className="text:lg font-semibold sm:text-xl">{title}</h3>
                 <button
                   className="float-right ml-auto border-0 bg-transparent p-1 text-xl font-semibold leading-none text-black outline-none focus:outline-none md:text-3xl"
                   onClick={onClose}

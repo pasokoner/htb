@@ -1,6 +1,6 @@
 import { type NextPage, type GetServerSideProps } from "next";
 
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 import { useState } from "react";
 
@@ -26,6 +26,8 @@ const Setup: NextPage = () => {
 
   const router = useRouter();
 
+  const { data: sessionData } = useSession();
+
   const { mutate, isLoading } = api.profile.setup.useMutation({
     onSuccess: () => {
       router.reload();
@@ -37,6 +39,10 @@ const Setup: NextPage = () => {
         setError("Seems like there is an error - Sorry for inconvenience");
       }
     },
+  });
+
+  const { data: profileData } = api.profile.getProfile.useQuery(undefined, {
+    enabled: !!sessionData?.user.unclaimed,
   });
 
   const { register, handleSubmit } = useForm<Profile>();
@@ -58,10 +64,6 @@ const Setup: NextPage = () => {
 
   const [outsideBataan, setOutsideBataan] = useState(false);
 
-  // const [showModal, setShowModal] = useState(false);
-
-  // const [agree, setAgree] = useState(false);
-
   const handleToggleAddress = () => {
     setOutsideBataan((prevState) => !prevState);
   };
@@ -72,8 +74,9 @@ const Setup: NextPage = () => {
     /* eslint-disable @typescript-eslint/no-misused-promises */
     <ScreenContainer className="py-6">
       <h2 className="mx-auto mb-4 w-full max-w-4xl text-2xl font-semibold uppercase">
-        Account Setup
+        Account Setup {profileData && "FOR CERTIFICATE"}
       </h2>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto grid max-w-3xl grid-cols-2 gap-4 rounded-md border-2 bg-gray-100 p-4 text-sm"
@@ -251,34 +254,6 @@ const Setup: NextPage = () => {
           }}
         />
       )}
-
-      {/* <Modal
-        show={showModal}
-        title="Saving Changes"
-        onClose={() => {
-          setShowModal(false);
-        }}
-      >
-        <p className="mb-4 text-sm sm:text-[1rem]">
-          Please be advised that any changes made to your account on our website
-          will be permanent and cannot be undone. It is important to thoroughly
-          review the details of the information you input before confirming
-          them. If you have any questions or concerns, please contact our
-          customer support team.
-        </p>
-
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            className="rounded-md border-2  border-red-400 py-1.5 font-medium uppercase text-red-500 sm:py-2"
-            onClick={() => setShowModal(false)}
-          >
-            Cancel
-          </button>
-          <button className="rounded-md border-2  bg-[#0062ad] py-1.5 uppercase text-white hover:bg-[#0d6cb5] disabled:opacity-60 sm:py-2">
-            Submit
-          </button>
-        </div>
-      </Modal> */}
     </ScreenContainer>
   );
 };
@@ -294,6 +269,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         destination: "/",
         permanent: false,
       },
+    };
+  }
+
+  if (session.user.unclaimed) {
+    return {
+      props: { session },
     };
   }
 

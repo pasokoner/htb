@@ -64,18 +64,19 @@ const NavBar: React.FC = () => {
           </button>
         )}
 
-        {sessionData && !sessionData.user.profileId && (
-          <button
-            className="rounded-md border-2 border-primary py-1.5 px-2.5 text-center text-xs font-semibold text-primary shadow-md md:px-4 md:py-2"
-            onClick={() => {
-              void signOut();
-            }}
-          >
-            Logout
-          </button>
-        )}
+        {sessionData &&
+          (!sessionData.user.profileId || sessionData.user.unclaimed) && (
+            <button
+              className="rounded-md border-2 border-primary py-1.5 px-2.5 text-center text-xs font-semibold text-primary shadow-md md:px-4 md:py-2"
+              onClick={() => {
+                void signOut();
+              }}
+            >
+              Logout
+            </button>
+          )}
 
-        {sessionData && profileData && (
+        {sessionData && profileData && !sessionData.user.unclaimed && (
           <div className="inline-flex rounded-md border border-primary bg-white text-primary transition-all">
             <a
               className="cursor-pointer rounded-l-md px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"

@@ -10,6 +10,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "../env.mjs";
 import { prisma } from "./db";
 import { type UserRole } from "@prisma/client";
+import { signIn } from "next-auth/react/index.js";
 
 /**
  * Module augmentation for `next-auth` types.
@@ -25,6 +26,7 @@ declare module "next-auth" {
       // ...other properties
       role: UserRole;
       profileId?: string;
+      unclaimed?: string;
     } & DefaultSession["user"];
   }
 
@@ -32,6 +34,7 @@ declare module "next-auth" {
     // ...other properties
     role: UserRole;
     profileId?: string;
+    unclaimed?: string;
   }
 }
 
@@ -49,6 +52,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = user.id;
         session.user.role = user.role;
         session.user.profileId = user.profileId;
+        session.user.unclaimed = user.unclaimed;
       }
       return session;
     },
