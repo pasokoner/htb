@@ -34,7 +34,7 @@ const Generate: NextPage = () => {
   );
 
   const bibRef = useRef<HTMLDivElement>(null);
-  const [printStart, setPrintStart] = useState(0);
+  const [printStart, setPrintStart] = useState(716);
   const [bibCanvas, setBibCanvas] = useState<EventParticipant>();
 
   const handleDownloadImage = async (registrationNumber?: number) => {
@@ -124,6 +124,10 @@ const Generate: NextPage = () => {
           bibColor
         }
       >
+        <div className="relative flex h-[5%] w-full items-center justify-between px-3">
+          <div className="h-2 w-2 rounded-md bg-white"></div>
+          <div className="h-2 w-2 rounded-md bg-white"></div>
+        </div>
         <div className="relative row-span-2 grid h-[35%] w-full grid-cols-5">
           <div className="absolute left-[100px] flex h-[40px] w-3/12 gap-2 opacity-10">
             <Image src={BataanSealLogo} alt="Bataan Seal" className="" />
@@ -177,7 +181,7 @@ const Generate: NextPage = () => {
               src={HTBLogo}
               alt="Hataw Takbo Bataan Logo"
               className="z-10 col-span-2 flex flex-col items-center justify-center"
-              width={200}
+              width={180}
             />
             <Image
               src={OneBataanLogo}
@@ -205,24 +209,25 @@ const Generate: NextPage = () => {
           <p className="mt-[-180px] scale-150 scale-y-125">{bibNumber}</p>
         </div>
 
-        <div className="row-span-1 flex h-[20%] border-t-2 border-solid border-black font-inter text-[2.8rem] font-bold tracking-tighter">
+        <div className="row-span-1 flex h-[15%] border-t-2 border-solid border-black font-inter text-[2.8rem] font-bold tracking-tighter">
           <div className="relative flex h-full w-[35%] flex-col items-center justify-center border-r-2 border-solid border-black bg-[#125CF9] pb-2">
-            <p className="mt-[-50px]">HATAW</p>
-            <div className="absolute bottom-2 left-1 ml-2 h-2 w-2 rounded-md bg-white"></div>
+            <p className="mt-[-40px]">HATAW</p>
           </div>
           <div className="relative flex h-full w-[30%] flex-col items-center justify-center border-r-2 border-solid border-black bg-km5 pb-2">
-            <p className="mt-[-45px]">TAKBO</p>
-            <div className="h-2 w-2 rounded-md"></div>
+            <p className="mt-[-40px]">TAKBO</p>
           </div>
           <div className="relative flex h-full w-[35%] flex-col items-center justify-center border-solid border-black bg-km3 pb-2">
-            <p className="mr-2 mt-[-50px]">BATAAN</p>
-            <div className="absolute bottom-2 right-1 ml-auto mr-2 h-2 w-2 rounded-md bg-white"></div>
+            <p className="mr-2 mt-[-40px]">BATAAN</p>
           </div>
         </div>
       </div>
     </ScreenContainer>
   );
 };
+
+{
+  /* <div className="absolute bottom-2 right-1 ml-auto mr-2 h-2 w-2 rounded-md bg-white"></div> */
+}
 
 export default Generate;
 
@@ -242,7 +247,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  if (session.user?.role !== "ADMIN") {
+  if (session.user?.role !== "SUPERADMIN") {
     return {
       redirect: {
         destination: "/",

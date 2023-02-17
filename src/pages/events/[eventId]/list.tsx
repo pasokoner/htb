@@ -15,12 +15,15 @@ import { RiLoader5Fill } from "react-icons/ri";
 import ExportList from "../../../components/ExportList";
 
 import { useInView } from "react-intersection-observer";
+import { useSession } from "next-auth/react";
 
 const List: NextPage = () => {
   const { query } = useRouter();
   const { eventId } = query;
 
   const { ref, inView } = useInView();
+
+  const { data: sessionData } = useSession();
 
   const [regNumber, setRegNumber] = useState<number | null>(null);
   const [distance, setDistance] = useState<number | undefined>(undefined);
@@ -99,7 +102,7 @@ const List: NextPage = () => {
 
   return (
     <ScreenContainer className="py-6">
-      <div>
+      <div className="mx-auto max-w-4xl">
         <div className="flex items-center justify-between">
           <div className="mb-2">
             <label htmlFor="maxItems" className="mr-4">
@@ -142,11 +145,11 @@ const List: NextPage = () => {
           }}
           className="mb-2 w-full"
         />
-        <div className="grid grid-cols-6 bg-primary text-lg font-semibold text-white md:text-2xl">
-          <p className="col-span-1 border-r-2 border-white p-2 md:col-span-1">
+        <div className="grid grid-cols-6 bg-primary text-lg font-semibold text-white">
+          <p className="col-span-2 border-r-2 border-white p-2 md:col-span-1">
             NO. & KM
           </p>
-          <p className="col-span-5 p-2 md:col-span-5">NAME</p>
+          <p className="col-span-4 p-2 md:col-span-5">NAME</p>
         </div>
         {isLoading && (
           <RiLoader5Fill className="mx-auto mt-6 animate-spin text-center text-5xl" />
@@ -157,27 +160,28 @@ const List: NextPage = () => {
               ({ profile, registrationNumber, id, distance }) => (
                 <div
                   key={id}
-                  className="grid grid-cols-6 border-2 border-r-2 border-solid text-xs md:text-lg"
+                  className="grid grid-cols-6 border-2 border-r-2 border-solid text-xs md:text-sm"
                 >
-                  <div className="col-span-1 flex items-center justify-between border-r-2 p-2 md:col-span-1">
+                  <div className="col-span-2 flex items-center justify-between border-r-2 p-2 md:col-span-1">
                     <p>
                       {registrationNumber} - {distance} KM
                     </p>
-                    <div></div>
                   </div>
-                  <div className="col-span-5 flex items-center justify-between p-2 md:col-span-5">
+                  <div className="col-span-4 flex items-center justify-between p-2 md:col-span-5">
                     <p>
                       {profile.firstName} {profile.lastName}
                     </p>
-                    <EditName
-                      participantId={id}
-                      registrationNumber={registrationNumber}
-                      firstName={profile.firstName}
-                      lastName={profile.lastName}
-                      refetchFn={() => {
-                        void refetch();
-                      }}
-                    />
+                    {sessionData?.user.role === "SUPERADMIN" && (
+                      <EditName
+                        participantId={id}
+                        registrationNumber={registrationNumber}
+                        firstName={profile.firstName}
+                        lastName={profile.lastName}
+                        refetchFn={() => {
+                          void refetch();
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               )

@@ -116,7 +116,8 @@ const NavBar: React.FC = () => {
                     >
                       My Profile
                     </Link>
-                    {sessionData.user.role === "ADMIN" && (
+                    {(sessionData.user.role === "ADMIN" ||
+                      sessionData.user.role === "SUPERADMIN") && (
                       <Link
                         href="/admin"
                         className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
