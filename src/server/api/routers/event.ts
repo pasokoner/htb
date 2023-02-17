@@ -226,10 +226,13 @@ export const eventRouter = createTRPCRouter({
       });
 
       const eventsF = events
-        .filter(
-          ({ name }) =>
-            name !== "test" && ctx.session.user.role === "SUPERADMIN"
-        )
+        .filter(({ name }) => {
+          if (ctx.session?.user.role === "SUPERADMIN") {
+            return true;
+          }
+
+          return name !== "test";
+        })
         .map(({ name, eventParticipant }) => {
           const three = eventParticipant.filter(({ timeFinished, distance }) =>
             input.finishers ? !!timeFinished && distance === 3 : distance === 3
