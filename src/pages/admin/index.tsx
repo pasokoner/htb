@@ -120,16 +120,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  if (session.user.role !== "ADMIN") {
+  if (session.user.role === "ADMIN" || session.user.role === "SUPERADMIN") {
     return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
+      props: { session },
     };
   }
 
   return {
-    props: { session },
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
   };
 };

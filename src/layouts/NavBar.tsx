@@ -30,7 +30,11 @@ const NavBar: React.FC = () => {
         as="nav"
         className="flex items-center justify-between border-b-2 py-4"
       >
-        <Link href={"/"} className="flex items-center  gap-2">
+        <Link
+          href={"/"}
+          className="flex items-center gap-2"
+          onClick={() => setDropdown(false)}
+        >
           <Image
             src={IconHatawBataan}
             height={50}
@@ -48,6 +52,7 @@ const NavBar: React.FC = () => {
           <Link
             href={"/events"}
             className="inline-flex rounded-md border border-primary bg-white py-1.5 px-2.5 text-primary transition-all sm:ml-auto sm:mr-4"
+            onClick={() => setDropdown(false)}
           >
             EVENTS
           </Link>
@@ -113,6 +118,7 @@ const NavBar: React.FC = () => {
                     <Link
                       href="/profile/my-profile"
                       className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      onClick={() => setDropdown(false)}
                     >
                       My Profile
                     </Link>
@@ -121,6 +127,7 @@ const NavBar: React.FC = () => {
                       <Link
                         href="/admin"
                         className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        onClick={() => setDropdown(false)}
                       >
                         Admin
                       </Link>
