@@ -30,7 +30,6 @@ export const scanRouter = createTRPCRouter({
         }
 
         if (!data?.enableCamera) {
-          console.log("true");
           throw new Error("Race hasn't started yet");
         }
 

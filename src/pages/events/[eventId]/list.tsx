@@ -112,8 +112,6 @@ const List: NextPage = () => {
               id="maxItems"
               value={distance}
               onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-                console.log(e.currentTarget.value);
-
                 if (e.currentTarget.value === "") {
                   setDistance(undefined);
                   return;

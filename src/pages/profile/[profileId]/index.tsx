@@ -45,7 +45,6 @@ const ProfileId: NextPage = () => {
           profileId: profileData.id,
         });
         // } else if (sessionData?.user.unclaimed && profileData?.user) {
-        //   console.log("sheshsh");
         //   router.push("/");
       } else if (!profileData?.user && !sessionData) {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises

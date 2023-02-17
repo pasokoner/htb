@@ -205,7 +205,6 @@ const Camera: NextPage = () => {
       } else {
         const data = savedRecords[0] as ScanRecord;
         setPurgeId(data.id);
-        console.log("SHESH?");
         cameraCheck({
           timeFinished: new Date(data.timeFinished),
           participantId: data.participantId,
