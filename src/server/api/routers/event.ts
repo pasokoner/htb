@@ -204,7 +204,7 @@ export const eventRouter = createTRPCRouter({
         });
       }
     }),
-  breakdown: publicProcedure
+  breakdown: protectedProcedure
     .input(
       z.object({
         finishers: z.boolean(),
@@ -225,24 +225,31 @@ export const eventRouter = createTRPCRouter({
         },
       });
 
-      const eventsF = events.map(({ name, eventParticipant }) => {
-        const three = eventParticipant.filter(({ timeFinished, distance }) =>
-          input.finishers ? !!timeFinished && distance === 3 : distance === 3
-        );
-        const five = eventParticipant.filter(({ timeFinished, distance }) =>
-          input.finishers ? !!timeFinished && distance === 5 : distance === 5
-        );
-        const ten = eventParticipant.filter(({ timeFinished, distance }) =>
-          input.finishers ? !!timeFinished && distance === 10 : distance === 10
-        );
+      const eventsF = events
+        .filter(
+          ({ name }) =>
+            name !== "test" && ctx.session.user.role === "SUPERADMIN"
+        )
+        .map(({ name, eventParticipant }) => {
+          const three = eventParticipant.filter(({ timeFinished, distance }) =>
+            input.finishers ? !!timeFinished && distance === 3 : distance === 3
+          );
+          const five = eventParticipant.filter(({ timeFinished, distance }) =>
+            input.finishers ? !!timeFinished && distance === 5 : distance === 5
+          );
+          const ten = eventParticipant.filter(({ timeFinished, distance }) =>
+            input.finishers
+              ? !!timeFinished && distance === 10
+              : distance === 10
+          );
 
-        return {
-          name,
-          three: three.length,
-          five: five.length,
-          ten: ten.length,
-        };
-      });
+          return {
+            name,
+            three: three.length,
+            five: five.length,
+            ten: ten.length,
+          };
+        });
 
       return [
         ...eventsF,

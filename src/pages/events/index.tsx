@@ -64,41 +64,46 @@ const Edit: NextPage = () => {
         ALL EVENTS
       </h3>
       <div className="mx-auto grid max-w-4xl grid-cols-6 gap-4">
-        {eventsData?.map(
-          ({
-            id,
-            name,
-            address,
-            _count,
-            scheduleTime,
-            closeRegistration,
-            timeStart10km,
-            timeStart3km,
-            timeStart5km,
-            raceFinished10km,
-            raceFinished3km,
-            raceFinished5km,
-          }) => (
-            <div
-              className="col-span-6 w-full sm:col-span-3 lg:col-span-2"
-              key={id}
-            >
-              <EventCard
-                eventId={id}
-                profileId={sessionData?.user.profileId}
-                name={name}
-                address={address}
-                numOfParticipants={_count.eventParticipant}
-                scheduleTime={scheduleTime}
-                closeRegistration={closeRegistration}
-                ongoing={!!(timeStart10km || timeStart5km || timeStart3km)}
-                ended={
-                  !!(raceFinished10km && raceFinished3km && raceFinished5km)
-                }
-              />
-            </div>
+        {eventsData
+          ?.filter(
+            ({ name }) =>
+              name !== "test" && sessionData?.user.role === "SUPERADMIN"
           )
-        )}
+          .map(
+            ({
+              id,
+              name,
+              address,
+              _count,
+              scheduleTime,
+              closeRegistration,
+              timeStart10km,
+              timeStart3km,
+              timeStart5km,
+              raceFinished10km,
+              raceFinished3km,
+              raceFinished5km,
+            }) => (
+              <div
+                className="col-span-6 w-full sm:col-span-3 lg:col-span-2"
+                key={id}
+              >
+                <EventCard
+                  eventId={id}
+                  profileId={sessionData?.user.profileId}
+                  name={name}
+                  address={address}
+                  numOfParticipants={_count.eventParticipant}
+                  scheduleTime={scheduleTime}
+                  closeRegistration={closeRegistration}
+                  ongoing={!!(timeStart10km || timeStart5km || timeStart3km)}
+                  ended={
+                    !!(raceFinished10km && raceFinished3km && raceFinished5km)
+                  }
+                />
+              </div>
+            )
+          )}
 
         <div className="col-span-6 w-full sm:col-span-3 lg:col-span-2">
           <EventCard
