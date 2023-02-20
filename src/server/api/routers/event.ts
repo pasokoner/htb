@@ -288,10 +288,18 @@ export const eventRouter = createTRPCRouter({
       z.object({
         eventId: z.string(),
         price: z.string(),
+        filter: z.object({
+          finisher: z.boolean(),
+          km10: z.boolean(),
+          km5: z.boolean(),
+          km3: z.boolean(),
+          all: z.boolean(),
+        }),
       })
     )
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const { prisma } = ctx;
+      const { filter } = input;
 
       const eventWinner = (await prisma.eventWinner.findMany({})).map(
         ({ registrationNumber }) => registrationNumber
@@ -301,8 +309,20 @@ export const eventRouter = createTRPCRouter({
         where: {
           eventId: input.eventId,
           registrationNumber: {
-            notIn: eventWinner,
+            notIn: filter.all ? [] : eventWinner,
           },
+          OR: [
+            { distance: filter.km3 ? 3 : undefined },
+            { distance: filter.km5 ? 5 : undefined },
+            { distance: filter.km10 ? 10 : undefined },
+          ],
+          NOT: {
+            timeFinished: filter.finisher ? null : undefined,
+          },
+        },
+
+        include: {
+          profile: true,
         },
       });
 
@@ -314,6 +334,9 @@ export const eventRouter = createTRPCRouter({
           registrationNumber: eventParticipants[randomIndex]
             ?.registrationNumber as number,
           price: input.price,
+          name: `${
+            eventParticipants[randomIndex]?.profile.firstName as string
+          } ${eventParticipants[randomIndex]?.profile.lastName as string}`,
         },
       });
 
@@ -328,6 +351,18 @@ export const eventRouter = createTRPCRouter({
         },
         orderBy: {
           createdAt: "desc",
+        },
+      });
+    }),
+  claim: publicProcedure
+    .input(z.object({ eventWinnerId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.eventWinner.update({
+        where: {
+          id: input.eventWinnerId,
+        },
+        data: {
+          isClaimed: true,
         },
       });
     }),

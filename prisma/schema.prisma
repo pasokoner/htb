@@ -38,6 +38,7 @@ model Event {
 model EventWinner {
     id                 Int      @id @default(autoincrement())
     registrationNumber Int
+    name               String
     price              String
     isClaimed          Boolean  @default(false)
     eventId            String?
