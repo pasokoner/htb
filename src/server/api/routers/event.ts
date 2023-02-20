@@ -101,7 +101,7 @@ export const eventRouter = createTRPCRouter({
               id: eventId,
             },
             data: {
-              timeStart10km: timeStart,
+              timeStart5km: timeStart,
             },
           });
         });
