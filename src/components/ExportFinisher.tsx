@@ -46,6 +46,7 @@ const ExportFinisher = ({ distance, eventId, eventData, className }: Props) => {
             registrationNumber,
             firstName: profile.firstName,
             lastName: profile.lastName,
+            gender: profile.gender,
             time: time,
           };
         }

@@ -53,7 +53,7 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
           <div className="absolute inset-60 top-[215px] left-[350px] right-[65px] z-10 flex justify-center text-2xl ">
             <p className="text-[24px] font-semibold">{participantName}</p>
           </div>
-          <div className="absolute top-[263px] right-[260px] left-[460px] flex justify-center">
+          <div className="absolute top-[263px] right-[220px] left-[490px] flex justify-center">
             <p className="text-[19px] font-bold">{distance} KM</p>
           </div>
           <div className="absolute top-[348px] right-[100px] left-[560px]">
@@ -118,7 +118,7 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
           <div className="absolute inset-60 top-[128px] left-[220px] right-[44px] z-10 flex justify-center text-xl">
             <p className="text-[18px] font-semibold ">{participantName}</p>
           </div>
-          <div className="absolute top-[162px] right-[167px] left-[288px] flex justify-center">
+          <div className="absolute top-[162px] right-[140px] left-[310px] flex justify-center">
             <p className="text-[13px] font-bold">{distance} KM</p>
           </div>
           <div className="absolute top-[218px] right-[50px] left-[350px]">
@@ -150,7 +150,7 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
           <div className="absolute inset-60 top-[72px] left-[130px] right-[27px] z-10 flex justify-center text-xl">
             <p className="text-[10px] font-semibold ">{participantName}</p>
           </div>
-          <div className="absolute top-[97px] right-[100px] left-[175px] flex justify-center">
+          <div className="absolute top-[97px] right-[85px] left-[188px] flex justify-center">
             <p className="text-[7px] font-bold">{distance} KM</p>
           </div>
           <div className="absolute top-[131px] right-[60px] left-[211px]">

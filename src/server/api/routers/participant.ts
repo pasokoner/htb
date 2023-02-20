@@ -85,6 +85,7 @@ export const participantRouter = createTRPCRouter({
             select: {
               firstName: true,
               lastName: true,
+              gender: true,
             },
           },
         },
