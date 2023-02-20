@@ -187,6 +187,21 @@ const EventCard = ({
           </Modal>
         )}
 
+      {/* <Modal
+        show={true}
+        title="CONGRATULATION FINISHING THE RACE"
+        onClose={() => setShowCertificate(false)}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <Certificate
+            eventName={name}
+            participantName="sdadasd"
+            distance={10}
+            time="sdsd"
+          />
+        </div>
+      </Modal> */}
+
       {!profileId && !closeRegistration && (
         <button
           className="w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"

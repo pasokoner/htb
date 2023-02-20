@@ -101,7 +101,7 @@ const SingeEvent: NextPage = () => {
 
           {eventData.timeStart3km && (
             <Link
-              href={`/event/${eventData.id}/finisher`}
+              href={`/events/${eventData.id}/finisher`}
               className="flex w-full justify-center"
             >
               <div className="w-8/12 border-2 border-dashed border-white text-xl font-semibold">
@@ -146,7 +146,7 @@ const SingeEvent: NextPage = () => {
 
           {eventData.timeStart5km && (
             <Link
-              href={`/event/${eventData.id}/finisher`}
+              href={`/events/${eventData.id}/finisher`}
               className="flex w-full justify-center"
             >
               <div className="w-8/12 border-2 border-dashed border-white text-xl font-semibold">
@@ -190,7 +190,7 @@ const SingeEvent: NextPage = () => {
 
           {eventData.timeStart10km && (
             <Link
-              href={`/event/${eventData.id}/finisher`}
+              href={`/events/${eventData.id}/finisher`}
               className="flex w-full justify-center"
             >
               <div className="w-8/12 border-2 border-dashed border-white text-xl font-semibold">
