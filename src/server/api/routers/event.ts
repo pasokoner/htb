@@ -101,7 +101,7 @@ export const eventRouter = createTRPCRouter({
               id: eventId,
             },
             data: {
-              timeStart3km: timeStart,
+              timeStart10km: timeStart,
             },
           });
         });
@@ -122,7 +122,7 @@ export const eventRouter = createTRPCRouter({
               id: eventId,
             },
             data: {
-              timeStart3km: timeStart,
+              timeStart10km: timeStart,
             },
           });
         });
@@ -280,6 +280,54 @@ export const eventRouter = createTRPCRouter({
         },
         data: {
           cameraPassword: cameraPassword,
+        },
+      });
+    }),
+  raffleDraw: publicProcedure
+    .input(
+      z.object({
+        eventId: z.string(),
+        price: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+
+      const eventWinner = (await prisma.eventWinner.findMany({})).map(
+        ({ registrationNumber }) => registrationNumber
+      );
+
+      const eventParticipants = await prisma.eventParticipant.findMany({
+        where: {
+          eventId: input.eventId,
+          registrationNumber: {
+            notIn: eventWinner,
+          },
+        },
+      });
+
+      const randomIndex = Math.floor(Math.random() * eventParticipants.length);
+
+      const result = await prisma.eventWinner.create({
+        data: {
+          eventId: eventParticipants[randomIndex]?.eventId,
+          registrationNumber: eventParticipants[randomIndex]
+            ?.registrationNumber as number,
+          price: input.price,
+        },
+      });
+
+      return result;
+    }),
+  getEventWinner: publicProcedure
+    .input(z.object({ eventId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.eventWinner.findMany({
+        where: {
+          eventId: input.eventId,
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       });
     }),
