@@ -45,14 +45,14 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
           ref={certL}
           className="relative hidden h-[571px] w-[800px] lg:block"
         >
-          <Image
+          <img
             src={`/certificates/${eventName.toLocaleLowerCase()}.jpg`}
             alt="certificate"
-            width={800}
-            height={571}
+            // width={800}
+            // height={571}
             onContextMenu={(e) => e.preventDefault()}
             className="absolute inset-40 left-0 top-0"
-          ></Image>
+          ></img>
           <div className="absolute inset-60 top-[215px] left-[350px] right-[65px] z-10 flex justify-center text-2xl ">
             <p className="text-[24px] font-semibold">{participantName}</p>
           </div>
@@ -79,14 +79,14 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
           ref={certMd}
           className="relative hidden h-[428px] w-[600px] md:block lg:hidden"
         >
-          <Image
+          <img
             src={`/certificates/${eventName.toLocaleLowerCase()}.jpg`}
             onContextMenu={(e) => e.preventDefault()}
-            height={428}
-            width={600}
+            // height={428}
+            // width={600}
             alt="hermosa certificate"
             className="absolute inset-40 left-0 top-0"
-          ></Image>
+          ></img>
           <div className="absolute inset-60 top-[158px] left-[270px] right-[50px] z-10 flex justify-center text-xl">
             <p className="text-[20px] font-semibold ">{participantName}</p>
           </div>
@@ -114,14 +114,14 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
           ref={certSm}
           className="relative hidden h-[356px] w-[500px] sm:block md:hidden lg:hidden"
         >
-          <Image
+          <img
             src={`/certificates/${eventName.toLocaleLowerCase()}.jpg`}
             onContextMenu={(e) => e.preventDefault()}
-            width={500}
-            height={356}
+            // width={500}
+            // height={356}
             alt="hermosa certificate"
             className="absolute inset-40 left-0 top-0"
-          ></Image>
+          ></img>
           <div className="absolute inset-60 top-[128px] left-[220px] right-[44px] z-10 flex justify-center text-xl">
             <p className="text-[18px] font-semibold ">{participantName}</p>
           </div>
@@ -148,14 +148,14 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
           ref={certXs}
           className="relative h-[214px]  w-[300px]  sm:hidden md:hidden lg:hidden"
         >
-          <Image
+          <img
             src={`/certificates/${eventName.toLocaleLowerCase()}.jpg`}
             onContextMenu={(e) => e.preventDefault()}
             alt="hermosa certificate"
-            height={214}
-            width={300}
+            // height={214}
+            // width={300}
             className="absolute inset-40 left-0 top-0"
-          ></Image>
+          ></img>
           <div className="absolute inset-60 top-[72px] left-[130px] right-[27px] z-10 flex justify-center text-xl">
             <p className="text-[10px] font-semibold ">{participantName}</p>
           </div>
