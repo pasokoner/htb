@@ -113,11 +113,14 @@ export const participantRouter = createTRPCRouter({
             select: {
               firstName: true,
               lastName: true,
+              address: true,
+              municipality: true,
+              contactNumber: true,
             },
           },
         },
         orderBy: {
-          timeFinished: "asc",
+          registrationNumber: "asc",
         },
       });
     }),
@@ -242,10 +245,12 @@ export const participantRouter = createTRPCRouter({
           }
 
           return { ...eventParticipant, time };
+        } else {
+          return { ...eventParticipant, time };
         }
       }
 
-      return { ...eventParticipant, time };
+      return null;
     }),
   join: protectedProcedure
     .input(

@@ -139,7 +139,16 @@ const EventCard = ({
         </Link>
       )}
 
-      {name !== "Hermosa" && closeRegistration && ongoing && (
+      {!sessionData && name !== "Hermosa" && closeRegistration && ongoing && (
+        <a
+          className="mb-2 block cursor-pointer text-center text-sm text-primary underline hover:text-primary-hover"
+          onClick={() => setShowCertificate(true)}
+        >
+          CLAIM CERTIFICATE
+        </a>
+      )}
+
+      {sessionData && eventProfileData?.time && name !== "Hermosa" && (
         <a
           className="mb-2 block cursor-pointer text-center text-sm text-primary underline hover:text-primary-hover"
           onClick={() => setShowCertificate(true)}

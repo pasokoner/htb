@@ -120,7 +120,7 @@ const JoinEvent = ({
         </div>
 
         <div className="text-sm text-gray-500">
-          editing is disabled as the generation of bib has started
+          Editing is disabled at the moment
         </div>
 
         <div className="grid grid-cols-2">

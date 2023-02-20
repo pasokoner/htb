@@ -31,7 +31,18 @@ model Event {
     image             String?
     address           String
     eventParticipant  EventParticipant[]
+    eventWinner       EventWinner[]
     createdAt         DateTime           @default(now())
+}
+
+model EventWinner {
+    id                 Int      @id @default(autoincrement())
+    registrationNumber Int
+    price              String
+    isClaimed          Boolean  @default(false)
+    eventId            String?
+    Event              Event?   @relation(fields: [eventId], references: [id])
+    createdAt          DateTime @default(now())
 }
 
 enum Gender {

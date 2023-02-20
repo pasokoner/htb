@@ -29,6 +29,9 @@ const ExportList = ({ distance, eventId, className }: Props) => {
             firstName: profile.firstName,
             lastName: profile.lastName,
             distance,
+            address: profile.address,
+            municipality: profile.municipality,
+            contactNumber: profile.contactNumber,
           };
         }
       );
