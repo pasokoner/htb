@@ -2,6 +2,8 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
+import { EventParticipant, Profile } from "@prisma/client";
+
 export const eventRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const { prisma } = ctx;
@@ -288,6 +290,7 @@ export const eventRouter = createTRPCRouter({
       z.object({
         eventId: z.string(),
         price: z.string(),
+        numOfWinners: z.number(),
         filter: z.object({
           finisher: z.boolean(),
           km10: z.boolean(),
@@ -326,21 +329,43 @@ export const eventRouter = createTRPCRouter({
         },
       });
 
-      const randomIndex = Math.floor(Math.random() * eventParticipants.length);
+      // const randomIndex = Math.floor(Math.random() * eventParticipants.length);
 
-      const result = await prisma.eventWinner.create({
-        data: {
-          eventId: eventParticipants[randomIndex]?.eventId,
-          registrationNumber: eventParticipants[randomIndex]
+      for (let i = eventParticipants.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = eventParticipants[i];
+        eventParticipants[i] = eventParticipants[j] as EventParticipant & {
+          profile: Profile;
+        };
+        eventParticipants[j] = temp as EventParticipant & {
+          profile: Profile;
+        };
+      }
+
+      const resultArray: {
+        eventId: string | undefined;
+        registrationNumber: number;
+        price: string;
+        name: string;
+      }[] = [];
+
+      for (let i = 0; i < input.numOfWinners; i++) {
+        resultArray.push({
+          eventId: eventParticipants[i]?.eventId,
+          registrationNumber: eventParticipants[i]
             ?.registrationNumber as number,
           price: input.price,
-          name: `${
-            eventParticipants[randomIndex]?.profile.firstName as string
-          } ${eventParticipants[randomIndex]?.profile.lastName as string}`,
-        },
+          name: `${eventParticipants[i]?.profile.firstName as string} ${
+            eventParticipants[i]?.profile.lastName as string
+          }`,
+        });
+      }
+
+      const result = await prisma.eventWinner.createMany({
+        data: resultArray,
       });
 
-      return result;
+      return resultArray;
     }),
   getEventWinner: publicProcedure
     .input(z.object({ eventId: z.string() }))

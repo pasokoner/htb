@@ -135,6 +135,16 @@ const NavBar: React.FC = () => {
 
                     {sessionData.user.role === "SUPERADMIN" && (
                       <Link
+                        href="/events/cle1fx5dw0000f1e0j1wch7mf/raffle"
+                        className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        onClick={() => setDropdown(false)}
+                      >
+                        Raffle
+                      </Link>
+                    )}
+
+                    {sessionData.user.role === "SUPERADMIN" && (
+                      <Link
                         href="/events/cle1fx5dw0000f1e0j1wch7mf"
                         className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         onClick={() => setDropdown(false)}

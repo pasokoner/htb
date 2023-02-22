@@ -34,7 +34,7 @@ const Generate: NextPage = () => {
   );
 
   const bibRef = useRef<HTMLDivElement>(null);
-  const [printStart, setPrintStart] = useState(0);
+  const [printStart, setPrintStart] = useState(800);
   const [bibCanvas, setBibCanvas] = useState<EventParticipant>();
 
   const handleDownloadImage = async (registrationNumber?: number) => {
