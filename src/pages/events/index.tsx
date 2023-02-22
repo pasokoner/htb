@@ -65,12 +65,12 @@ const Edit: NextPage = () => {
       </h3>
       <div className="mx-auto grid max-w-4xl grid-cols-6 gap-4">
         {eventsData
-          ?.filter(({ name }) => {
+          ?.filter(({ id }) => {
             if (sessionData?.user.role === "SUPERADMIN") {
               return true;
             }
 
-            return name !== "test";
+            return id !== "cle7ygs6x0000f1fgbhvoa9ap";
           })
           .map(
             ({
