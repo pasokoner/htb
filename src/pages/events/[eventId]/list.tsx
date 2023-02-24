@@ -25,7 +25,10 @@ const List: NextPage = () => {
 
   const { data: sessionData } = useSession();
 
-  const [regNumber, setRegNumber] = useState<number | null>(null);
+  const [listQuery, setListQuery] = useState<{
+    registrationNumber: number | null;
+    name: string | null;
+  } | null>(null);
   const [distance, setDistance] = useState<number | undefined>(undefined);
   const [cameraPassword, setCameraPassword] = useLocalStorage(
     "camera-password",
@@ -42,7 +45,10 @@ const List: NextPage = () => {
   } = api.participant.getByQuery.useInfiniteQuery(
     {
       eventId: eventId as string,
-      registrationNumber: regNumber ? regNumber : undefined,
+      registrationNumber: listQuery?.registrationNumber
+        ? listQuery?.registrationNumber
+        : undefined,
+      name: listQuery?.name ? listQuery?.name : undefined,
       limit: 20,
       distance: distance,
     },
@@ -136,10 +142,20 @@ const List: NextPage = () => {
           />
         </div>
         <input
-          type="number"
-          placeholder="Search Registration #"
+          placeholder="Search by name or registration #"
           onChange={(e: React.FormEvent<HTMLInputElement>) => {
-            setRegNumber(parseInt(e.currentTarget.value));
+            if (isNaN(parseInt(e.currentTarget.value))) {
+              setListQuery({
+                registrationNumber: null,
+                name: e.currentTarget.value,
+              });
+              return;
+            }
+
+            setListQuery({
+              registrationNumber: parseInt(e.currentTarget.value),
+              name: null,
+            });
           }}
           className="mb-2 w-full"
         />

@@ -28,6 +28,7 @@ export const participantRouter = createTRPCRouter({
         eventId: z.string(),
         distance: z.number().optional(),
         registrationNumber: z.number().optional(),
+        name: z.string().optional(),
         limit: z.number(),
         cursor: z.string().nullish(),
         skip: z.number().optional(),
@@ -39,6 +40,20 @@ export const participantRouter = createTRPCRouter({
           eventId: input.eventId,
           registrationNumber: input.registrationNumber,
           distance: input.distance,
+          profile: {
+            OR: [
+              {
+                firstName: {
+                  contains: input.name ? input.name : "",
+                },
+              },
+              {
+                lastName: {
+                  contains: input.name ? input.name : "",
+                },
+              },
+            ],
+          },
         },
         orderBy: {
           registrationNumber: "asc",
