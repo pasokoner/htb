@@ -33,7 +33,7 @@ export const scanRouter = createTRPCRouter({
           throw new Error("Race hasn't started yet");
         }
 
-        if (!data?.timeFinished) {
+        if (data?.timeFinished) {
           throw new Error("This participant already has a record");
         }
 
