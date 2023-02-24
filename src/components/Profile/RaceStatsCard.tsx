@@ -60,7 +60,7 @@ const RaceStatsCard = ({ profileId, eventId }: Props) => {
                   className="cursor-pointer rounded-md border-[1px] border-solid bg-primary-hover p-0.5 font-medium text-white hover:bg-primary"
                   onClick={() => setShowCertificate(true)}
                 >
-                  CLAIM CERTIFICATE
+                  CERTIFICATE
                 </span>
               </p>
             ) : (
