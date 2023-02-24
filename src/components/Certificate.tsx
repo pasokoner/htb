@@ -156,7 +156,7 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
             // width={300}
             className="absolute inset-40 left-0 top-0"
           ></img>
-          <div className="absolute inset-60 top-[72px] left-[130px] right-[27px] z-10 flex justify-center text-xl">
+          <div className="absolute inset-60 top-[75px] left-[130px] right-[27px] z-10 flex justify-center text-xl">
             <p className="text-[10px] font-semibold ">{participantName}</p>
           </div>
           <div className="absolute top-[97px] right-[100px] left-[173px] flex justify-center">
