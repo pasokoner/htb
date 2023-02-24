@@ -171,7 +171,7 @@ const Certificate = ({ eventName, participantName, distance, time }: Props) => {
           onClick={async () => {
             await handleDownloadImage(certXs);
           }}
-          className="mt-4 flex animate-bounce cursor-pointer items-center justify-center gap-1 rounded-md border-2 py-1 px-4 font-medium hover:bg-slate-200 sm:hidden"
+          className="mt-4 flex w-full animate-bounce cursor-pointer items-center justify-center gap-1 rounded-md border-2 py-1 px-4 font-medium hover:bg-slate-200 sm:hidden"
         >
           DOWNLOAD CERTIFICATE <FiDownload />
         </button>

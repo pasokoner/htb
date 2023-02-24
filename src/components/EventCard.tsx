@@ -173,7 +173,7 @@ const EventCard = ({
         showCertificate && (
           <Modal
             show={showCertificate}
-            title="CONGRATULATION FINISHING THE RACE"
+            title="CONGRATULATION"
             onClose={() => setShowCertificate(false)}
           >
             <div className="relative flex flex-col items-center justify-center">
