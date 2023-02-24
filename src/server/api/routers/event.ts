@@ -297,6 +297,7 @@ export const eventRouter = createTRPCRouter({
           km5: z.boolean(),
           km3: z.boolean(),
           all: z.boolean(),
+          dummy: z.boolean(),
         }),
       })
     )
@@ -321,6 +322,11 @@ export const eventRouter = createTRPCRouter({
           ],
           NOT: {
             timeFinished: filter.finisher ? null : undefined,
+          },
+          profile: {
+            NOT: {
+              firstName: filter.dummy ? undefined : { contains: "BAGAC" },
+            },
           },
         },
 

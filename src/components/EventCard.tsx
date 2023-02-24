@@ -179,28 +179,13 @@ const EventCard = ({
             <div className="relative flex flex-col items-center justify-center">
               <Certificate
                 eventName={name}
-                participantName={`${eventProfileData?.profile.firstName} ${eventProfileData?.profile.lastName}`}
-                distance={5}
+                participantName={`${eventProfileData.profile.firstName} ${eventProfileData.profile.lastName}`}
+                distance={eventProfileData.distance}
                 time={eventProfileData.time}
               />
             </div>
           </Modal>
         )}
-
-      {/* <Modal
-        show={true}
-        title="CONGRATULATION FINISHING THE RACE"
-        onClose={() => setShowCertificate(false)}
-      >
-        <div className="flex flex-col items-center justify-center">
-          <Certificate
-            eventName={name}
-            participantName="sdadasd"
-            distance={10}
-            time="sdsd"
-          />
-        </div>
-      </Modal> */}
 
       {!profileId && !closeRegistration && (
         <button

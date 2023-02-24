@@ -44,7 +44,7 @@ const Raffle: NextPage = () => {
         if (data) {
           setWInner(data);
           setVisible(true);
-          setTime(5000);
+          setTime(8000);
           void refetchWinner();
         }
       },
@@ -74,6 +74,7 @@ const Raffle: NextPage = () => {
     km5: true,
     km10: true,
     all: false,
+    dummy: false,
   });
 
   const [visible, setVisible] = useState(false);
@@ -361,6 +362,20 @@ const Raffle: NextPage = () => {
                     }
                   />
                   10 KM
+                </label>
+              </div>
+              <div className="col-span-1">
+                <label htmlFor="dummy" className="flex items-center gap-2">
+                  <input
+                    id="dummy"
+                    type="checkbox"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setFilter((prevState) => {
+                        return { ...prevState, dummy: event.target.checked };
+                      })
+                    }
+                  />
+                  DUMMY
                 </label>
               </div>
             </div>

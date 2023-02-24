@@ -4,6 +4,9 @@ import { getSession, useSession } from "next-auth/react";
 import ScreenContainer from "../../layouts/ScreenContainer";
 import { api } from "../../utils/api";
 
+import { getFinishedTime } from "../../utils/convertion";
+import RaceStatsCard from "../../components/Profile/RaceStatsCard";
+
 const MyProfile = () => {
   const { data: sessionData } = useSession();
 
@@ -19,29 +22,29 @@ const MyProfile = () => {
   }
 
   return (
-    <ScreenContainer className="pt-6">
+    <ScreenContainer className="py-6">
       <h2 className="mx-auto mb-4 w-full max-w-4xl text-2xl font-semibold uppercase">
         My Profile
       </h2>
       <div className="mx-auto grid max-w-3xl grid-cols-2 gap-4 rounded-md border-2 bg-gray-100 p-4 text-sm">
         <h5 className="text col-span-2 text-lg">PERSONAL INFORMATION</h5>
 
-        <div className="col-span-2 flex flex-col gap-2 sm:col-span-1">
+        <div className="col-span-1 flex flex-col gap-2 ">
           <p className="font-medium underline underline-offset-2">First Name</p>
           <p>{profileData?.firstName}</p>
         </div>
 
-        <div className="col-span-2 flex flex-col gap-2 sm:col-span-1">
+        <div className="col-span-1 flex flex-col gap-2 ">
           <p className="font-medium underline underline-offset-2">Last Name</p>
           <p>{profileData?.lastName}</p>
         </div>
 
-        <div className="col-span-2 flex flex-col gap-2 sm:col-span-1">
+        <div className="col-span-1 flex flex-col gap-2 ">
           <p className="font-medium underline underline-offset-2">Gender</p>
           <p>{profileData?.gender}</p>
         </div>
 
-        <div className="col-span-2 flex flex-col gap-2 sm:col-span-1">
+        <div className="col-span-1 flex flex-col gap-2 ">
           <p className="font-medium underline underline-offset-2">Birthdate</p>
           <p>{profileData?.birthdate?.toLocaleDateString()}</p>
         </div>
@@ -84,6 +87,21 @@ const MyProfile = () => {
           </p>
           <p>{profileData?.emergencyContactNumber}</p>
         </div>
+
+        <div className="col-span-2 border-b-2"></div>
+
+        <h5 className="text col-span-2 text-lg">RACE STATS</h5>
+
+        {profileData?.eventParticitpant &&
+          profileData.eventParticitpant.length > 0 &&
+          profileData?.eventParticitpant.map(({ id, profileId, eventId }) => (
+            <RaceStatsCard key={id} profileId={profileId} eventId={eventId} />
+          ))}
+        {profileData?.eventParticitpant?.length === 0 && (
+          <h6 className="col-span-2 text-center">
+            YOU HAVE NOT JOIN ANY RACE YET
+          </h6>
+        )}
       </div>
     </ScreenContainer>
   );

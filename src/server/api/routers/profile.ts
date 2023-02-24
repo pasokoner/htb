@@ -92,7 +92,11 @@ export const profileRouter = createTRPCRouter({
       },
       include: {
         user: true,
-        eventParticitpant: true,
+        eventParticitpant: {
+          include: {
+            event: true,
+          },
+        },
       },
     });
   }),
