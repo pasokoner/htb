@@ -70,8 +70,8 @@ const Edit: NextPage = () => {
               return true;
             }
 
-            // return id !== "cle7ygs6x0000f1fgbhvoa9ap";
-            return true;
+            return id !== "cle7ygs6x0000f1fgbhvoa9ap";
+            // return true;
           })
           .map(
             ({
