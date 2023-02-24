@@ -101,7 +101,7 @@ const Raffle: NextPage = () => {
 
   return (
     <ScreenContainer id="fireworks-container" className="py-6 pb-20">
-      <div className="grid h-[700px] grid-cols-6 grid-rows-6 border-2 border-solid border-black">
+      <div className="grid h-[750px] grid-cols-6 grid-rows-6 border-2 border-solid border-black">
         <div className="col-span-4 row-span-4 h-[460px] border-b-2 border-solid border-black">
           <div className="relative flex h-[460px] w-[765px] items-center justify-center">
             {!winner && (
