@@ -48,7 +48,7 @@ const NavBar: React.FC = () => {
           </h1>
         </Link>
 
-        {(profileData || !sessionData) && (
+        {(profileData || !sessionData) && !sessionData?.user.unclaimed && (
           <Link
             href={"/events"}
             className="inline-flex rounded-md border border-primary bg-white py-1.5 px-2.5 text-primary transition-all sm:ml-auto sm:mr-4"
@@ -82,7 +82,7 @@ const NavBar: React.FC = () => {
           )}
 
         {sessionData && profileData && !sessionData.user.unclaimed && (
-          <div className="inline-flex rounded-md border border-primary bg-white text-primary transition-all">
+          <div className="z-50 inline-flex rounded-md border border-primary bg-white text-primary transition-all">
             <a
               className="cursor-pointer rounded-l-md px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
               onClick={() => setDropdown((prevState) => !prevState)}

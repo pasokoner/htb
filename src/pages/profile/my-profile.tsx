@@ -121,6 +121,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  if (session?.user.unclaimed) {
+    return {
+      redirect: { destination: "/profile/setup", permanent: false },
+    };
+  }
+
   if (session && !session.user.profileId) {
     return {
       redirect: {

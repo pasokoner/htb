@@ -45,14 +45,20 @@ const Setup: NextPage = () => {
     enabled: !!sessionData?.user.unclaimed,
   });
 
-  const { register, handleSubmit } = useForm<Profile>();
+  const { register, handleSubmit, watch } = useForm<Profile>();
 
   const onSubmit: SubmitHandler<Profile> = (data) => {
     if (data) {
       const { address, firstName, lastName, emergencyContact } = data;
+
       mutate({
         ...data,
-        birthdate: dayjs(data.birthdate).toDate(),
+        birthdate:
+          data.birthdate?.toString() === ""
+            ? undefined
+            : dayjs(data.birthdate).isSame(profileData?.birthdate)
+            ? undefined
+            : dayjs(data.birthdate).toDate(),
         address: address.trim().toUpperCase(),
         municipality: data.municipality ? data.municipality : undefined,
         firstName: firstName.trim().toUpperCase(),
@@ -74,7 +80,7 @@ const Setup: NextPage = () => {
     /* eslint-disable @typescript-eslint/no-misused-promises */
     <ScreenContainer className="py-6">
       <h2 className="mx-auto mb-4 w-full max-w-4xl text-2xl font-semibold uppercase">
-        Account Setup {profileData && "FOR CERTIFICATE"}
+        Account Setup {profileData && "FOR CLAIMING CERTIFICATE"}
       </h2>
 
       <form
@@ -119,8 +125,38 @@ const Setup: NextPage = () => {
             type="date"
             id="birthdate"
             required
+            // defaultValue={
+            //   profileData?.birthdate
+            //     ? new Date(
+            //         dayjs(profileData?.birthdate).toDate().getTime() -
+            //           dayjs(profileData?.birthdate)
+            //             .toDate()
+            //             .getTimezoneOffset() *
+            //             60000
+            //       )
+            //         .toISOString()
+            //         .substr(0, 10)
+            //     : ""
+            // }
             {...register("birthdate")}
           />
+          <p className="text-xs text-gray-600">
+            {watch("birthdate") &&
+              new Date(watch("birthdate") as Date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            {/* {profileData?.birthdate &&
+              !watch("birthdate") &&
+              dayjs(profileData.birthdate)
+                .toDate()
+                .toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })} */}
+          </p>
         </div>
 
         <div className="col-span-2 flex flex-col gap-2 md:col-span-1">

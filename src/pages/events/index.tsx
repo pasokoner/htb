@@ -70,7 +70,8 @@ const Edit: NextPage = () => {
               return true;
             }
 
-            return id !== "cle7ygs6x0000f1fgbhvoa9ap";
+            // return id !== "cle7ygs6x0000f1fgbhvoa9ap";
+            return true;
           })
           .map(
             ({
@@ -130,7 +131,7 @@ export default Edit;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  if (session && !session.user.profileId) {
+  if ((session && !session.user.profileId) || session?.user?.unclaimed) {
     return {
       redirect: {
         destination: "/profile/setup",

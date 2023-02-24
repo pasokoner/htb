@@ -8,7 +8,7 @@ export const profileSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   gender: z.nativeEnum(Gender),
-  birthdate: z.date(),
+  birthdate: z.date().optional(),
   contactNumber: z.string(),
   municipality: z.nativeEnum(Municipality).optional(),
   address: z.string(),
