@@ -11,6 +11,8 @@ import { api } from "../utils/api";
 
 import Snackbar from "../components/Snackbar";
 
+const currentEventId = "clenx05d90000f1u4vaj7mwek";
+
 const NavBar: React.FC = () => {
   const [dropdown, setDropdown] = useState(false);
 
@@ -135,7 +137,7 @@ const NavBar: React.FC = () => {
 
                     {sessionData.user.role === "SUPERADMIN" && (
                       <Link
-                        href="/events/cle1fx5dw0000f1e0j1wch7mf/raffle"
+                        href={`/events/${currentEventId}`}
                         className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         onClick={() => setDropdown(false)}
                       >
@@ -145,7 +147,7 @@ const NavBar: React.FC = () => {
 
                     {sessionData.user.role === "SUPERADMIN" && (
                       <Link
-                        href="/events/cle1fx5dw0000f1e0j1wch7mf"
+                        href={`/events/${currentEventId}`}
                         className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         onClick={() => setDropdown(false)}
                       >
