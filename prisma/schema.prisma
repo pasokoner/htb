@@ -76,7 +76,7 @@ enum Municipality {
 
 model EventParticipant {
     id                 String    @id @default(cuid())
-    registrationNumber Int
+    registrationNumber Int       @unique
     distance           Int
     timeFinished       DateTime?
     shirtSize          ShirtSize
