@@ -157,6 +157,17 @@ const EventCard = ({
         </a>
       )}
 
+      {name === "Hermosa" && (
+        <a
+          href="https://hataw-takbo-bataan.vercel.app/event/cld87jvpj0000f114kp3wsili/participant"
+          target="_blank"
+          rel="noreferrer"
+          className="mb-2 block cursor-pointer text-center text-sm text-primary underline hover:text-primary-hover"
+        >
+          CLAIM CERTIFICATE
+        </a>
+      )}
+
       {!sessionData && !eventProfileData && showCertificate && (
         <Modal
           show={showCertificate}
