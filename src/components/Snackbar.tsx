@@ -13,7 +13,7 @@ const Snackbar = ({ message, type, title, onClose }: Props) => {
   if (type === "error") {
     return (
       <div
-        className="fixed inset-0 top-2 bottom-auto mx-auto max-w-screen-lg rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700 opacity-95"
+        className="fixed inset-0 top-2 bottom-auto z-50 mx-auto max-w-screen-lg rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700 opacity-95"
         role="alert"
       >
         <p className="font-bold">{title ? title : "Error"}</p>
@@ -31,7 +31,7 @@ const Snackbar = ({ message, type, title, onClose }: Props) => {
   if (type === "success") {
     return (
       <div
-        className="fixed inset-0 top-2 bottom-auto mx-auto max-w-screen-lg rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700 opacity-95"
+        className="fixed inset-0 top-2 bottom-auto z-50 mx-auto max-w-screen-lg rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700 opacity-95"
         role="alert"
       >
         <p className="font-bold">Success</p>
