@@ -285,13 +285,29 @@ export const participantRouter = createTRPCRouter({
         take: 1,
       });
 
-      return await ctx.prisma.eventParticipant.create({
-        data: {
-          ...input,
-          registrationNumber: data[0]?.registrationNumber
-            ? data[0].registrationNumber + 1
-            : 3350,
-        },
+      return await ctx.prisma.$transaction(async (tx) => {
+        const eventParticitpant = await tx.eventParticipant.create({
+          data: {
+            ...input,
+            registrationNumber: data[0]?.registrationNumber
+              ? data[0].registrationNumber + 1
+              : 3350,
+          },
+        });
+
+        const eventParticipants = await tx.eventParticipant.findMany({
+          where: {
+            registrationNumber: eventParticitpant.registrationNumber,
+          },
+        });
+
+        console.log(eventParticipants.length);
+
+        if (eventParticipants.length > 1) {
+          throw new Error("Something's wrong, submit your application again");
+        }
+
+        return eventParticitpant;
       });
     }),
   editEventProfile: protectedProcedure

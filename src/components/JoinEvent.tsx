@@ -33,7 +33,13 @@ const JoinEvent = ({
   const { mutate: join, isLoading: isJoining } =
     api.participant.join.useMutation({
       onSuccess: () => {
+        setError("");
         if (onSuccess) onSuccess();
+      },
+      onError: (e) => {
+        if (e.shape) {
+          setError(e.shape.message);
+        }
       },
     });
 
@@ -46,6 +52,8 @@ const JoinEvent = ({
 
   const [showAgreement, setShowAgreement] = useState(false);
   const [acceptAgreement, setAcceptAgreement] = useState(false);
+
+  const [error, setError] = useState("");
 
   const { register, handleSubmit } = useForm<{
     shirtSize: ShirtSize;
@@ -180,6 +188,8 @@ const JoinEvent = ({
         >
           CLICK HERE TO ACCEPT RACE AGREEMENT
         </button>
+
+        {error && <div className="text-xs text-red-500">{error}</div>}
 
         <div className="grid grid-cols-2">
           <button
