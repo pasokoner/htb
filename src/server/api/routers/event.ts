@@ -225,6 +225,10 @@ export const eventRouter = createTRPCRouter({
         include: {
           eventParticipant: true,
         },
+
+        orderBy: {
+          scheduleTime: "desc",
+        },
       });
 
       const eventsF = events
