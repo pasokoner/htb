@@ -41,7 +41,6 @@ const Home: NextPage = () => {
   return (
     <>
       <div className="w-full py-5">
-        <input />
         <ScreenContainer className="py:10 grid grid-cols-6 gap-14 sm:gap-0 sm:py-16">
           <div className="order-last col-span-6 mb-20  flex flex-col items-center justify-center sm:-order-1 sm:col-span-3 sm:mb-0">
             <div>
