@@ -94,9 +94,16 @@ const MyProfile = () => {
 
         {profileData?.eventParticitpant &&
           profileData.eventParticitpant.length > 0 &&
-          profileData?.eventParticitpant.map(({ id, profileId, eventId }) => (
-            <RaceStatsCard key={id} profileId={profileId} eventId={eventId} />
-          ))}
+          profileData?.eventParticitpant.map(
+            ({ id, profileId, eventId, event }) => (
+              <RaceStatsCard
+                key={id}
+                profileId={profileId}
+                eventId={eventId}
+                name={event.name}
+              />
+            )
+          )}
         {profileData?.eventParticitpant?.length === 0 && (
           <h6 className="col-span-2 text-center">
             YOU HAVE NOT JOIN ANY RACE YET

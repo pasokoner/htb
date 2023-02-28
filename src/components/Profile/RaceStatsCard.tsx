@@ -8,9 +8,10 @@ import Certificate from "../Certificate";
 type Props = {
   profileId: string;
   eventId: string;
+  name: string;
 };
 
-const RaceStatsCard = ({ profileId, eventId }: Props) => {
+const RaceStatsCard = ({ profileId, eventId, name }: Props) => {
   const {
     data: eventProfileData,
     refetch,
@@ -30,7 +31,7 @@ const RaceStatsCard = ({ profileId, eventId }: Props) => {
     <>
       <div className="col-span-2 grid grid-cols-6 grid-rows-2 justify-center gap-2 border-2 border-solid bg-slate-300 p-2">
         <div className="col-span-6 row-span-2 flex  items-center justify-center bg-slate-400 py-2 text-base font-semibold text-white sm:col-span-1 sm:py-5 sm:text-lg">
-          BAGAC
+          {name}
         </div>
         <div className="col-span-6 row-span-2 grid grid-cols-2 gap-2 sm:col-span-5">
           <div className="col-span-1">
