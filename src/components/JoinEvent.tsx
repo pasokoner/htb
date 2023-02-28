@@ -19,6 +19,8 @@ type Props = {
   registrationNumber?: number;
 };
 
+const EDIT = false;
+
 const JoinEvent = ({
   distance,
   profileId,
@@ -37,8 +39,14 @@ const JoinEvent = ({
         if (onSuccess) onSuccess();
       },
       onError: (e) => {
-        if (e.shape) {
-          setError(e.shape.message);
+        if (e.message.includes("constraint")) {
+          setError(
+            "Seems like there is an error, try pressing the join button again"
+          );
+        } else {
+          setError(
+            "Seems like there is an error, try pressing the join button again"
+          );
         }
       },
     });
@@ -96,7 +104,7 @@ const JoinEvent = ({
           <select
             id="shirtSize"
             required
-            disabled
+            disabled={EDIT}
             defaultValue={shirtSize}
             {...register("shirtSize")}
           >
@@ -113,7 +121,7 @@ const JoinEvent = ({
           <label htmlFor="distance">Select Distance</label>
           <select
             id="distance"
-            disabled
+            disabled={EDIT}
             required
             defaultValue={distance}
             {...register("distance")}
@@ -127,9 +135,11 @@ const JoinEvent = ({
           </select>
         </div>
 
-        <div className="text-sm text-gray-500">
-          Editing is disabled at the moment
-        </div>
+        {EDIT && (
+          <div className="text-sm text-gray-500">
+            Editing is disabled at the moment
+          </div>
+        )}
 
         <div className="grid grid-cols-2">
           <button
@@ -142,7 +152,7 @@ const JoinEvent = ({
           </button>
           <button
             type="submit"
-            disabled
+            disabled={EDIT || isEditing}
             className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
           >
             {isEditing ? <LoadingSpinner /> : "SAVE"}
@@ -202,7 +212,7 @@ const JoinEvent = ({
           </button>
           <button
             type="submit"
-            disabled={!acceptAgreement}
+            disabled={!acceptAgreement || isJoining}
             className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
           >
             {isJoining ? <LoadingSpinner /> : "JOIN"}

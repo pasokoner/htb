@@ -5,6 +5,8 @@ import { ShirtSize, EventParticipant, Profile, User } from "@prisma/client";
 import { FaLessThanEqual } from "react-icons/fa";
 import { getFinishedTime } from "../../../utils/convertion";
 
+import { Prisma } from "@prisma/client";
+
 export const participantRouter = createTRPCRouter({
   getAll: publicProcedure
     .input(
@@ -285,8 +287,8 @@ export const participantRouter = createTRPCRouter({
         take: 1,
       });
 
-      return await ctx.prisma.$transaction(async (tx) => {
-        const eventParticitpant = await tx.eventParticipant.create({
+      try {
+        return await ctx.prisma.eventParticipant.create({
           data: {
             ...input,
             registrationNumber: data[0]?.registrationNumber
@@ -294,21 +296,14 @@ export const participantRouter = createTRPCRouter({
               : 3350,
           },
         });
-
-        const eventParticipants = await tx.eventParticipant.findMany({
-          where: {
-            registrationNumber: eventParticitpant.registrationNumber,
-          },
-        });
-
-        console.log(eventParticipants.length);
-
-        if (eventParticipants.length > 1) {
-          throw new Error("Something's wrong, submit your application again");
+      } catch (e) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+          // The .code property can be accessed in a type-safe manner
+          if (e.code === "P2002") {
+          }
         }
-
-        return eventParticitpant;
-      });
+        throw e;
+      }
     }),
   editEventProfile: protectedProcedure
     .input(
