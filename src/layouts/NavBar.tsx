@@ -82,7 +82,7 @@ const NavBar: React.FC = () => {
           )}
 
         {sessionData && profileData && !sessionData.user.unclaimed && (
-          <div className="z-10 inline-flex rounded-md border border-primary bg-white text-primary transition-all">
+          <div className="z-20 inline-flex rounded-md border border-primary bg-white text-primary transition-all">
             <a
               className="cursor-pointer rounded-l-md px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
               onClick={() => setDropdown((prevState) => !prevState)}
