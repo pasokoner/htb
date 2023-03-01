@@ -18,9 +18,10 @@ import { RiGuideLine } from "react-icons/ri";
 import HTBLogo from "../assets/hataw-takbo-bataan.webp";
 import OneBataanLogo from "../assets/1bataan.png";
 import SeekPhorLogo from "../assets/seekphor.png";
-import HermosaLogo from "../assets/hermosa.png";
 import BataanSealLogo from "../assets/bataan-seal.png";
+import HermosaLogo from "../assets/hermosa.png";
 import BagacLogo from "../assets/bagac-logo.png";
+import MarivelesLogo from "../assets/mariveles-logo.png";
 
 import Alternative1 from "../assets/landing-page/alternative-1.jpg";
 import Alternative2 from "../assets/landing-page/alternative-2.jpg";
@@ -117,9 +118,9 @@ const Home: NextPage = () => {
             className="col-span-2 mx-auto md:col-span-1"
           />
           <Image
-            src={BagacLogo}
+            src={MarivelesLogo}
             width={65}
-            alt="Bagac Logo"
+            alt="Mariveles Logo"
             className="col-span-2 mx-auto md:col-span-1"
           />
         </ScreenContainer>
@@ -131,12 +132,12 @@ const Home: NextPage = () => {
             RACE GUIDE <RiGuideLine className="text-yellow-400" />
           </h2>
           <div className="grid grid-cols-2 gap-4">
-            <Image
+            {/* <Image
               width={800}
               src={RouteImg}
               alt="Bagac Route Image"
               className="col-span-2 md:col-span-1"
-            />
+            /> */}
             <Image
               width={800}
               src={StretchImg}
