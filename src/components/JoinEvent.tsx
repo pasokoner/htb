@@ -104,7 +104,7 @@ const JoinEvent = ({
           <select
             id="shirtSize"
             required
-            disabled={EDIT}
+            disabled={registrationNumber ? registrationNumber <= 6149 : false}
             defaultValue={shirtSize}
             {...register("shirtSize")}
           >
@@ -121,7 +121,7 @@ const JoinEvent = ({
           <label htmlFor="distance">Select Distance</label>
           <select
             id="distance"
-            disabled={EDIT}
+            disabled={registrationNumber ? registrationNumber <= 6149 : false}
             required
             defaultValue={distance}
             {...register("distance")}
@@ -135,9 +135,9 @@ const JoinEvent = ({
           </select>
         </div>
 
-        {EDIT && (
+        {registrationNumber && registrationNumber <= 6149 && (
           <div className="text-sm text-gray-500">
-            Editing is disabled at the moment
+            Edit disabled: bib generation started
           </div>
         )}
 
@@ -152,7 +152,11 @@ const JoinEvent = ({
           </button>
           <button
             type="submit"
-            disabled={EDIT || isEditing}
+            disabled={
+              registrationNumber
+                ? registrationNumber <= 6149
+                : false || isEditing
+            }
             className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
           >
             {isEditing ? <LoadingSpinner /> : "SAVE"}

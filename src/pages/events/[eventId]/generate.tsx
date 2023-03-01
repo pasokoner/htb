@@ -18,6 +18,7 @@ import OneBataanLogo from "../../../assets/1bataan.png";
 import SeekPhorLogo from "../../../assets/seekphor.png";
 // import HermosaLogo from "../../../assets/hermosa.png";
 import BagacLogo from "../../../assets/bagac-logo.png";
+import MarivelesLogo from "../../../assets/mariveles-logo.png";
 import BataanSealLogo from "../../../assets/bataan-seal.png";
 
 const Generate: NextPage = () => {
@@ -134,14 +135,14 @@ const Generate: NextPage = () => {
             <Image src={SeekPhorLogo} alt="Seek Phor" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
-            <Image src={BagacLogo} alt="Hermosa Logo" className="" />
+            <Image src={MarivelesLogo} alt="Hermosa Logo" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
           </div>
 
           <div className="absolute left-[100px] mt-[45px] flex h-[40px] w-3/12 gap-2 opacity-10">
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
-            <Image src={BagacLogo} alt="Hermosa Logo" className="" />
+            <Image src={MarivelesLogo} alt="Hermosa Logo" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
             <Image src={BataanSealLogo} alt="Bataan Seal" className="" />
@@ -154,7 +155,7 @@ const Generate: NextPage = () => {
             <Image src={SeekPhorLogo} alt="Seek Phor" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
-            <Image src={BagacLogo} alt="Hermosa Logo" className="" />
+            <Image src={MarivelesLogo} alt="Hermosa Logo" className="" />
             <Image src={HTBLogo} alt="Hataw Takbo Bataan Logo" className="" />
             <Image src={OneBataanLogo} alt="One Bataan Logo" className="" />
           </div>
@@ -190,7 +191,7 @@ const Generate: NextPage = () => {
               className="z-10 col-span-1"
             />
             <Image
-              src={BagacLogo}
+              src={MarivelesLogo}
               alt="Hermosa Logo"
               width={150}
               className="z-10 col-span-1"
