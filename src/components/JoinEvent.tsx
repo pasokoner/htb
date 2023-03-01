@@ -104,7 +104,7 @@ const JoinEvent = ({
           <select
             id="shirtSize"
             required
-            disabled={registrationNumber ? registrationNumber <= 6149 : false}
+            disabled={registrationNumber ? registrationNumber <= 6152 : false}
             defaultValue={shirtSize}
             {...register("shirtSize")}
           >
@@ -121,7 +121,7 @@ const JoinEvent = ({
           <label htmlFor="distance">Select Distance</label>
           <select
             id="distance"
-            disabled={registrationNumber ? registrationNumber <= 6149 : false}
+            disabled={registrationNumber ? registrationNumber <= 6152 : false}
             required
             defaultValue={distance}
             {...register("distance")}
@@ -135,7 +135,7 @@ const JoinEvent = ({
           </select>
         </div>
 
-        {registrationNumber && registrationNumber <= 6149 && (
+        {registrationNumber && registrationNumber <= 6152 && (
           <div className="text-sm text-gray-500">
             Edit disabled: bib generation started
           </div>
@@ -154,7 +154,7 @@ const JoinEvent = ({
             type="submit"
             disabled={
               registrationNumber
-                ? registrationNumber <= 6149
+                ? registrationNumber <= 6152
                 : false || isEditing
             }
             className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
