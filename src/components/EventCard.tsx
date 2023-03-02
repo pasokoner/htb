@@ -67,7 +67,7 @@ const EventCard = ({
   }
 
   return (
-    <div className="rounded-md border-2 border-slate-200">
+    <div className="flex h-full flex-col rounded-md border-2 border-slate-200">
       <div className="relative h-40">
         {eventProfileData?.registrationNumber && (
           <div className="absolute top-0 right-0 z-10 rounded-md border-2 border-black bg-black px-2 text-lg font-medium text-white">
@@ -200,7 +200,7 @@ const EventCard = ({
 
       {!profileId && !closeRegistration && (
         <button
-          className="w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
+          className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
           onClick={() => toggleJoin()}
         >
           REGISTER
@@ -210,7 +210,7 @@ const EventCard = ({
       {closeRegistration && (
         <button
           disabled
-          className="w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover disabled:bg-gray-400 disabled:text-gray-700"
+          className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover disabled:bg-gray-400 disabled:text-gray-700"
         >
           CLOSED
         </button>
@@ -218,7 +218,7 @@ const EventCard = ({
 
       {profileId && !eventProfileData && !closeRegistration && (
         <button
-          className="w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
+          className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
           onClick={() => setShowJoin(true)}
         >
           JOIN
@@ -227,7 +227,7 @@ const EventCard = ({
 
       {profileId && eventProfileData && !closeRegistration && (
         <button
-          className="w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
+          className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
           onClick={() => setShowJoin(true)}
         >
           EDIT
