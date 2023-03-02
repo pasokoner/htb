@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+
+import { useOnClickOutside } from "usehooks-ts";
 
 import IconHatawBataan from "../assets/icon-hataw-bataan.webp";
 import ScreenContainer from "./ScreenContainer";
@@ -16,6 +18,8 @@ const currentEventId = "clenx05d90000f1u4vaj7mwek";
 const NavBar: React.FC = () => {
   const [dropdown, setDropdown] = useState(false);
 
+  const dropdownRef = useRef(null);
+
   const { data: sessionData } = useSession();
 
   const { mutate } = api.profile.firstTime.useMutation();
@@ -25,6 +29,15 @@ const NavBar: React.FC = () => {
   });
 
   const [firstTime, setFirstTime] = useState(true);
+
+  const handleClickOutside = () => {
+    // Your custom logic here
+    if (dropdown === true) {
+      setDropdown(false);
+    }
+  };
+
+  useOnClickOutside(dropdownRef, handleClickOutside);
 
   return (
     <header className="w-full">
@@ -84,7 +97,10 @@ const NavBar: React.FC = () => {
           )}
 
         {sessionData && profileData && !sessionData.user.unclaimed && (
-          <div className="z-20 inline-flex rounded-md border border-primary bg-white text-primary transition-all">
+          <div
+            ref={dropdownRef}
+            className="z-20 inline-flex rounded-md border border-primary bg-white text-primary transition-all"
+          >
             <a
               className="cursor-pointer rounded-l-md px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
               onClick={() => setDropdown((prevState) => !prevState)}
