@@ -103,10 +103,12 @@ model Profile {
     emergencyContact       String?
     emergencyContactNumber String?
     firstTime              Boolean            @default(true)
+    officials              Boolean            @default(false)
     eventParticitpant      EventParticipant[]
     updatedAt              DateTime           @updatedAt
     createdAt              DateTime           @default(now())
-    user                   User?
+
+    user User?
 
     @@unique([firstName, lastName, birthdate])
 }

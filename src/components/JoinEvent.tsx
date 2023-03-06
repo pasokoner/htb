@@ -20,7 +20,7 @@ type Props = {
 };
 
 const EDIT = false;
-
+ 
 const JoinEvent = ({
   distance,
   profileId,

@@ -152,23 +152,29 @@ const NavBar: React.FC = () => {
                     )}
 
                     {sessionData.user.role === "SUPERADMIN" && (
-                      <Link
-                        href={`/events/${currentEventId}`}
-                        className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                        onClick={() => setDropdown(false)}
-                      >
-                        Raffle
-                      </Link>
-                    )}
-
-                    {sessionData.user.role === "SUPERADMIN" && (
-                      <Link
-                        href={`/events/${currentEventId}`}
-                        className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                        onClick={() => setDropdown(false)}
-                      >
-                        Event Control
-                      </Link>
+                      <>
+                        <Link
+                          href={`/super-admin`}
+                          className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          onClick={() => setDropdown(false)}
+                        >
+                          Super Admin
+                        </Link>
+                        <Link
+                          href={`/events/${currentEventId}`}
+                          className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          onClick={() => setDropdown(false)}
+                        >
+                          Raffle
+                        </Link>
+                        <Link
+                          href={`/events/${currentEventId}`}
+                          className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          onClick={() => setDropdown(false)}
+                        >
+                          Event Control
+                        </Link>
+                      </>
                     )}
 
                     <button
