@@ -161,7 +161,7 @@ const NavBar: React.FC = () => {
                           Super Admin
                         </Link>
                         <Link
-                          href={`/events/${currentEventId}`}
+                          href={`/events/${currentEventId}/raffle`}
                           className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                           onClick={() => setDropdown(false)}
                         >
