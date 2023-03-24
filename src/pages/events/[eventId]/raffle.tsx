@@ -8,8 +8,8 @@ import { useRouter } from "next/router";
 import { api } from "../../../utils/api";
 import LoadSpinner from "../../../components/LoadingSpinner";
 
-import RaffleLayout from "../../../assets/raffle/raffle-layout.png";
-import RaffleWinner from "../../../assets/raffle/raffle-winner.png";
+import RaffleLayout from "../../../assets/raffle/raffle-layout.jpg";
+import RaffleWinner from "../../../assets/raffle/raffle-winner.jpg";
 import { useState } from "react";
 import { EventWinner } from "@prisma/client";
 import ExportEventWinner from "../../../components/ExportEventWinner";
