@@ -19,9 +19,7 @@ import HTBLogo from "../assets/hataw-takbo-bataan.webp";
 import OneBataanLogo from "../assets/1bataan.png";
 import SeekPhorLogo from "../assets/seekphor.png";
 import BataanSealLogo from "../assets/bataan-seal.png";
-import HermosaLogo from "../assets/hermosa.png";
-import BagacLogo from "../assets/bagac-logo.png";
-import MarivelesLogo from "../assets/mariveles-logo.png";
+import OraniLogo from "../assets/orani-logo.png";
 
 import Alternative1 from "../assets/landing-page/alternative-1.jpg";
 import Alternative2 from "../assets/landing-page/alternative-2.jpg";
@@ -45,15 +43,13 @@ const Home: NextPage = () => {
         <ScreenContainer className="py:10 grid grid-cols-6 gap-14 sm:gap-0 sm:py-16">
           <div className="order-last col-span-6 mb-20  flex flex-col items-center justify-center sm:-order-1 sm:col-span-3 sm:mb-0">
             <div>
-              <h1 className="mb-2 text-3xl font-semibold sm:text-5xl">
-                Mariveles
-              </h1>
+              <h1 className="mb-2 text-3xl font-semibold sm:text-5xl">Orani</h1>
               <div className="mb-4 text-lg font-medium">
-                <p>Event Date: March 25, 2023</p>
-                <p>Mariveles</p>
+                <p>Event Date: April 22, 2023</p>
+                <p>Orani Plaza</p>
               </div>
               <p className="mb-4 text-sm">
-                *Free event t-shirt for first 2,000 registered participant
+                *Free event t-shirt for first 3,000 registered participant
               </p>
               <div className="grid grid-cols-2 gap-6">
                 {sessionData && (
@@ -118,7 +114,7 @@ const Home: NextPage = () => {
             className="col-span-2 mx-auto md:col-span-1"
           />
           <Image
-            src={MarivelesLogo}
+            src={OraniLogo}
             width={65}
             alt="Mariveles Logo"
             className="col-span-2 mx-auto md:col-span-1"
