@@ -49,7 +49,7 @@ const Home: NextPage = () => {
                 <p>Orani Plaza</p>
               </div>
               <p className="mb-4 text-sm">
-                *Free event t-shirt for first 3,000 registered participant
+                *Free event t-shirt for first 2,000 registered participant
               </p>
               <div className="grid grid-cols-2 gap-6">
                 {sessionData && (
@@ -116,7 +116,7 @@ const Home: NextPage = () => {
           <Image
             src={OraniLogo}
             width={65}
-            alt="Mariveles Logo"
+            alt="Orani Logo"
             className="col-span-2 mx-auto md:col-span-1"
           />
         </ScreenContainer>
