@@ -154,7 +154,7 @@ const JoinEvent = ({
             type="submit"
             disabled={
               registrationNumber
-                ? registrationNumber <= 7158
+                ? registrationNumber <= 9875
                 : false || isEditing
             }
             className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
