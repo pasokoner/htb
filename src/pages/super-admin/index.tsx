@@ -18,6 +18,7 @@ import { MdEventNote } from "react-icons/md";
 const events = [
   { id: "cle1fx5dw0000f1e0j1wch7mf", name: "Bagac" },
   { id: "clenx05d90000f1u4vaj7mwek", name: "Mariveles" },
+  { id: "clfzawnto0000fx54eplai1nq", name: "Orani" },
 ];
 
 const SuperAdmin: NextPage = () => {
