@@ -135,7 +135,7 @@ const JoinEvent = ({
           </select>
         </div>
 
-        {registrationNumber && registrationNumber <= 7158 && (
+        {registrationNumber && registrationNumber <= 9875 && (
           <div className="text-sm text-gray-500">
             Edit disabled: bib generation started
           </div>
