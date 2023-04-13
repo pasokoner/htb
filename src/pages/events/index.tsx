@@ -99,7 +99,9 @@ const Edit: NextPage = () => {
                   address={address}
                   numOfParticipants={_count.eventParticipant}
                   scheduleTime={scheduleTime}
-                  closeRegistration={closeRegistration}
+                  closeRegistration={
+                    closeRegistration || _count.eventParticipant >= 2500
+                  }
                   ongoing={!!(timeStart10km || timeStart5km || timeStart3km)}
                   ended={
                     !!(raceFinished10km && raceFinished3km && raceFinished5km)
