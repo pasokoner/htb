@@ -329,7 +329,7 @@ export const eventRouter = createTRPCRouter({
           },
           profile: {
             NOT: {
-              firstName: filter.dummy ? undefined : { contains: "MARIVELES" },
+              firstName: filter.dummy ? undefined : { contains: "ORANI" },
             },
           },
         },
