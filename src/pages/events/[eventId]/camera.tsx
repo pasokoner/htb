@@ -15,10 +15,11 @@ import LoadingSpinner from "../../../components/LoadingSpinner";
 import ManualScanner from "../../../components/ManualScanner";
 import Scanner from "../../../components/Scanner";
 import ScreenContainer from "../../../layouts/ScreenContainer";
-import Snackbar from "../../../components/Snackbar";
 
 import { IoClose } from "react-icons/io5";
 import { SlReload } from "react-icons/sl";
+
+import { toast } from "react-hot-toast";
 
 type ManualRecord = {
   id: string;
@@ -41,6 +42,8 @@ const Camera: NextPage = () => {
   const { query } = useRouter();
   const { eventId } = query;
 
+  const [ongoingRequest, setOngoingRequest] = useState("");
+
   const { data: eventData, isLoading } = api.event.details.useQuery(
     {
       eventId: eventId as string,
@@ -52,15 +55,24 @@ const Camera: NextPage = () => {
   );
 
   const { mutate: cameraCheck } = api.scan.cameraCheck.useMutation({
+    onSuccess: () => {
+      toast.success("Participant successfully added!");
+
+      setSavedRecords((prevState) => {
+        return [...prevState.slice(1)];
+      });
+
+      setOngoingRequest(uuidv4());
+    },
     onError: (e) => {
       if (e.shape) {
-        setErrorMessage(e.shape.message);
+        toast.error(e.shape.message);
       } else {
-        setErrorMessage("Some error has occured!");
+        toast.error("Some error has occured!");
       }
 
       setSavedRecords((prevState) => {
-        const errorRecord = prevState.find(({ id }) => id === purgeId);
+        const errorRecord = prevState.shift();
 
         if (errorRecord) {
           setErrorRecords((prevState) => [
@@ -69,34 +81,32 @@ const Camera: NextPage = () => {
           ]);
         }
 
-        return prevState.filter(({ id }) => id !== purgeId);
+        return [...prevState.slice(1)];
       });
-      setShowMessage(true);
-
-      setOngoingRequest(uuidv4());
-    },
-    onSuccess: () => {
-      setSuccessMessage("Participant successfully added!");
-      setShowMessage(true);
-
-      setSavedRecords((prevState) =>
-        prevState.filter(({ id }) => id !== purgeId)
-      );
 
       setOngoingRequest(uuidv4());
     },
   });
 
   const { mutate: manualCheck } = api.scan.manualCheck.useMutation({
+    onSuccess: () => {
+      toast.success("Participant successfully added!");
+
+      setSavedRecords((prevState) => {
+        return [...prevState.slice(1)];
+      });
+
+      setOngoingRequest(uuidv4());
+    },
     onError: (e) => {
       if (e.shape) {
-        setErrorMessage(e.shape.message);
+        toast.error(e.shape.message);
       } else {
-        setErrorMessage("Some error has occured!");
+        toast.error("Some error has occured!");
       }
 
       setSavedRecords((prevState) => {
-        const errorRecord = prevState.find(({ id }) => id === purgeId);
+        const errorRecord = prevState.shift();
 
         if (errorRecord) {
           setErrorRecords((prevState) => [
@@ -105,18 +115,8 @@ const Camera: NextPage = () => {
           ]);
         }
 
-        return prevState.filter(({ id }) => id !== purgeId);
+        return [...prevState.slice(1)];
       });
-      setShowMessage(true);
-      setOngoingRequest(uuidv4());
-    },
-    onSuccess: () => {
-      setSuccessMessage("Participant successfully added!");
-      setShowMessage(true);
-
-      setSavedRecords((prevState) =>
-        prevState.filter(({ id }) => id !== purgeId)
-      );
 
       setOngoingRequest(uuidv4());
     },
@@ -136,13 +136,6 @@ const Camera: NextPage = () => {
     "camera-password",
     ""
   );
-
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [showMessage, setShowMessage] = useState(false);
-
-  const [ongoingRequest, setOngoingRequest] = useState("");
-  const [purgeId, setPurgeId] = useState("");
 
   const cameraUpdate = (cameraResult: string, timeFinished: Date) => {
     // mutate({ kilometerId: cameraResultF[1], timeFinished });
@@ -174,20 +167,6 @@ const Camera: NextPage = () => {
     setOngoingRequest(uuidv4());
   };
 
-  const closeSnackbar = () => {
-    setShowMessage(false);
-    setErrorMessage("");
-    setSuccessMessage("");
-  };
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      closeSnackbar();
-    }, 5000);
-
-    return () => clearTimeout(timeoutId);
-  }, [showMessage]);
-
   useEffect(() => {
     if (
       savedRecords.length !== 0 &&
@@ -196,7 +175,6 @@ const Camera: NextPage = () => {
     ) {
       if (savedRecords[0] && savedRecords[0].registrationNumber) {
         const data = savedRecords[0] as ManualRecord;
-        setPurgeId(data.id);
         manualCheck({
           timeFinished: new Date(data.timeFinished),
           eventId: data.eventId,
@@ -204,7 +182,6 @@ const Camera: NextPage = () => {
         });
       } else {
         const data = savedRecords[0] as ScanRecord;
-        setPurgeId(data.id);
         cameraCheck({
           timeFinished: new Date(data.timeFinished),
           participantId: data.participantId,
@@ -364,17 +341,6 @@ const Camera: NextPage = () => {
         })}
 
       <div className="py-4"></div>
-
-      {showMessage && errorMessage && (
-        <Snackbar onClose={closeSnackbar} type="error" message={errorMessage} />
-      )}
-      {showMessage && successMessage && (
-        <Snackbar
-          onClose={closeSnackbar}
-          type="success"
-          message={successMessage}
-        />
-      )}
     </ScreenContainer>
   );
 };

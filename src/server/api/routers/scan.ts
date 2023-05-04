@@ -71,15 +71,15 @@ export const scanRouter = createTRPCRouter({
           throw new Error("This Participant doesn't exist");
         }
 
-        if (data?.raceEnded) {
+        if (data.raceEnded) {
           throw new Error("Race has already ended");
         }
 
-        if (!data?.enableCamera) {
+        if (!data.enableCamera) {
           throw new Error("Race hasn't started yet");
         }
 
-        if (data?.timeFinished) {
+        if (data.timeFinished) {
           throw new Error("This participant already has a record");
         }
 

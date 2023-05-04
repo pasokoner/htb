@@ -27,9 +27,8 @@ const ManualScanner = ({ manualUpdate, eventData }: Props) => {
     /* eslint-disable @typescript-eslint/no-misused-promises */
     <form onSubmit={handleSubmit(onSubmit)} className="flex w-full">
       <input
-        type="text"
+        type="number"
         className="mr-2 flex-1"
-        maxLength={9}
         {...register("query")}
         required
       />
