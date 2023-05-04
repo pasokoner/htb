@@ -13,6 +13,9 @@ const Scanner = ({ updateParticipant }: Props) => {
     return new QrScanner(
       document.getElementById("video-feed") as HTMLVideoElement,
       (result: { data: string }) => {
+        if ("vibrate" in navigator) {
+          navigator.vibrate(200);
+        }
         setCameraResult(result.data);
       },
       {
