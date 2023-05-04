@@ -13,7 +13,7 @@ import { api } from "../utils/api";
 
 import Snackbar from "../components/Snackbar";
 
-const currentEventId = "clfzawnto0000fx54eplai1nq";
+const currentEventId = "clh8f55uk0000fxu8ld38mlkj";
 
 const NavBar: React.FC = () => {
   const [dropdown, setDropdown] = useState(false);
