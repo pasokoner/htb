@@ -21,6 +21,8 @@ type Props = {
 
 const EDIT = false;
 
+const NUMBER_FROM_DISABLED = 1065;
+
 const JoinEvent = ({
   distance,
   profileId,
@@ -104,7 +106,11 @@ const JoinEvent = ({
           <select
             id="shirtSize"
             required
-            disabled={registrationNumber ? registrationNumber <= 7158 : false}
+            disabled={
+              registrationNumber
+                ? registrationNumber <= NUMBER_FROM_DISABLED
+                : false
+            }
             defaultValue={shirtSize}
             {...register("shirtSize")}
           >
@@ -121,7 +127,11 @@ const JoinEvent = ({
           <label htmlFor="distance">Select Distance</label>
           <select
             id="distance"
-            disabled={registrationNumber ? registrationNumber <= 7158 : false}
+            disabled={
+              registrationNumber
+                ? registrationNumber <= NUMBER_FROM_DISABLED
+                : false
+            }
             required
             defaultValue={distance}
             {...register("distance")}
@@ -135,7 +145,7 @@ const JoinEvent = ({
           </select>
         </div>
 
-        {registrationNumber && registrationNumber <= 9875 && (
+        {registrationNumber && registrationNumber <= NUMBER_FROM_DISABLED && (
           <div className="text-sm text-gray-500">
             Edit disabled: bib generation started
           </div>
@@ -154,7 +164,7 @@ const JoinEvent = ({
             type="submit"
             disabled={
               registrationNumber
-                ? registrationNumber <= 9875
+                ? registrationNumber <= NUMBER_FROM_DISABLED
                 : false || isEditing
             }
             className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
