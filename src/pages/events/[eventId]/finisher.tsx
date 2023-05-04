@@ -209,3 +209,33 @@ const Finished: NextPage = () => {
 };
 
 export default Finished;
+
+import { type GetServerSideProps } from "next";
+
+import { getSession } from "next-auth/react";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  if (session.user.role === "ADMIN" || session.user.role === "SUPERADMIN") {
+    return {
+      props: { session },
+    };
+  }
+
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
+};

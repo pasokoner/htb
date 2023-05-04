@@ -223,9 +223,9 @@ const SingeEvent: NextPage = () => {
 };
 
 export default SingeEvent;
+import { type GetServerSideProps } from "next";
 
 import { getSession } from "next-auth/react";
-import type { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
@@ -239,16 +239,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  if (session.user?.role !== "SUPERADMIN") {
+  if (session.user.role === "ADMIN" || session.user.role === "SUPERADMIN") {
     return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
+      props: { session },
     };
   }
 
   return {
-    props: { session },
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
   };
 };
