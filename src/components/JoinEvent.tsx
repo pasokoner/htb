@@ -21,7 +21,7 @@ type Props = {
 
 const EDIT = false;
 
-const NUMBER_FROM_DISABLED = 10700;
+const NUMBER_FROM_DISABLED = 11200;
 
 const JoinEvent = ({
   distance,
