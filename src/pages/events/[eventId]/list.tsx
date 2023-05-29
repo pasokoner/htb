@@ -136,6 +136,9 @@ const List: NextPage = () => {
           </div>
 
           <ExportList
+            timeStart10km={eventData.timeStart10km}
+            timeStart5km={eventData.timeStart5km}
+            timeStart3km={eventData.timeStart3km}
             distance={distance}
             eventId={eventId as string}
             className="rounded-sm bg-primary py-1.5 px-2 font-medium text-white hover:bg-primary-hover md:py-2"

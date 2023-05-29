@@ -1,13 +1,24 @@
 import * as XLSX from "xlsx";
 import { api } from "../utils/api";
 import { useEffect, useState } from "react";
+import { getFinishedTime } from "../utils/convertion";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   distance?: number;
+  timeStart10km?: Date | null;
+  timeStart5km?: Date | null;
+  timeStart3km?: Date | null;
   eventId: string;
 }
 
-const ExportList = ({ distance, eventId, className }: Props) => {
+const ExportList = ({
+  distance,
+  eventId,
+  timeStart10km,
+  timeStart5km,
+  timeStart3km,
+  className,
+}: Props) => {
   const [enableFetch, setEnableFetch] = useState(false);
 
   const { data } = api.participant.getList.useQuery(
@@ -22,7 +33,13 @@ const ExportList = ({ distance, eventId, className }: Props) => {
   useEffect(() => {
     if (enableFetch === true && data) {
       const dataFormatted = data?.map(
-        ({ registrationNumber, profile, shirtSize, distance }) => {
+        ({
+          registrationNumber,
+          profile,
+          shirtSize,
+          distance,
+          timeFinished,
+        }) => {
           return {
             registrationNumber,
             shirtSize,
@@ -32,6 +49,13 @@ const ExportList = ({ distance, eventId, className }: Props) => {
             address: profile.address,
             municipality: profile.municipality,
             contactNumber: profile.contactNumber,
+            finishedTime: !timeFinished
+              ? ""
+              : distance === 10
+              ? getFinishedTime(timeFinished, timeStart10km as Date)
+              : distance === 5
+              ? getFinishedTime(timeFinished, timeStart5km as Date)
+              : getFinishedTime(timeFinished, timeStart3km as Date),
           };
         }
       );
