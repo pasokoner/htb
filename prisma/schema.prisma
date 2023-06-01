@@ -52,6 +52,7 @@ enum Gender {
 }
 
 enum ShirtSize {
+    XS
     S
     MD
     L
