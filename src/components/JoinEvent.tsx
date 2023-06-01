@@ -188,7 +188,7 @@ const JoinEvent = ({
           <select id="shirtSize" required {...register("shirtSize")}>
             <option value={""}>Select Shirt Size</option>
             {Object.keys(ShirtSize)
-              .filter((size) => !["S", "XS"].includes(size))
+              // .filter((size) => !["S", "XS"].includes(size))
               .map((size) => (
                 <option key={size} value={size}>
                   {size}
