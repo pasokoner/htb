@@ -19,9 +19,9 @@ type Props = {
   registrationNumber?: number;
 };
 
-const EDIT = false;
+const EDIT = true;
 
-const NUMBER_FROM_DISABLED = 12700;
+const NUMBER_FROM_DISABLED = 100000;
 
 const JoinEvent = ({
   distance,
