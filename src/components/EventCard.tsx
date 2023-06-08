@@ -26,6 +26,8 @@ type Props = {
   ended?: boolean;
   ongoing?: boolean;
   registrationNumber?: number;
+  enableEdit?: boolean;
+  shirtLimit?: number;
 };
 
 const EventCard = ({
@@ -38,6 +40,8 @@ const EventCard = ({
   closeRegistration,
   ended,
   ongoing,
+  enableEdit,
+  shirtLimit,
 }: Props) => {
   const [resultId, setResultId] = useState(profileId);
 
@@ -246,6 +250,7 @@ const EventCard = ({
           setShowJoin(false);
         }}
         registrationNumber={eventProfileData?.registrationNumber}
+        enableEdit={enableEdit as boolean}
       />
     </div>
   );

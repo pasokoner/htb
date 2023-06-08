@@ -87,6 +87,8 @@ const Edit: NextPage = () => {
               raceFinished10km,
               raceFinished3km,
               raceFinished5km,
+              enableEdit,
+              shirtLimit,
             }) => (
               <div
                 className="col-span-6 w-full sm:col-span-3 lg:col-span-2"
@@ -100,12 +102,14 @@ const Edit: NextPage = () => {
                   numOfParticipants={_count.eventParticipant}
                   scheduleTime={scheduleTime}
                   closeRegistration={
-                    closeRegistration || _count.eventParticipant >= 3000
+                    closeRegistration ||
+                    _count.eventParticipant >= (shirtLimit as number)
                   }
                   ongoing={!!(timeStart10km || timeStart5km || timeStart3km)}
                   ended={
                     !!(raceFinished10km && raceFinished3km && raceFinished5km)
                   }
+                  enableEdit={enableEdit}
                 />
               </div>
             )

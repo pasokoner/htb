@@ -17,11 +17,8 @@ type Props = {
   onSuccess?: () => void;
   onError?: () => void;
   registrationNumber?: number;
+  enableEdit: boolean;
 };
-
-const EDIT = true;
-
-const NUMBER_FROM_DISABLED = 100000;
 
 const JoinEvent = ({
   distance,
@@ -33,6 +30,7 @@ const JoinEvent = ({
   show,
   showControl,
   registrationNumber,
+  enableEdit,
 }: Props) => {
   const { mutate: join, isLoading: isJoining } =
     api.participant.join.useMutation({
@@ -106,11 +104,7 @@ const JoinEvent = ({
           <select
             id="shirtSize"
             required
-            disabled={
-              registrationNumber
-                ? registrationNumber <= NUMBER_FROM_DISABLED
-                : false
-            }
+            disabled={!enableEdit}
             defaultValue={shirtSize}
             {...register("shirtSize")}
           >
@@ -127,11 +121,7 @@ const JoinEvent = ({
           <label htmlFor="distance">Select Distance</label>
           <select
             id="distance"
-            disabled={
-              registrationNumber
-                ? registrationNumber <= NUMBER_FROM_DISABLED
-                : false
-            }
+            disabled={!enableEdit}
             required
             defaultValue={distance}
             {...register("distance")}
@@ -145,7 +135,7 @@ const JoinEvent = ({
           </select>
         </div>
 
-        {registrationNumber && registrationNumber <= NUMBER_FROM_DISABLED && (
+        {!enableEdit && (
           <div className="text-sm text-gray-500">
             Edit disabled: bib generation started
           </div>
@@ -162,11 +152,7 @@ const JoinEvent = ({
           </button>
           <button
             type="submit"
-            disabled={
-              registrationNumber
-                ? registrationNumber <= NUMBER_FROM_DISABLED
-                : false || isEditing
-            }
+            disabled={!enableEdit || isEditing}
             className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
           >
             {isEditing ? <LoadingSpinner /> : "SAVE"}

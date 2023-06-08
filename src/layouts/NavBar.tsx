@@ -40,10 +40,10 @@ const NavBar: React.FC = () => {
   useOnClickOutside(dropdownRef, handleClickOutside);
 
   return (
-    <header className="w-full">
+    <header className="w-full border-b-2">
       <ScreenContainer
         as="nav"
-        className="flex items-center justify-between border-b-2 py-4"
+        className="flex items-center justify-between py-4"
       >
         <Link
           href={"/"}
