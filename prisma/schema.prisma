@@ -19,6 +19,8 @@ datasource db {
 model Event {
     id                String             @id @default(cuid())
     name              String
+    closeRegistration Boolean            @default(false)
+    scheduleTime      DateTime
     timeStart3km      DateTime?
     timeStart5km      DateTime?
     timeStart10km     DateTime?
@@ -26,10 +28,10 @@ model Event {
     raceFinished5km   Boolean            @default(false)
     raceFinished10km  Boolean            @default(false)
     cameraPassword    String             @default("hatawbataan")
-    closeRegistration Boolean            @default(false)
-    scheduleTime      DateTime
     image             String?
     address           String
+    shirtLimit        Int?
+    enableEdit        Boolean            @default(false)
     eventParticipant  EventParticipant[]
     eventWinner       EventWinner[]
     createdAt         DateTime           @default(now())
@@ -44,6 +46,8 @@ model EventWinner {
     eventId            String?
     Event              Event?   @relation(fields: [eventId], references: [id])
     createdAt          DateTime @default(now())
+
+    @@index([eventId])
 }
 
 enum Gender {
@@ -90,6 +94,7 @@ model EventParticipant {
     createdAt          DateTime  @default(now())
 
     @@unique([eventId, profileId])
+    @@index([profileId])
 }
 
 model Profile {
@@ -137,6 +142,7 @@ model Account {
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -145,6 +151,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 enum UserRole {
