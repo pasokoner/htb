@@ -199,7 +199,7 @@ const NavBar: React.FC = () => {
               setFirstTime(false);
             }}
             type="success"
-            message="Congratulation on setting up your account!"
+            message="Congratulations on setting up your account!"
           />
         )}
       </ScreenContainer>

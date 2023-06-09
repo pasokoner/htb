@@ -76,7 +76,7 @@ const RaceStatsCard = ({ profileId, eventId, name }: Props) => {
         showCertificate && (
           <Modal
             show={showCertificate}
-            title="CONGRATULATION!"
+            title="CONGRATULATIONS!"
             onClose={() => setShowCertificate(false)}
           >
             <div className="relative flex flex-col items-center justify-center">
