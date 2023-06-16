@@ -101,28 +101,23 @@ const Raffle: NextPage = () => {
 
   return (
     <ScreenContainer id="fireworks-container" className="py-6 pb-20">
-      <div className="grid h-[750px] grid-cols-6 grid-rows-6 border-2 border-solid border-black">
-        <div className="col-span-4 row-span-4 h-[460px] border-b-2 border-solid border-black">
-          <div className="relative flex h-[460px] w-[765px] items-center justify-center">
+      <div className="grid grid-cols-6 border-2 border-solid border-black">
+        <div className="col-span-6 border-b-2 border-solid border-black">
+          <div className="relative flex h-[720px] items-center justify-center">
             {!winner && (
               <Image
                 src={RaffleLayout}
                 alt="Raffle Layout"
                 fill
-                className="object-fill"
+                className="absolute"
               />
             )}
 
             {winner && (
               <>
-                <Image
-                  src={RaffleWinner}
-                  alt="Raffle Winner"
-                  fill
-                  className="object-fill"
-                />
+                <Image src={RaffleWinner} alt="Raffle Winner" fill />
                 {winner.length === 1 && (
-                  <div className="absolute top-[150px] left-[280px] right-[100px] break-words text-center text-8xl font-semibold text-gray-900 drop-shadow-2xl">
+                  <div className="absolute top-[180px] left-[400px] right-[100px] break-words bg-white/40 p-5 text-center text-[200px] font-semibold text-gray-900 drop-shadow-2xl">
                     {winner &&
                       winner.map(({ registrationNumber }) => (
                         <p key={registrationNumber}>{registrationNumber}</p>
@@ -130,7 +125,7 @@ const Raffle: NextPage = () => {
                   </div>
                 )}
                 {winner.length === 2 && (
-                  <div className="absolute top-[150px] left-[280px] right-[100px] break-words text-center text-5xl font-semibold text-gray-900 drop-shadow-2xl">
+                  <div className="absolute top-[200px] left-[400px] right-[100px] break-words bg-white/40 p-5 text-center text-8xl font-semibold text-gray-900 drop-shadow-2xl">
                     {winner &&
                       winner.map(({ registrationNumber }) => (
                         <p key={registrationNumber} className="py-2">
@@ -139,8 +134,8 @@ const Raffle: NextPage = () => {
                       ))}
                   </div>
                 )}
-                {winner.length >= 3 && winner.length <= 12 && (
-                  <div className="absolute top-[130px] left-[280px] right-[100px] grid grid-cols-3 break-words text-center text-3xl font-semibold text-gray-900 drop-shadow-2xl">
+                {winner.length >= 3 && winner.length < 12 && (
+                  <div className="absolute top-[200px] left-[400px] right-[100px] grid grid-cols-2 break-words bg-white/40 p-5 text-center text-7xl font-semibold text-gray-900 drop-shadow-2xl">
                     {winner &&
                       winner.map(({ registrationNumber }) => (
                         <p key={registrationNumber} className="py-1">
@@ -149,8 +144,8 @@ const Raffle: NextPage = () => {
                       ))}
                   </div>
                 )}
-                {winner.length > 12 && winner.length <= 16 && (
-                  <div className="absolute top-[130px] left-[280px] right-[100px] grid grid-cols-4 break-words text-center text-2xl font-semibold text-gray-900 drop-shadow-2xl">
+                {winner.length >= 12 && winner.length <= 16 && (
+                  <div className="absolute top-[180px] left-[350px] right-[50px] grid grid-cols-3 break-words bg-white/40 p-5 text-center text-6xl font-semibold text-gray-900 drop-shadow-2xl">
                     {winner &&
                       winner.map(({ registrationNumber }) => (
                         <p key={registrationNumber} className="py-1">
@@ -160,17 +155,20 @@ const Raffle: NextPage = () => {
                   </div>
                 )}
                 {winner.length > 16 && winner.length <= 30 && (
-                  <div className="absolute top-[130px] left-[280px] right-[100px] grid grid-cols-5 break-words text-center text-lg font-semibold text-gray-900 drop-shadow-2xl">
+                  <div className="absolute top-[200px] left-[350px] right-0 grid grid-cols-3 break-words bg-white/40 p-5 text-center text-4xl font-semibold text-gray-900 drop-shadow-2xl">
                     {winner &&
                       winner.map(({ registrationNumber }) => (
-                        <p key={registrationNumber} className="py-.5">
+                        <p
+                          key={registrationNumber}
+                          className="py-.5 text-gray-900"
+                        >
                           {registrationNumber}
                         </p>
                       ))}
                   </div>
                 )}
                 {winner.length > 30 && (
-                  <div className="absolute top-[125px] left-[280px] right-[50px] grid grid-cols-6 break-words text-center text-sm font-semibold text-gray-900 drop-shadow-2xl">
+                  <div className="absolute top-[180px] left-[300px] right-0 grid grid-cols-5 break-words bg-white/40 p-5  text-center text-3xl font-semibold text-gray-900 drop-shadow-2xl">
                     {winner &&
                       winner.map(({ registrationNumber }) => (
                         <p key={registrationNumber}>{registrationNumber}</p>
@@ -181,75 +179,7 @@ const Raffle: NextPage = () => {
             )}
           </div>
         </div>
-        <div className="col-span-2 row-span-6 border-l-2 border-solid border-black">
-          <div className="flex items-center justify-center gap-2">
-            <h3 className="text-center text-3xl font-semibold">WINNERS</h3>
-
-            <ExportEventWinner
-              eventId={eventData.id}
-              className="cursor-pointer text-xl"
-            />
-          </div>
-          <div className="block max-h-[662px]">
-            <table className="w-full">
-              <thead className="sticky top-0 w-full bg-white">
-                <tr className="grid grid-cols-6 border-y-2 border-solid border-black">
-                  <th className="col-span-2 border-r-2 border-solid border-black py-1">
-                    REG #
-                  </th>
-                  <th className="col-span-4 py-1">
-                    CLAIMED{" "}
-                    <span className="rounded-sm bg-emerald-600 px-1 text-white">
-                      YES
-                    </span>
-                    {"/"}
-                    <span className="rounded-sm bg-[#efefef] px-1">NO</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="scrollbar-hide block h-[628px] w-full overflow-auto">
-                {eventWinner &&
-                  eventWinner.map(
-                    ({ registrationNumber, price, id, isClaimed }, i) => (
-                      <tr
-                        key={id}
-                        className="grid grid-cols-6 border-b-[.5px] border-solid border-gray-400"
-                      >
-                        <td className="col-span-2 grid grid-cols-5 border-r-2 border-solid border-black py-1 px-2 text-sm">
-                          <p className="col-span-1">{i + 1}.</p>
-                          <p className="col-span-4">{registrationNumber}</p>
-                        </td>
-                        {isClaimed && (
-                          <td className="col-span-4 bg-emerald-600 py-1 px-2 text-center text-sm font-medium text-gray-100">
-                            {price}
-                          </td>
-                        )}
-
-                        {!isClaimed && (
-                          <td className="relative col-span-4 bg-[#EFEFEF] py-1 px-2 text-center text-sm font-medium">
-                            {price}
-
-                            <AiFillCheckCircle
-                              className="absolute top-1 right-1 z-10 cursor-pointer text-lg"
-                              onClick={() => {
-                                claim({ eventWinnerId: id });
-                              }}
-                            />
-                          </td>
-                        )}
-                      </tr>
-                    )
-                  )}
-                <tr className="flex justify-center border-b-[.5px] border-solid border-gray-400 py-3">
-                  <td className="text-xl font-semibold text-red-700">
-                    END OF LIST
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="col-span-4 row-span-2 grid grid-cols-6">
+        <div className="col-span-6 grid grid-cols-6">
           <div className="col-span-4 p-2">
             <input
               placeholder="SET PRICE HERE"
@@ -401,6 +331,74 @@ const Raffle: NextPage = () => {
             >
               {isDrawing ? <LoadSpinner /> : "DRAW!"}
             </button>
+          </div>
+        </div>
+        <div className="col-span-6 border-solid border-black">
+          <div className="flex items-center justify-center gap-2">
+            <h3 className="text-center text-3xl font-semibold">WINNERS</h3>
+
+            <ExportEventWinner
+              eventId={eventData.id}
+              className="cursor-pointer text-xl"
+            />
+          </div>
+          <div className="block max-h-[662px]">
+            <table className="w-full">
+              <thead className="sticky top-0 w-full bg-white">
+                <tr className="grid grid-cols-6 border-y-2 border-solid border-black">
+                  <th className="col-span-2 border-r-2 border-solid border-black py-1">
+                    REG #
+                  </th>
+                  <th className="col-span-4 py-1">
+                    CLAIMED{" "}
+                    <span className="rounded-sm bg-emerald-600 px-1 text-white">
+                      YES
+                    </span>
+                    {"/"}
+                    <span className="rounded-sm bg-[#efefef] px-1">NO</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="scrollbar-hide block h-[628px] w-full overflow-auto">
+                {eventWinner &&
+                  eventWinner.map(
+                    ({ registrationNumber, price, id, isClaimed }, i) => (
+                      <tr
+                        key={id}
+                        className="grid grid-cols-6 border-b-[.5px] border-solid border-gray-400"
+                      >
+                        <td className="col-span-2 grid grid-cols-5 border-r-2 border-solid border-black py-1 px-2 text-sm">
+                          <p className="col-span-1">{i + 1}.</p>
+                          <p className="col-span-4">{registrationNumber}</p>
+                        </td>
+                        {isClaimed && (
+                          <td className="col-span-4 bg-emerald-600 py-1 px-2 text-center text-sm font-medium text-gray-100">
+                            {price}
+                          </td>
+                        )}
+
+                        {!isClaimed && (
+                          <td className="relative col-span-4 bg-[#EFEFEF] py-1 px-2 text-center text-sm font-medium">
+                            {price}
+
+                            <AiFillCheckCircle
+                              className="absolute top-1 right-1 z-10 cursor-pointer text-lg"
+                              onClick={() => {
+                                claim({ eventWinnerId: id });
+                              }}
+                            />
+                          </td>
+                        )}
+                      </tr>
+                    )
+                  )}
+                <tr className="flex justify-center border-b-[.5px] border-solid border-gray-400 py-3">
+                  <td className="text-xl font-semibold text-red-700">
+                    END OF LIST
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
