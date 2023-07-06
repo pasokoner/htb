@@ -16,11 +16,12 @@ import { RxCross2 } from "react-icons/rx";
 import { MdEventNote } from "react-icons/md";
 
 const events = [
-  { id: "cle1fx5dw0000f1e0j1wch7mf", name: "Bagac" },
-  { id: "clenx05d90000f1u4vaj7mwek", name: "Mariveles" },
-  { id: "clfzawnto0000fx54eplai1nq", name: "Orani" },
+  // { id: "cle1fx5dw0000f1e0j1wch7mf", name: "Bagac" },
+  // { id: "clenx05d90000f1u4vaj7mwek", name: "Mariveles" },
+  // { id: "clfzawnto0000fx54eplai1nq", name: "Orani" },
   { id: "clh8f55uk0000fxu8ld38mlkj", name: "Orion" },
   { id: "clicqkn8h0000fx5g4vkilw9e", name: "Dinalupihan" },
+  { id: "cljprc7j70002fxaouk2e32mz", name: "Limay" },
 ];
 
 const SuperAdmin: NextPage = () => {
