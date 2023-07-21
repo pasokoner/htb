@@ -17,6 +17,7 @@ import { GiCheckeredFlag } from "react-icons/gi";
 const SingeEvent: NextPage = () => {
   const { query } = useRouter();
   const { eventId } = query;
+  const { data: sessionData } = useSession();
 
   const {
     data: eventData,
@@ -68,12 +69,23 @@ const SingeEvent: NextPage = () => {
           CAMERA
         </Link>
 
-        <Link
-          href={`/events/${eventData.id}/config`}
-          className="col-span-2 flex items-center justify-center  border-2 border-dotted border-slate-400 py-2 font-semibold"
-        >
-          CONFIGURATION
-        </Link>
+        {sessionData?.user.role === "ADMIN" || (
+          <Link
+            href={`/events/${eventData.id}/raffle`}
+            className="col-span-2 flex items-center justify-center  border-2 border-dotted border-slate-400 py-2 font-semibold"
+          >
+            RAFFLE
+          </Link>
+        )}
+
+        {sessionData?.user.role === "SUPERADMIN" || (
+          <Link
+            href={`/events/${eventData.id}/config`}
+            className="col-span-2 flex items-center justify-center  border-2 border-dotted border-slate-400 py-2 font-semibold"
+          >
+            CONFIGURATION
+          </Link>
+        )}
         <Link
           href={`/events/${eventData.id}/list`}
           className="col-span-2 flex items-center justify-center border-2  border-dotted border-slate-400 py-2 font-semibold"
@@ -225,7 +237,7 @@ const SingeEvent: NextPage = () => {
 export default SingeEvent;
 import { type GetServerSideProps } from "next";
 
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);

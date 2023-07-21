@@ -101,7 +101,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  if (session.user.role === "ADMIN" || session.user.role === "SUPERADMIN") {
+  if (session.user.role === "SUPERADMIN") {
     return {
       props: { session },
     };
