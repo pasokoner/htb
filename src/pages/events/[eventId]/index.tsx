@@ -69,7 +69,7 @@ const SingeEvent: NextPage = () => {
           CAMERA
         </Link>
 
-        {sessionData?.user.role === "ADMIN" || (
+        {sessionData?.user.role === "ADMIN" && (
           <Link
             href={`/events/${eventData.id}/raffle`}
             className="col-span-2 flex items-center justify-center  border-2 border-dotted border-slate-400 py-2 font-semibold"
@@ -78,7 +78,7 @@ const SingeEvent: NextPage = () => {
           </Link>
         )}
 
-        {sessionData?.user.role === "SUPERADMIN" || (
+        {sessionData?.user.role === "SUPERADMIN" && (
           <Link
             href={`/events/${eventData.id}/config`}
             className="col-span-2 flex items-center justify-center  border-2 border-dotted border-slate-400 py-2 font-semibold"
