@@ -19,7 +19,7 @@ import HTBLogo from "../assets/hataw-takbo-bataan.webp";
 import OneBataanLogo from "../assets/1bataan.png";
 import SeekPhorLogo from "../assets/seekphor.png";
 import BataanSealLogo from "../assets/bataan-seal.png";
-import MunicipalityLogo from "../assets/limay-logo.png";
+import MunicipalityLogo from "../assets/samal-logo.png";
 
 import Alternative1 from "../assets/landing-page/alternative-1.jpg";
 import Alternative2 from "../assets/landing-page/alternative-2.jpg";
