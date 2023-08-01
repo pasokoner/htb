@@ -43,13 +43,13 @@ const Home: NextPage = () => {
         <ScreenContainer className="py:10 grid grid-cols-6 gap-14 sm:gap-0 sm:py-16">
           <div className="order-last col-span-6 mb-20  flex flex-col items-center justify-center sm:-order-1 sm:col-span-3 sm:mb-0">
             <div>
-              <h1 className="mb-2 text-3xl font-semibold sm:text-5xl">Limay</h1>
+              <h1 className="mb-2 text-3xl font-semibold sm:text-5xl">Samal</h1>
               <div className="mb-4 text-lg font-medium">
-                <p>Event Date: July 29, 2023</p>
+                <p>Event Date: August 19, 2023</p>
                 {/* <p>Orani Plaza</p> */}
               </div>
               <p className="mb-4 text-sm">
-                *Free event t-shirt for first 2,000 registered participant
+                *Free event t-shirt for first 2,500 registered participant
               </p>
               <div className="grid grid-cols-2 gap-6">
                 {sessionData && (
