@@ -22,6 +22,7 @@ const events = [
   { id: "clh8f55uk0000fxu8ld38mlkj", name: "Orion" },
   { id: "clicqkn8h0000fx5g4vkilw9e", name: "Dinalupihan" },
   { id: "cljprc7j70002fxaouk2e32mz", name: "Limay" },
+  { id: "clkro9sc30000fx9sbtaznu6l", name: "Samal" },
 ];
 
 const SuperAdmin: NextPage = () => {
