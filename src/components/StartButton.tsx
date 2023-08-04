@@ -21,13 +21,14 @@ const StartButton = ({
   refetchEvent,
   color,
 }: Props) => {
-  const { mutate: startRace } = api.event.start.useMutation({
-    onSuccess: () => {
-      refetchEvent();
-    },
-  });
+  const { mutate: startRace, isLoading: starting } =
+    api.event.start.useMutation({
+      onSuccess: () => {
+        refetchEvent();
+      },
+    });
 
-  const { mutate: endRace } = api.event.end.useMutation({
+  const { mutate: endRace, isLoading: ending } = api.event.end.useMutation({
     onSuccess: () => {
       refetchEvent();
     },
@@ -68,7 +69,8 @@ const StartButton = ({
             onClick={() => {
               updateRaceStatus(kilometer, eventId);
             }}
-            className={`flex w-8/12 items-center justify-center gap-4 bg-${color} py-3 px-2 text-xl font-semibold text-white hover:opacity-80`}
+            className={`flex w-8/12 items-center justify-center gap-4 bg-${color} py-3 px-2 text-xl font-semibold text-white hover:opacity-80 disabled:opacity-70`}
+            disabled={ending}
           >
             END RACE
             <FaStop />
@@ -84,7 +86,8 @@ const StartButton = ({
           onClick={() => {
             updateTimeStart(kilometer, new Date(), eventId);
           }}
-          className={`flex w-8/12 items-center justify-center gap-4 bg-${color} py-3 px-2 text-xl font-semibold text-white hover:opacity-80`}
+          className={`flex w-8/12 items-center justify-center gap-4 bg-${color} py-3 px-2 text-xl font-semibold text-white hover:opacity-80 disabled:opacity-70`}
+          disabled={starting}
         >
           START
           <FaPlay />
