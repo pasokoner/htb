@@ -13,7 +13,7 @@ import { api } from "../utils/api";
 
 import Snackbar from "../components/Snackbar";
 
-const currentEventId = "clicqkn8h0000fx5g4vkilw9e";
+const currentEventId = "clkro9sc30000fx9sbtaznu6l";
 
 const NavBar: React.FC = () => {
   const [dropdown, setDropdown] = useState(false);
@@ -151,7 +151,8 @@ const NavBar: React.FC = () => {
                       </Link>
                     )}
 
-                    {sessionData.user.role === "SUPERADMIN" && (
+                    {(sessionData.user.role === "SUPERADMIN" ||
+                      sessionData.user.role === "ADMIN") && (
                       <>
                         <Link
                           href={`/super-admin`}
