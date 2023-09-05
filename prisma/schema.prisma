@@ -35,6 +35,7 @@ model Event {
     eventParticipant  EventParticipant[]
     eventWinner       EventWinner[]
     createdAt         DateTime           @default(now())
+    reserve           Int                @default(0)
 }
 
 model EventWinner {
