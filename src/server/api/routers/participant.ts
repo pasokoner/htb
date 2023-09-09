@@ -287,6 +287,18 @@ export const participantRouter = createTRPCRouter({
         take: 1,
       });
 
+      const eventDetails = await ctx.prisma.event.findUnique({
+        where: {
+          id: input.eventId,
+        },
+      });
+
+      const eventParticipantCount = await ctx.prisma.eventParticipant.count({
+        where: {
+          eventId: input.eventId,
+        },
+      });
+
       try {
         return await ctx.prisma.eventParticipant.create({
           data: {
@@ -294,6 +306,10 @@ export const participantRouter = createTRPCRouter({
             registrationNumber: data[0]?.registrationNumber
               ? data[0].registrationNumber + 1
               : 3350,
+            noTshirt: eventDetails
+              ? eventDetails.shirtLimit <=
+                eventParticipantCount + eventDetails.reserve
+              : false,
           },
         });
       } catch (e) {

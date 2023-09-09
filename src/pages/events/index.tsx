@@ -89,7 +89,6 @@ const Edit: NextPage = () => {
               raceFinished5km,
               enableEdit,
               shirtLimit,
-              reserve,
             }) => (
               <div
                 className="col-span-6 w-full sm:col-span-3 lg:col-span-2"
@@ -100,17 +99,15 @@ const Edit: NextPage = () => {
                   profileId={sessionData?.user.profileId}
                   name={name}
                   address={address}
-                  numOfParticipants={_count.eventParticipant + reserve}
+                  numOfParticipants={_count.eventParticipant}
                   scheduleTime={scheduleTime}
-                  closeRegistration={
-                    closeRegistration ||
-                    _count.eventParticipant + reserve >= (shirtLimit as number)
-                  }
+                  closeRegistration={closeRegistration}
                   ongoing={!!(timeStart10km || timeStart5km || timeStart3km)}
                   ended={
                     !!(raceFinished10km && raceFinished3km && raceFinished5km)
                   }
                   enableEdit={enableEdit}
+                  shirtLimit={shirtLimit}
                 />
               </div>
             )
@@ -126,6 +123,7 @@ const Edit: NextPage = () => {
             closeRegistration={true}
             ongoing={true}
             ended={true}
+            shirtLimit={2500}
           />
         </div>
       </div>

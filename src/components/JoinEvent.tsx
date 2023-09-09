@@ -6,6 +6,8 @@ import { api } from "../utils/api";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 import LoadingSpinner from "./LoadingSpinner";
+import QrMaker from "./QrMaker";
+import { AiOutlineInfo } from "react-icons/ai";
 
 type Props = {
   shirtSize?: ShirtSize;
@@ -15,9 +17,11 @@ type Props = {
   show?: boolean;
   showControl: () => void;
   onSuccess?: () => void;
-  onError?: () => void;
   registrationNumber?: number;
   enableEdit: boolean;
+  shirtLimit: number;
+  noTshirt: boolean;
+  eventParticipantId: string | null | undefined;
 };
 
 const JoinEvent = ({
@@ -26,11 +30,12 @@ const JoinEvent = ({
   eventId,
   shirtSize,
   onSuccess,
-  onError,
   show,
   showControl,
   registrationNumber,
-  enableEdit,
+  shirtLimit,
+  noTshirt,
+  eventParticipantId,
 }: Props) => {
   const { mutate: join, isLoading: isJoining } =
     api.participant.join.useMutation({
@@ -51,13 +56,6 @@ const JoinEvent = ({
       },
     });
 
-  const { mutate: editEventProfile, isLoading: isEditing } =
-    api.participant.editEventProfile.useMutation({
-      onSuccess: () => {
-        if (onSuccess) onSuccess();
-      },
-    });
-
   const [showAgreement, setShowAgreement] = useState(false);
   const [acceptAgreement, setAcceptAgreement] = useState(false);
 
@@ -72,93 +70,71 @@ const JoinEvent = ({
     data
   ) => {
     if (data) {
-      if (distance && shirtSize) {
-        editEventProfile({
-          profileId: profileId,
-          eventId: eventId,
-          ...data,
-          distance: parseInt(data.distance),
-        });
-      } else {
-        join({
-          profileId: profileId,
-          eventId: eventId,
-          ...data,
-          distance: parseInt(data.distance),
-        });
-      }
+      join({
+        profileId: profileId,
+        eventId: eventId,
+        ...data,
+        distance: parseInt(data.distance),
+      });
     }
   };
 
   let content = <></>;
 
-  if (distance && shirtSize) {
+  if (distance && shirtSize && eventParticipantId) {
     /* eslint-disable @typescript-eslint/no-misused-promises */
     content = (
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-2 sm:min-w-[400px]"
-      >
-        <div className="flex flex-col gap-1">
-          <label htmlFor="shirtSize">Shirt Size</label>
-          <select
-            id="shirtSize"
-            required
-            disabled={!enableEdit}
-            defaultValue={shirtSize}
-            {...register("shirtSize")}
-          >
-            <option value={""}>Select Shirt Size</option>
-            {Object.keys(ShirtSize).map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="w-full sm:min-w-[450px]">
+        <div className="mb-2 flex gap-4">
+          <div className="flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-1">
+              <div className="font-semibold">Shirt Size</div>
+              <div>{shirtSize}</div>
+            </div>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="distance">Select Distance</label>
-          <select
-            id="distance"
-            disabled={!enableEdit}
-            required
-            defaultValue={distance}
-            {...register("distance")}
-          >
-            <option value={""}>Select Distance</option>
-            {[3, 5, 10].map((d) => (
-              <option key={d} value={d}>
-                {d} Kilometers
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {!enableEdit && (
-          <div className="text-sm text-gray-500">
-            Edit disabled: bib generation started
+            <div className="flex flex-col gap-1">
+              <div className="font-semibold">Distance</div>
+              <div>{distance} Kilometers</div>
+            </div>
           </div>
-        )}
 
-        <div className="grid grid-cols-2">
-          <button
-            type="button"
-            disabled={isEditing}
-            onClick={() => showControl()}
-            className="col-span-1 rounded-md border-2 border-solid bg-red-500 py-1.5 text-white disabled:opacity-60"
-          >
-            CANCEL
-          </button>
-          <button
-            type="submit"
-            disabled={!enableEdit || isEditing}
-            className="col-span-1 flex items-center justify-center rounded-md border-2 border-solid bg-primary py-1.5 text-white hover:bg-primary-hover disabled:opacity-60"
-          >
-            {isEditing ? <LoadingSpinner /> : "SAVE"}
-          </button>
+          <QrMaker value={eventParticipantId} size={5} />
         </div>
-      </form>
+        <div className="rounded-md bg-blue-200 p-2">
+          <div className="flex gap-6">
+            <div>
+              <div className="flex items-center gap-2 text-sm font-semibold sm:text-base">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-300 p-1">
+                  <AiOutlineInfo className="h-6 w-6" />
+                </div>
+                Hello Hataw Takbo Participant!
+              </div>
+              <p className="pl-2 font-semibold"></p>
+              {noTshirt && (
+                <p className="pl-2 text-justify text-xs sm:text-sm">
+                  <span className="font-semibold text-red-600">
+                    Dahil naabot na ang limit ng ipinapamigay na t-shirt
+                  </span>
+                  , hinihikayat naming isuot nalang muli ang inyong HTB t-shirts
+                  para sa parating na HTB event. Maaring ipa-scan ang QR code sa
+                  Finish Line upang opisyal na ma-record ang inyong time.
+                  Maraming salamat sa inyong pag unawa.
+                </p>
+              )}
+              {!noTshirt && (
+                <p className="pl-2 text-justify text-sm">
+                  <span className="font-semibold text-green-600">
+                    Ikaw ay pasok para sa libreng t-shirt
+                  </span>
+                  . Sa pagkakataon na mawala ang iyong Bib maaaring ipa-scan ang
+                  QR code sa Finish Line upang opisyal na ma-record ang inyong
+                  time. Maraming salamat.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     );
   } else {
     /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -228,7 +204,7 @@ const JoinEvent = ({
         show={show}
         title={
           distance && shirtSize
-            ? `EDIT DETAILS - ${registrationNumber as number}`
+            ? `PARTICIPANT NO.${registrationNumber as number}`
             : "JOIN EVENT"
         }
         onClose={() => showControl()}

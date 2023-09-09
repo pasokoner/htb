@@ -58,9 +58,6 @@ const SingeEvent: NextPage = () => {
 
   return (
     <ScreenContainer className="mx-auto px-8 py-6 md:px-16">
-      {/* <h2 className="text-center text-6xl font-semibold">
-        Welcome to {eventData.name}
-      </h2> */}
       <div className="mb-2 grid grid-cols-6 text-xs sm:text-sm">
         <Link
           href={`/events/${eventData.id}/camera`}

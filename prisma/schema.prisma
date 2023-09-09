@@ -30,7 +30,7 @@ model Event {
     cameraPassword    String             @default("hatawbataan")
     image             String?
     address           String
-    shirtLimit        Int?
+    shirtLimit        Int                @default(0)
     enableEdit        Boolean            @default(false)
     eventParticipant  EventParticipant[]
     eventWinner       EventWinner[]
@@ -92,6 +92,7 @@ model EventParticipant {
     profileId          String
     event              Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
     eventId            String
+    noTshirt           Boolean   @default(false)
     createdAt          DateTime  @default(now())
 
     @@unique([eventId, profileId])

@@ -27,7 +27,7 @@ type Props = {
   ongoing?: boolean;
   registrationNumber?: number;
   enableEdit?: boolean;
-  shirtLimit?: number;
+  shirtLimit: number;
 };
 
 const EventCard = ({
@@ -211,15 +211,6 @@ const EventCard = ({
         </button>
       )}
 
-      {closeRegistration && (
-        <button
-          disabled
-          className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover disabled:bg-gray-400 disabled:text-gray-700"
-        >
-          CLOSED
-        </button>
-      )}
-
       {profileId && !eventProfileData && !closeRegistration && (
         <button
           className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
@@ -229,12 +220,21 @@ const EventCard = ({
         </button>
       )}
 
-      {profileId && eventProfileData && !closeRegistration && (
+      {profileId && eventProfileData && !ended && (
         <button
           className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
           onClick={() => setShowJoin(true)}
         >
-          EDIT
+          VIEW QR
+        </button>
+      )}
+
+      {ended && (
+        <button
+          disabled
+          className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover disabled:bg-gray-400 disabled:text-gray-700"
+        >
+          EVENT ENDED
         </button>
       )}
 
@@ -247,10 +247,12 @@ const EventCard = ({
         showControl={() => setShowJoin(false)}
         onSuccess={() => {
           void refetch();
-          setShowJoin(false);
         }}
         registrationNumber={eventProfileData?.registrationNumber}
         enableEdit={enableEdit as boolean}
+        shirtLimit={shirtLimit}
+        noTshirt={!!eventProfileData?.noTshirt}
+        eventParticipantId={eventProfileData?.id}
       />
     </div>
   );
