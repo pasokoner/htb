@@ -211,12 +211,30 @@ const EventCard = ({
         </button>
       )}
 
+      {!profileId && closeRegistration && !ended && (
+        <button
+          disabled
+          className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover disabled:bg-gray-400 disabled:text-gray-700"
+        >
+          CLOSED
+        </button>
+      )}
+
       {profileId && !eventProfileData && !closeRegistration && (
         <button
           className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover"
           onClick={() => setShowJoin(true)}
         >
           JOIN
+        </button>
+      )}
+
+      {profileId && !eventProfileData && closeRegistration && !ended && (
+        <button
+          disabled
+          className="mt-auto w-full rounded-b-md bg-primary py-2 uppercase text-white hover:bg-primary-hover active:bg-primary-hover disabled:bg-gray-400 disabled:text-gray-700"
+        >
+          CLOSED
         </button>
       )}
 
