@@ -103,7 +103,7 @@ const Edit: NextPage = () => {
                   numOfParticipants={_count.eventParticipant + reserve}
                   scheduleTime={scheduleTime}
                   closeRegistration={
-                    closeRegistration || _count.eventParticipant >= 3000
+                    closeRegistration || _count.eventParticipant >= 2000
                   }
                   ongoing={!!(timeStart10km || timeStart5km || timeStart3km)}
                   ended={
