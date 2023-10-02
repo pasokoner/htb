@@ -19,7 +19,7 @@ import HTBLogo from "../assets/hataw-takbo-bataan.webp";
 import OneBataanLogo from "../assets/1bataan.png";
 import SeekPhorLogo from "../assets/seekphor.png";
 import BataanSealLogo from "../assets/bataan-seal.png";
-import MunicipalityLogo from "../assets/abucay-logo.png";
+import MunicipalityLogo from "../assets/pilar-logo.png";
 
 import Alternative1 from "../assets/landing-page/alternative-1.jpg";
 import Alternative2 from "../assets/landing-page/alternative-2.jpg";
@@ -43,11 +43,9 @@ const Home: NextPage = () => {
         <ScreenContainer className="py:10 grid grid-cols-6 gap-14 sm:gap-0 sm:py-16">
           <div className="order-last col-span-6 mb-20  flex flex-col items-center justify-center sm:-order-1 sm:col-span-3 sm:mb-0">
             <div>
-              <h1 className="mb-2 text-3xl font-semibold sm:text-5xl">
-                Abucay
-              </h1>
+              <h1 className="mb-2 text-3xl font-semibold sm:text-5xl">Pilar</h1>
               <div className="mb-4 text-lg font-medium">
-                <p>Event Date: September 30, 2023</p>
+                <p>Event Date: October 28, 2023</p>
                 {/* <p>Orani Plaza</p> */}
               </div>
               <p className="mb-4 text-sm">
