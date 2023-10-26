@@ -140,20 +140,16 @@ const NavBar: React.FC = () => {
                     >
                       My Profile
                     </Link>
-                    {(sessionData.user.role === "ADMIN" ||
-                      sessionData.user.role === "SUPERADMIN") && (
-                      <Link
-                        href="/admin"
-                        className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                        onClick={() => setDropdown(false)}
-                      >
-                        Admin
-                      </Link>
-                    )}
 
-                    {(sessionData.user.role === "SUPERADMIN" ||
-                      sessionData.user.role === "ADMIN") && (
+                    {sessionData.user.role === "SUPERADMIN" && (
                       <>
+                        <Link
+                          href="/admin"
+                          className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          onClick={() => setDropdown(false)}
+                        >
+                          Admin
+                        </Link>
                         <Link
                           href={`/super-admin`}
                           className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
@@ -161,6 +157,12 @@ const NavBar: React.FC = () => {
                         >
                           Super Admin
                         </Link>
+                      </>
+                    )}
+
+                    {(sessionData.user.role === "SUPERADMIN" ||
+                      sessionData.user.role === "ADMIN") && (
+                      <>
                         <Link
                           href={`/events/${currentEventId}/raffle`}
                           className="block w-full rounded-lg px-4 py-2 text-center text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
