@@ -63,6 +63,9 @@ enum ShirtSize {
     L
     XL
     XXL
+    XXXL
+    XXXXL
+    XXXXXL
 }
 
 enum Municipality {
