@@ -113,6 +113,7 @@ model Profile {
     address                String?
     emergencyContact       String?
     emergencyContactNumber String?
+    feedback               Boolean            @default(false)
     firstTime              Boolean            @default(true)
     officials              Boolean            @default(false)
     eventParticitpant      EventParticipant[]
