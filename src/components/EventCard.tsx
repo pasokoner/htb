@@ -183,7 +183,7 @@ const EventCard = ({
       )}
 
       {sessionData &&
-        eventProfileData?.profile &&
+        eventProfileData?.profile.feedback &&
         eventProfileData?.time &&
         showCertificate && (
           <Modal
@@ -198,6 +198,28 @@ const EventCard = ({
                 distance={eventProfileData.distance}
                 time={eventProfileData.time}
               />
+            </div>
+          </Modal>
+        )}
+
+      {sessionData &&
+        !eventProfileData?.profile.feedback &&
+        eventProfileData?.time &&
+        showCertificate && (
+          <Modal
+            show={showCertificate}
+            title="PLEASE ANSWER THIS FEEDBACK FIRST"
+            onClose={() => setShowCertificate(false)}
+          >
+            <div className="relative flex flex-col items-center justify-center">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScDuiG5l4oXMfa1-h5IFusUjCgw5MrmPPb8_DR4GAvO7_F52w/viewform"
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary underline"
+              >
+                Click here to answer feedback
+              </a>
             </div>
           </Modal>
         )}
