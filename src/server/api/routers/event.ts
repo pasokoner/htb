@@ -401,4 +401,20 @@ export const eventRouter = createTRPCRouter({
         },
       });
     }),
+  confirmFeedback: publicProcedure
+    .input(z.string().email())
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.user.update({
+        where: {
+          email: input,
+        },
+        data: {
+          profile: {
+            update: {
+              feedback: true,
+            },
+          },
+        },
+      });
+    }),
 });
