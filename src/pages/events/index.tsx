@@ -6,6 +6,7 @@ import React from "react";
 import ScreenContainer from "../../layouts/ScreenContainer";
 import { api } from "../../utils/api";
 import EventCard from "../../components/EventCard";
+import EventCardWithLimit from "../../components/EventCardWithLimit";
 
 const Edit: NextPage = () => {
   const { data: sessionData } = useSession();
@@ -65,13 +66,60 @@ const Edit: NextPage = () => {
       </h3>
       <div className="mx-auto grid max-w-4xl grid-cols-6 gap-4">
         {eventsData
+          ?.filter(({ name }) => {
+            return name === "Balanga";
+          })
+          .map(
+            ({
+              id,
+              name,
+              address,
+              _count,
+              scheduleTime,
+              closeRegistration,
+              timeStart10km,
+              timeStart3km,
+              timeStart5km,
+              raceFinished10km,
+              raceFinished3km,
+              raceFinished5km,
+              enableEdit,
+              shirtLimit,
+              reserve,
+            }) => (
+              <div
+                className="col-span-6 w-full sm:col-span-3 lg:col-span-2"
+                key={id}
+              >
+                <EventCardWithLimit
+                  eventId={id}
+                  profileId={sessionData?.user.profileId}
+                  name={name}
+                  address={address}
+                  numOfParticipants={_count.eventParticipant + reserve}
+                  scheduleTime={scheduleTime}
+                  closeRegistration={
+                    closeRegistration ||
+                    _count.eventParticipant + reserve >= 2000
+                  }
+                  ongoing={!!(timeStart10km || timeStart5km || timeStart3km)}
+                  ended={
+                    !!(raceFinished10km && raceFinished3km && raceFinished5km)
+                  }
+                  enableEdit={enableEdit}
+                  shirtLimit={shirtLimit}
+                />
+              </div>
+            )
+          )}
+
+        {eventsData
           ?.filter(({ id }) => {
             if (sessionData?.user.role === "SUPERADMIN") {
               return true;
             }
 
             return id !== "cle7ygs6x0000f1fgbhvoa9ap";
-            // return true;
           })
           .map(
             ({

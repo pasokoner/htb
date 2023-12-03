@@ -445,4 +445,14 @@ export const eventRouter = createTRPCRouter({
         },
       });
     }),
+  getLimitByDistance: publicProcedure
+    .input(z.object({ distance: z.number(), eventId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.prisma.eventParticipant.count({
+        where: {
+          id: input.eventId,
+          distance: input.distance,
+        },
+      });
+    }),
 });

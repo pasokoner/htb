@@ -6,6 +6,7 @@ import { FaLessThanEqual } from "react-icons/fa";
 import { getFinishedTime } from "../../../utils/convertion";
 
 import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
 export const participantRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -18,6 +19,7 @@ export const participantRouter = createTRPCRouter({
       return ctx.prisma.eventParticipant.findMany({
         where: {
           eventId: input.eventId,
+          noTshirt: false,
         },
         orderBy: {
           registrationNumber: "asc",
@@ -260,6 +262,8 @@ export const participantRouter = createTRPCRouter({
             time = getFinishedTime(timeFinished, event.timeStart5km);
           } else if (distance === 10 && event.timeStart10km) {
             time = getFinishedTime(timeFinished, event.timeStart10km);
+          } else if (distance === 16 && event.timeStart16km) {
+            time = getFinishedTime(timeFinished, event.timeStart16km);
           }
 
           return { ...eventParticipant, time };
@@ -306,6 +310,115 @@ export const participantRouter = createTRPCRouter({
             registrationNumber: data[0]?.registrationNumber
               ? data[0].registrationNumber + 1
               : 3350,
+            noTshirt: eventDetails
+              ? eventDetails.shirtLimit <=
+                eventParticipantCount + eventDetails.reserve
+              : false,
+          },
+        });
+      } catch (e) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+          // The .code property can be accessed in a type-safe manner
+          if (e.code === "P2002") {
+          }
+        }
+        throw e;
+      }
+    }),
+  joinWithLimit: protectedProcedure
+    .input(
+      z.object({
+        profileId: z.string(),
+        eventId: z.string(),
+        shirtSize: z.nativeEnum(ShirtSize),
+        distance: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const data = await ctx.prisma.eventParticipant.findMany({
+        where: {
+          eventId: input.eventId,
+          distance: input.distance,
+        },
+        orderBy: {
+          registrationNumber: "desc",
+        },
+        take: 1,
+      });
+
+      const eventDetails = await ctx.prisma.event.findUnique({
+        where: {
+          id: input.eventId,
+        },
+      });
+
+      const eventParticipantCount = await ctx.prisma.eventParticipant.count({
+        where: {
+          eventId: input.eventId,
+          distance: input.distance,
+        },
+      });
+
+      if (input.distance === 3 && eventParticipantCount >= 300) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Limit reached for 3 kilometers please change your distance",
+        });
+      }
+
+      if (input.distance === 5 && eventParticipantCount >= 1300) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Limit reached for 5 kilometers please change your distance",
+        });
+      }
+
+      if (input.distance === 10 && eventParticipantCount >= 1100) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            "Limit reached for 10 kilometers please change your distance",
+        });
+      }
+
+      if (input.distance === 16 && eventParticipantCount >= 300) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            "Limit reached for 16 kilometers please change your distance",
+        });
+      }
+
+      let registrationNumber = 0;
+      if (input.distance === 16) {
+        registrationNumber = data[0]?.registrationNumber
+          ? data[0]?.registrationNumber + 1
+          : 28301;
+      }
+
+      if (input.distance === 10) {
+        registrationNumber = data[0]?.registrationNumber
+          ? data[0]?.registrationNumber + 1
+          : 28601;
+      }
+
+      if (input.distance === 5) {
+        registrationNumber = data[0]?.registrationNumber
+          ? data[0]?.registrationNumber + 1
+          : 29701;
+      }
+
+      if (input.distance === 3) {
+        registrationNumber = data[0]?.registrationNumber
+          ? data[0]?.registrationNumber + 1
+          : 31101;
+      }
+
+      try {
+        return await ctx.prisma.eventParticipant.create({
+          data: {
+            ...input,
+            registrationNumber,
             noTshirt: eventDetails
               ? eventDetails.shirtLimit <=
                 eventParticipantCount + eventDetails.reserve
