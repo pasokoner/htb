@@ -73,6 +73,7 @@ const Raffle: NextPage = () => {
     km3: true,
     km5: true,
     km10: true,
+    km16: true,
     all: false,
     dummy: false,
   });
@@ -306,6 +307,22 @@ const Raffle: NextPage = () => {
                     }
                   />
                   DUMMY
+                </label>
+              </div>
+              <div className="col-span-1">
+                <label htmlFor="16km" className="flex items-center gap-2">
+                  <input
+                    id="16km"
+                    type="checkbox"
+                    className="accent-km16"
+                    checked={filter.km16}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setFilter((prevState) => {
+                        return { ...prevState, km16: event.target.checked };
+                      })
+                    }
+                  />
+                  16 KM
                 </label>
               </div>
             </div>

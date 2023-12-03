@@ -127,7 +127,7 @@ const List: NextPage = () => {
               }}
             >
               <option value={""}>ALL</option>
-              {[3, 5, 10].map((distance) => (
+              {[3, 5, 10, 16].map((distance) => (
                 <option key={distance} value={distance}>
                   {distance}
                 </option>

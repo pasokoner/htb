@@ -147,11 +147,15 @@ const JoinEvent = ({
           <label htmlFor="shirtSize">Shirt Size</label>
           <select id="shirtSize" required {...register("shirtSize")}>
             <option value={""}>Select Shirt Size</option>
-            {Object.keys(ShirtSize).map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
+            {Object.keys(ShirtSize)
+              .filter((size) =>
+                ["XS", "S", "MD", "L", "XL", "XXL"].includes(size)
+              )
+              .map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
           </select>
         </div>
 
@@ -159,7 +163,7 @@ const JoinEvent = ({
           <label htmlFor="distance">Select Distance</label>
           <select id="distance" required {...register("distance")}>
             <option value={""}>Select Distance</option>
-            {[3, 5, 10].map((d) => (
+            {[3, 5, 10, 16].map((d) => (
               <option key={d} value={d}>
                 {d} Kilometers
               </option>

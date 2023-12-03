@@ -5,11 +5,11 @@ import { api } from "../utils/api";
 import { FaPlay, FaStop } from "react-icons/fa";
 
 type Props = {
-  kilometer: "3" | "5" | "10";
+  kilometer: "3" | "5" | "10" | "16";
   raceFinished: boolean;
   timeStart: Date | null;
   eventId: string;
-  color: "km3" | "km5" | "km10";
+  color: "km3" | "km5" | "km10" | "km16";
   refetchEvent: () => void;
 };
 
@@ -35,14 +35,17 @@ const StartButton = ({
   });
 
   const updateTimeStart = (
-    kilometer: "3" | "5" | "10",
+    kilometer: "3" | "5" | "10" | "16",
     timeStart: Date,
     eventId: string
   ) => {
     startRace({ kilometer: kilometer, timeStart, eventId });
   };
 
-  const updateRaceStatus = (kilometer: "3" | "5" | "10", eventId: string) => {
+  const updateRaceStatus = (
+    kilometer: "3" | "5" | "10" | "16",
+    eventId: string
+  ) => {
     endRace({ kilometer, eventId });
   };
 

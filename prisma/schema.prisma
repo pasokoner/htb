@@ -24,9 +24,11 @@ model Event {
     timeStart3km      DateTime?
     timeStart5km      DateTime?
     timeStart10km     DateTime?
+    timeStart16km     DateTime?
     raceFinished3km   Boolean            @default(false)
     raceFinished5km   Boolean            @default(false)
     raceFinished10km  Boolean            @default(false)
+    raceFinished16km  Boolean            @default(false)
     cameraPassword    String             @default("hatawbataan")
     image             String?
     address           String

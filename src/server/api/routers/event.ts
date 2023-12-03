@@ -56,7 +56,7 @@ export const eventRouter = createTRPCRouter({
   start: publicProcedure
     .input(
       z.object({
-        kilometer: z.enum(["3", "5", "10"]),
+        kilometer: z.enum(["3", "5", "10", "16"]),
         timeStart: z.date(),
         eventId: z.string(),
       })
@@ -128,12 +128,33 @@ export const eventRouter = createTRPCRouter({
             },
           });
         });
+      } else if (kilometer === "16") {
+        return await prisma.$transaction(async (tx) => {
+          await tx.eventParticipant.updateMany({
+            where: {
+              eventId: eventId,
+              distance: 16,
+            },
+            data: {
+              enableCamera: true,
+            },
+          });
+
+          return await prisma.event.update({
+            where: {
+              id: eventId,
+            },
+            data: {
+              timeStart16km: timeStart,
+            },
+          });
+        });
       }
     }),
   end: publicProcedure
     .input(
       z.object({
-        kilometer: z.enum(["3", "5", "10"]),
+        kilometer: z.enum(["3", "5", "10", "16"]),
         eventId: z.string(),
       })
     )
@@ -201,6 +222,27 @@ export const eventRouter = createTRPCRouter({
             },
             data: {
               raceFinished10km: true,
+            },
+          });
+        });
+      } else if (kilometer === "16") {
+        return await prisma.$transaction(async (tx) => {
+          await tx.eventParticipant.updateMany({
+            where: {
+              eventId: eventId,
+              distance: 16,
+            },
+            data: {
+              raceEnded: true,
+            },
+          });
+
+          return await prisma.event.update({
+            where: {
+              id: eventId,
+            },
+            data: {
+              raceFinished16km: true,
             },
           });
         });
@@ -300,6 +342,7 @@ export const eventRouter = createTRPCRouter({
           km10: z.boolean(),
           km5: z.boolean(),
           km3: z.boolean(),
+          km16: z.boolean(),
           all: z.boolean(),
           dummy: z.boolean(),
         }),
@@ -323,6 +366,7 @@ export const eventRouter = createTRPCRouter({
             { distance: filter.km3 ? 3 : undefined },
             { distance: filter.km5 ? 5 : undefined },
             { distance: filter.km10 ? 10 : undefined },
+            { distance: filter.km16 ? 16 : undefined },
           ],
           NOT: {
             timeFinished: filter.finisher ? null : undefined,

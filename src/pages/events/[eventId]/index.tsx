@@ -92,7 +92,7 @@ const SingeEvent: NextPage = () => {
       </div>
 
       <div className="mx-auto grid grid-cols-6 gap-4">
-        <div className="col-span-6 flex flex-col items-center justify-start gap-4 rounded-md border-2 border-km3 font-semibold text-black md:col-span-3 lg:col-span-2">
+        <div className="col-span-6 flex flex-col items-center justify-start gap-4 rounded-md border-2 border-km3 font-semibold text-black md:col-span-3">
           <h2 className="flex w-full justify-center rounded-t-sm bg-km3 py-2 text-4xl text-white">
             3 KM
           </h2>
@@ -138,7 +138,7 @@ const SingeEvent: NextPage = () => {
             </p>
           </div>
         </div>
-        <div className="col-span-6 flex flex-col items-center justify-start gap-4 rounded-md border-2 border-km5 font-semibold text-white md:col-span-3 lg:col-span-2">
+        <div className="col-span-6 flex flex-col items-center justify-start gap-4 rounded-md border-2 border-km5 font-semibold text-white md:col-span-3">
           <h2 className="flex w-full justify-center rounded-t-sm bg-km5 py-2 text-4xl text-white">
             5 KM
           </h2>
@@ -182,7 +182,7 @@ const SingeEvent: NextPage = () => {
             </p>
           </div>
         </div>
-        <div className="col-span-6 flex flex-col items-center justify-start gap-4 rounded-md border-2 border-km10 font-semibold text-white md:col-span-6 lg:col-span-2">
+        <div className="col-span-6 flex flex-col items-center justify-start gap-4 rounded-md border-2 border-km10 font-semibold text-white md:col-span-3">
           <h2 className="flex w-full justify-center rounded-t-sm bg-km10 py-2 text-4xl text-white">
             10 KM
           </h2>
@@ -223,6 +223,50 @@ const SingeEvent: NextPage = () => {
             </p>
             <p className="text-center text-xl font-medium text-gray-700">
               {filterParticipants(10, eventData.eventParticipant)}
+            </p>
+          </div>
+        </div>
+        <div className="col-span-6 flex flex-col items-center justify-start gap-4 rounded-md border-2 border-km16 font-semibold text-white md:col-span-3">
+          <h2 className="flex w-full justify-center rounded-t-sm bg-km16 py-2 text-4xl text-white">
+            16 KM
+          </h2>
+          {/* <CustomClock /> */}
+          <StartButton
+            kilometer="16"
+            timeStart={eventData?.timeStart16km}
+            eventId={eventData.id}
+            raceFinished={eventData.raceFinished16km}
+            /* eslint-disable @typescript-eslint/no-misused-promises */
+            refetchEvent={refetchEvent}
+            color="km16"
+          />
+
+          {eventData.timeStart16km && (
+            <Link
+              href={`/events/${eventData.id}/finisher`}
+              className="flex w-full justify-center"
+            >
+              <div className="w-8/12 border-2 border-dashed border-white text-xl font-semibold">
+                {eventData.raceFinished16km ? (
+                  <div className="flex items-center justify-center gap-2 border-[1px] border-km16 py-2 text-km16">
+                    CHECK STATUS <GiCheckeredFlag className="text-4xl" />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-2 border-[1px] border-km16 py-2 text-km16">
+                    LIVE FEED{" "}
+                    <GoPrimitiveDot className="text-4xl text-red-700" />
+                  </div>
+                )}
+              </div>
+            </Link>
+          )}
+          <div className="mt-6 w-full border-b-2 border-double border-b-slate-100"></div>
+          <div>
+            <p className="mb-1 text-center text-xl font-medium text-gray-700">
+              Registered Participants
+            </p>
+            <p className="text-center text-xl font-medium text-gray-700">
+              {filterParticipants(16, eventData.eventParticipant)}
             </p>
           </div>
         </div>
